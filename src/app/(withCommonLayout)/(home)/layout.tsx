@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
+import CHomePageLayout from "@/src/Layouts/CHomePageLayout";
+import React, { ReactNode } from "react";
 
-const HomeLayout = ({children}:{children:ReactNode}) => {
-    return (
-        <div>
-           home sidebar
-            {children}
-        </div>
-    );
+const HomeLayout = ({ children }: { children: ReactNode }) => {
+  return (
+    <div>
+      <CHomePageLayout>{children}</CHomePageLayout>
+    </div>
+  );
 };
 
 export default HomeLayout;
