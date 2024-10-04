@@ -1,7 +1,8 @@
 
 import axios from "axios";
 import { cookies } from "next/headers";
-import { getNewAccessToken } from "../services/auth.service";
+import { getNewAccessToken } from "../Auth/auth.service";
+
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:5000/api/v1",

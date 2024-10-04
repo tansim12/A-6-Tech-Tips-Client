@@ -20,6 +20,7 @@ import { Avatar } from "@nextui-org/avatar";
 import { ThemeSwitch } from "./theme-switch";
 import { siteConfig } from "@/src/config/site";
 import { Logo } from "./icon";
+import NavbarDropdown from "./NavbarDropdown";
 
 export const Navbar = () => {
   return (
@@ -61,7 +62,7 @@ export const Navbar = () => {
             <ThemeSwitch />
           </NavbarItem>
           <NavbarItem className="hidden sm:flex gap-2">
-            {/* <NavbarDropdown /> */} hello
+            <NavbarDropdown />
           </NavbarItem>
         </NavbarContent>
 

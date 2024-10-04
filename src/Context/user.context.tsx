@@ -8,8 +8,9 @@ import {
   useEffect,
 } from "react";
 
-import { getCurrentUser } from "../services/auth.service";
+
 import { TUser } from "../Types/User/user.types";
+import { getCurrentUser } from "../Service/Auth/auth.service";
 
 type TProviderValue = {
   user: TUser | null;

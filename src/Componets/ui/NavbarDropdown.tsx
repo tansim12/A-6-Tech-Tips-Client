@@ -1,8 +1,7 @@
 "use client";
 
-// import { privateRotes } from "@/src/constant";
-// import { useUser } from "@/src/context/user.provider";
-// import { logoutFn } from "@/src/services/auth.service";
+import { useUser } from "@/src/Context/user.context";
+import { logoutFn } from "@/src/Service/Auth/auth.service";
 import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import {
@@ -47,9 +46,9 @@ export default function NavbarDropdown() {
               onClick={() => {
                 logoutFn();
                 userSetLoading(true);
-                if (privateRotes.some((route:any) => route === pathname)) {
-                  router.push("/");
-                }
+                // if (privateRotes.some((route:any) => route === pathname)) {
+                //   router.push("/");
+                // }
               }}
               key="delete"
               className="text-danger"
