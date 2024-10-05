@@ -22,6 +22,8 @@ export default function NavbarDropdown() {
   };
 
   const { user, setIsLoading: userSetLoading } = useUser();
+  console.log(user);
+  
 
   return (
     <>

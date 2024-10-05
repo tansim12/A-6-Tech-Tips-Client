@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
-import "./globals.css";
-import { Providers } from "@/lib/Provider";
+import "@/src/app/global.css"
+import { Providers } from "../lib/Provider";
 
 export const metadata: Metadata = {
   title: "Home",
