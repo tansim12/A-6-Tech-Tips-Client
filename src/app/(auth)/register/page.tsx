@@ -1,11 +1,12 @@
-import React from 'react';
+import CRegisterPage from "@/src/pages/CRegisterPage";
+import React from "react";
 
 const RegisterPage = () => {
-    return (
-        <div>
-            RegisterPage
-        </div>
-    );
+  return (
+    <div>
+      <CRegisterPage />
+    </div>
+  );
 };
 
 export default RegisterPage;

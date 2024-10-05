@@ -34,15 +34,16 @@ const CLoginPage = () => {
       }
     }
   }, [isPending, isSuccess]);
+
   return (
     <>
       {isPending && <Loading />}
-      <div className="flex justify-center items-center h-screen w-screen bg-[#1b1b1b]">
+      <div className="flex justify-center items-center h-screen w-screen ">
         <div className="max-w-3xl  p-6 shadow-md sm:px-8 sm:py-10 lg:px-12 lg:py-16 ">
           <div className="flex flex-col justify-between space-x-0 sm:flex-row sm:space-x-12">
             <div className="mb-8 w-full sm:mb-0 sm:w-1/2">
               {/* Left side form */}
-              <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white">
+              <h2 className="mb-6 text-3xl font-semibold tracking-tight light:text-lightText">
                 Sign In
               </h2>
               <FXForm
@@ -68,7 +69,7 @@ const CLoginPage = () => {
                 <div className="mb-6 flex items-center space-x-2 accent-sky-600">
                   <input type="checkbox" id="keep_signed_in" />
                   <label
-                    className="select-none text-sm font-medium text-white"
+                    className="select-none text-sm font-medium light:text-lightText"
                     htmlFor="keep_signed_in"
                   >
                     Keep me signed in
@@ -77,7 +78,7 @@ const CLoginPage = () => {
 
                 <CustomButton name="Login" customCss="w-full" />
               </FXForm>
-              <p className="mt-6 flex gap-1 text-sm text-white">
+              <p className="mt-6 flex gap-1 text-sm light:text-lightText">
                 Did you
                 <span
                   // onClick={() => navigate("/forget-password")}
@@ -89,19 +90,19 @@ const CLoginPage = () => {
             </div>
             {/* Right side content */}
             <div className="w-full sm:w-1/2">
-              <p className="mb-6 text-sm text-white">
+              <p className="mb-6 text-sm light:text-lightText">
                 If you don&apos;t already have an account click the button below
                 to create your account.
               </p>
               <button
                 onClick={() => {
-                  // navigate("/register");
+                  navigate.push("/register");
                 }}
                 className="mb-2 inline-flex h-10 w-full items-center justify-center rounded-md bg-zinc-800 px-4 py-2 text-sm font-medium uppercase text-white hover:bg-zinc-700"
               >
                 Create Account
               </button>
-              <p className="my-4 text-center text-white">OR</p>
+              <p className="my-4 text-center light:text-lightText">OR</p>
               <div>
                 <SocialLogin />
               </div>

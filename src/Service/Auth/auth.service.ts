@@ -7,7 +7,7 @@ import { jwtDecode } from "jwt-decode";
 import { axiosInstance } from "../axios/axiosInstance";
 export const createRegister = async (payload: FieldValues) => {
   try {
-    const { data } = await axiosInstance.post("/auth/register", payload);
+    const { data } = await axiosInstance.post("/auth/signup", payload);
     if (data?.success) {
       const cookieStore = cookies(); // Use cookies in server-side context
       cookieStore.set("accessToken", data?.data?.accessToken);
