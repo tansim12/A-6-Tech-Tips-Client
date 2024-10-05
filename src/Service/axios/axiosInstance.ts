@@ -5,7 +5,7 @@ import { getNewAccessToken } from "../Auth/auth.service";
 
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  baseURL: "http://localhost:5000/api",
   withCredentials: true,
   // baseURL: envConfig.backendUrl,
 });
