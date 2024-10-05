@@ -1,13 +1,19 @@
 "use client";
 
-import LightGallery from "lightgallery/react";
+import LightGallery from 'lightgallery/react';
 
-import "lightgallery/css/lightgallery.css";
-import "lightgallery/css/lg-zoom.css";
-import "lightgallery/css/lg-thumbnail.css";
+// import styles
+import 'lightgallery/css/lightgallery.css';
+import 'lightgallery/css/lg-zoom.css';
+import 'lightgallery/css/lg-thumbnail.css';
 
-import lgThumbnail from "lightgallery/plugins/thumbnail";
-import lgZoom from "lightgallery/plugins/zoom";
+// If you want you can use SCSS instead of css
+import 'lightgallery/scss/lightgallery.scss';
+import 'lightgallery/scss/lg-zoom.scss';
+
+// import plugins if you need
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import lgZoom from 'lightgallery/plugins/zoom';
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,7 +38,7 @@ export default function ImageGallery({ images }: IProps) {
             alt={`image-${index}`}
             className="h-[400px] w-full object-cover"
             height={500}
-            src={image}
+            src={"https://i.ibb.co.com/Pt9bHZ9/Variety.jpg"}
             width={500}
           />
         </Link>

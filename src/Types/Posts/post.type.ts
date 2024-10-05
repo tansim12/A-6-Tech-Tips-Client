@@ -17,11 +17,12 @@ export enum TPostCategory {
 }
 
 export type TPost = {
+  _id: string;
   userId?: string;
   category: TPostCategory;
   description: string;
   premium: boolean;
-  images?: string[];
+  images?: string[]|undefined;
   react?: TReact[];
   isDelete?: boolean;
   comments?: string[];
