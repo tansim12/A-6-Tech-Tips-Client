@@ -14,9 +14,6 @@ import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 
-
-import { Avatar } from "@nextui-org/avatar";
-// import NavbarDropdown from "./NavbarDropdown";
 import { ThemeSwitch } from "./theme-switch";
 import { siteConfig } from "@/src/config/site";
 import { Logo } from "./icon";
