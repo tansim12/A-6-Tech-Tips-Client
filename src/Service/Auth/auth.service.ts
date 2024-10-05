@@ -43,8 +43,6 @@ export const getCurrentUser = async (): Promise<any | null> => {
     }
 
     const decodedToken = await jwtDecode(accessToken);
-    console.log(decodedToken);
-    
     return decodedToken;
   } catch (error) {
     console.error("Error decoding token:", error);

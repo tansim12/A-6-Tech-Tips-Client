@@ -18,7 +18,7 @@ export default function NavbarDropdown() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleNavigation = (pathname: string) => { 
+  const handleNavigation = (pathname: string) => {
     router.push(pathname);
   };
 
@@ -33,7 +33,7 @@ export default function NavbarDropdown() {
             <Avatar
               className="cursor-pointer border-base border-2"
               // name={user?.name ? user?.name : "user"}
-              
+
               src={
                 user?.profilePhoto
                   ? user?.profilePhoto
@@ -45,19 +45,17 @@ export default function NavbarDropdown() {
             <DropdownItem onClick={() => handleNavigation("/profile")}>
               Profile
             </DropdownItem>
-            <DropdownItem onClick={() => handleNavigation("/profile/settings")}>
-              Settings
-            </DropdownItem>
             <DropdownItem
-              onClick={() => handleNavigation("/profile/create-post")}
+              onClick={() => handleNavigation(`/${user?.role}/dashboard`)}
             >
-              Create Post
+              Dashboard
             </DropdownItem>
+            
             <DropdownItem
               onClick={() => {
                 logoutFn();
                 userSetLoading(true);
-                if (privateRotes?.some((route:any) => route === pathname)) {
+                if (privateRotes?.some((route: any) => route === pathname)) {
                   router.push("/");
                 }
               }}

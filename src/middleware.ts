@@ -2,11 +2,10 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getCurrentUser } from "./Service/Auth/auth.service";
 
-
 const AuthRoutes = ["/login", "/register"];
 const roleBaseRoute = {
-  USER: [/^\/profile/],
-  ADMIN: [/^\/admin/],
+  user: [/^\/user/],
+  admin: [/^\/admin/],
 };
 
 type TRole = keyof typeof roleBaseRoute;
@@ -15,8 +14,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const user = await getCurrentUser();
-
-  if (!user) {
+  if (!user?.data) {
     if (AuthRoutes.includes(pathname)) {
       return NextResponse.next();
     }
@@ -25,8 +23,8 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  if (user?.role && roleBaseRoute[user?.role as TRole]) {
-    const routes = roleBaseRoute[user?.role as TRole];
+  if (user?.data?.role && roleBaseRoute[user?.data?.role as TRole]) {
+    const routes = roleBaseRoute[user?.data?.role as TRole];
     if (routes.some((route) => route.test(pathname))) {
       return NextResponse.next();
     }
@@ -35,5 +33,12 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/profile", "/profile/:page*", "/admin", "/login", "/register"],
+  matcher: [
+    "/profile",
+    "/profile/:page*",
+    "/user/:page*",
+    "/admin/:page*",
+    "/login",
+    "/register",
+  ],
 };

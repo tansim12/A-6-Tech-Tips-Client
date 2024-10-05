@@ -1,8 +1,9 @@
 export const privateRotes = [
-    "/profile",
-    "/profile/:page*",
-    "/admin",
-    "/login",
-    "/register",
-  ];
-  
+  "/profile",
+  "/profile/:page*",
+  "/user/:page*",
+  "/admin/:page*",
+  "/user",
+  "/login",
+  "/register",
+];
