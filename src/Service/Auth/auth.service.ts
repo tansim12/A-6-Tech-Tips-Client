@@ -7,7 +7,7 @@ import { jwtDecode } from "jwt-decode";
 import { axiosInstance } from "../axios/axiosInstance";
 export const createRegister = async (payload: FieldValues) => {
   try {
-    const {data} = await axiosInstance.post("/auth/register", payload);
+    const { data } = await axiosInstance.post("/auth/register", payload);
     if (data?.success) {
       const cookieStore = cookies(); // Use cookies in server-side context
       cookieStore.set("accessToken", data?.data?.accessToken);
@@ -43,6 +43,8 @@ export const getCurrentUser = async (): Promise<any | null> => {
     }
 
     const decodedToken = await jwtDecode(accessToken);
+    console.log(decodedToken);
+    
     return decodedToken;
   } catch (error) {
     console.error("Error decoding token:", error);

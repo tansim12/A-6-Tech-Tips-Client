@@ -29,7 +29,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     const handleUser = async () => {
       const getUser = await getCurrentUser();
       if (getUser) {
-        setUser(getUser);
+        setUser(getUser?.data);
         setIsLoading(false);
       } else {
         setUser(null);
