@@ -16,7 +16,19 @@ module.exports = {
         lightText: "#000000", // black text for light mode
         darkText: "#ffffff", // white text for dark mode
         default:"#000000"
+      }, animation: {
+        "background-shine": "background-shine 2s linear infinite"
       },
+      keyframes: {
+        "background-shine": {
+          "from": {
+            "backgroundPosition": "0 0"
+          },
+          "to": {
+            "backgroundPosition": "-200% 0"
+          }
+        }
+      }
     },
   },
   darkMode: "class", // enables class-based dark mode
