@@ -21,7 +21,6 @@ const CRegisterPage = () => {
   const { mutate: handleRegister, isPending, isSuccess } = useUserRegister();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
     if (data?.password !== data?.confirmPassword) {
       return toast.error("Password are not same");
     }
