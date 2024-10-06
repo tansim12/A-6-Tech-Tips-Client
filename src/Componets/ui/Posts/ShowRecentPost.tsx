@@ -12,7 +12,7 @@ const ShowRecentPost = () => {
   const { params } = useUser();
   const [allPostData, setAllPostData] = useState<TPost[]>([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(3);
+  const [pageSize, setPageSize] = useState(1);
 
   const { data, isLoading, isSuccess } = useGetRecentPostData(
     page,
@@ -35,7 +35,7 @@ const ShowRecentPost = () => {
 //     }
 //   }, [params]);
 
-  //   console.log(params);
+    console.log({params});
 
   infiniteScrollFn(page, setPage, data?.data?.meta?.total, pageSize);
 

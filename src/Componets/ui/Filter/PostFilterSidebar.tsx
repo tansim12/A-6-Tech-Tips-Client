@@ -23,7 +23,7 @@ const PostFilterSidebar = () => {
   const handleFilterChange = (e: any) => {
     const { name, value, checked, type } = e.target;
     console.log(typeof value);
-    
+
     setFilters((prevFilters: TQueryParams[]) => {
       if (type === "checkbox") {
         if (checked) {
@@ -72,8 +72,6 @@ const PostFilterSidebar = () => {
     setParams(filters);
   }, [filters, searchTerm]);
 
-  console.log(filters);
-  
 
   return (
     <div className="">
@@ -89,12 +87,12 @@ const PostFilterSidebar = () => {
         />
       </div>
 
-      {filterFields?.map((item) => (
-        <section key={item?.name} className="w-full divide-y rounded mt-4">
+      {filterFields?.map((filed) => (
+        <section key={filed?.name} className="w-full divide-y rounded mt-4">
           <details className="group border  rounded-md " open>
             <summary className="relative cursor-pointer list-none pr-8 py-1 ps-1 transition-colors duration-300 focus-visible:outline-none [&::-webkit-details-marker]:hidden bg-[#F1F2F3] text_blue rounded-se-lg rounded-ss-lg ">
               <span className="text-base text-[16px] font-[500]">
-                {item?.name?.toUpperCase()}
+                {filed?.name?.toUpperCase()}
               </span>
               <span className="absolute right-1 w-4 h-4 transition duration-300 top-1 shrink-0 ">
                 <svg
@@ -119,13 +117,13 @@ const PostFilterSidebar = () => {
               </span>
             </summary>
 
-            {item?.value?.map((item) => (
+            {filed?.value?.map((item) => (
               <div className="mt-1 text-[#5D636F] text-[14px] font-[400]">
                 <div className="relative flex flex-wrap items-center">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
-                      name="premium"
+                      name={filed?.name}
                       value={item?.value as never}
                       className="h-4 w-4 rounded-md border-gray-200 bg-gray-500 shadow-sm"
                       onClick={handleFilterChange}

@@ -1,4 +1,3 @@
-import CHomePageLayout from "@/src/Layouts/CHomePageLayout";
 import React, { ReactNode } from "react";
 
 const HomeLayout = ({
@@ -12,7 +11,9 @@ const HomeLayout = ({
     <>
       <div className="container mx-auto p-3">
         <div className="flex gap-5">
-          <div className="basis-1/5">{filter}</div>
+          <div className="sticky max-h-screen " id="stickySidebar">
+            <div className="basis-1/5 sticky ">{filter}</div>
+          </div>
           <div className="basis-4/5">{children}</div>
         </div>
       </div>

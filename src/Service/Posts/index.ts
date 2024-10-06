@@ -25,7 +25,7 @@ export const getNewsFeedPosts = async (
         params.append(item.name, String(item.value)); // Convert value to string
       });
     }
-
+    
     // Fetch from the API with the constructed URL including query parameters
     const res = await fetch(
       `${envConfig.baseApi}/post?${params.toString()}`,
