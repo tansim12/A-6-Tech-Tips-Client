@@ -6,8 +6,10 @@ import Post from "../NewsFeed/Posts";
 import { useGetRecentPostData } from "@/src/hooks/post.hook";
 import infiniteScrollFn from "@/src/utils/infiniteScrollFn";
 import { Spinner } from "@nextui-org/react";
+import { useUser } from "@/src/Context/user.context";
 
 const ShowRecentPost = () => {
+  const { params } = useUser();
   const [allPostData, setAllPostData] = useState<TPost[]>([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(3);
@@ -15,7 +17,7 @@ const ShowRecentPost = () => {
   const { data, isLoading, isSuccess } = useGetRecentPostData(
     page,
     pageSize,
-    []
+    params
   );
   useEffect(() => {
     if (data?.data?.result) {
@@ -26,6 +28,14 @@ const ShowRecentPost = () => {
       }
     }
   }, [data, page]);
+
+//   useEffect(() => {
+//     if (params?.length >= 1) {
+//       setPage(1);
+//     }
+//   }, [params]);
+
+  //   console.log(params);
 
   infiniteScrollFn(page, setPage, data?.data?.meta?.total, pageSize);
 

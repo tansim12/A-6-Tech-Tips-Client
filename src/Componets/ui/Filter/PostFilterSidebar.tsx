@@ -1,5 +1,6 @@
 "use client";
 import { categoryData, premiumData } from "@/src/Constant/filter.const";
+import { useUser } from "@/src/Context/user.context";
 import useDebounce from "@/src/hooks/useDebounce";
 import { TQueryParams } from "@/src/Types/Filter/filter.type";
 import { Input } from "@nextui-org/react";
@@ -16,10 +17,13 @@ const filterFields = [
   },
 ];
 const PostFilterSidebar = () => {
+  const { setParams } = useUser();
   const [filters, setFilters] = useState<TQueryParams[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const handleFilterChange = (e: any) => {
     const { name, value, checked, type } = e.target;
+    console.log(typeof value);
+    
     setFilters((prevFilters: TQueryParams[]) => {
       if (type === "checkbox") {
         if (checked) {
@@ -64,7 +68,12 @@ const PostFilterSidebar = () => {
     }
   }, [searchTerm]);
 
+  useEffect(() => {
+    setParams(filters);
+  }, [filters, searchTerm]);
+
   console.log(filters);
+  
 
   return (
     <div className="">
@@ -132,7 +141,6 @@ const PostFilterSidebar = () => {
           </details>
         </section>
       ))}
-  
     </div>
   );
 };
