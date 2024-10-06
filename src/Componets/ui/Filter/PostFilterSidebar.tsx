@@ -1,10 +1,13 @@
 "use client";
 import { categoryData, premiumData } from "@/src/Constant/filter.const";
+import useDebounce from "@/src/hooks/useDebounce";
 import { TQueryParams } from "@/src/Types/Filter/filter.type";
-import React, { useState } from "react";
-
+import { Input } from "@nextui-org/react";
+import React, { EventHandler, useEffect, useState } from "react";
+import { FiSearch } from "react-icons/fi";
 const PostFilterSidebar = () => {
   const [filters, setFilters] = useState<TQueryParams[]>([]);
+  const [searchValue, setSearchValue] = useState("");
   const handleFilterChange = (e: any) => {
     const { name, value, checked, type } = e.target;
     setFilters((prevFilters: TQueryParams[]) => {
@@ -37,10 +40,35 @@ const PostFilterSidebar = () => {
     });
   };
 
+  const searchTerm = useDebounce(searchValue, 700); // Debouncing with 500ms delay
+  useEffect(() => {
+    if (searchTerm) {
+      // This will trigger after 500ms delay when the user stops typing
+      setFilters((pre) => [...pre, { name: "searchTerm", value: searchTerm }]);
+      // Call your search API or filtering function here
+    } else {
+      const filterOtherValue = filters?.filter(
+        (filter) => !(filter.name === "searchTerm")
+      );
+      setFilters(filterOtherValue);
+    }
+  }, [searchTerm]);
+
   console.log(filters);
 
   return (
-    <div className="text-3xl">
+    <div className="">
+      {/* search  */}
+      <div className="w-full">
+        <Input
+          //   contentLeft={<FiSearch size={20} />}
+          placeholder="Search..."
+          aria-label="Search"
+          fullWidth
+          endContent={<FiSearch size={20} />}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+      </div>
       {/* premium  */}
       <section className="w-full divide-y rounded mt-4">
         <details className="group border  rounded-md " open>
