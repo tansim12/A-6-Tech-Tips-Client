@@ -1,3 +1,5 @@
+import { TUser } from "../User/user.types";
+
 export type TReact = {
   isDelete?: boolean;
   userId: string;
@@ -17,13 +19,15 @@ export enum TPostCategory {
 }
 
 export type TPost = {
+  title: string;
   _id: string;
-  userId?: string;
+  userId?: string | TUser;
   category: TPostCategory;
   description: string;
   premium: boolean;
-  images?: string[]|undefined;
+  images?: string[] | undefined;
   react?: TReact[];
   isDelete?: boolean;
   comments?: string[];
+  createdAt: string;
 };
