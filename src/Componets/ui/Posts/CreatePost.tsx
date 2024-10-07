@@ -7,6 +7,8 @@ import { MdWork } from "react-icons/md"; // For job icon
 import { AiOutlineFileText } from "react-icons/ai"; // For write article icon
 import { useDisclosure } from "@nextui-org/react";
 import CustomModal from "../Custom Modal/CustomModal";
+import PostForm from "./PostForm";
+import { TUser } from "@/src/Types/User/user.types";
 
 const CreatePost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -18,16 +20,12 @@ const CreatePost = () => {
         title="Create New Post"
         isOpen={isOpen}
         backdrop={backdrop as "opaque" | "blur" | "transparent"}
-        onConfirm={() => {
-          console.log("Post created");
-          onClose();
-        }}
         onCancel={onClose}
-        confirmText="Post"
         cancelText="Cancel"
+        size="4xl"
       >
         {" "}
-        hello
+        <PostForm user={user as TUser} />
       </CustomModal>
 
       <div

@@ -9,7 +9,15 @@ import {
 } from "@nextui-org/react";
 
 interface DynamicModalProps {
-  title: string;
+  title?: string;
+  size?: "lg" | "sm" | "md" | "xl" | "2xl" | "4xl" | "xs" | "3xl" | "5xl" | "full"
+  placement?:
+    | "center"
+    | "auto"
+    | "top"
+    | "top-center"
+    | "bottom"
+    | "bottom-center";
   onConfirm?: () => void;
   onCancel?: () => void;
   confirmText?: string;
@@ -21,6 +29,8 @@ interface DynamicModalProps {
 
 const CustomModal: React.FC<DynamicModalProps> = ({
   title,
+  placement = "top",
+  size="lg",
   onConfirm,
   onCancel,
   confirmText = "Confirm",
@@ -30,7 +40,13 @@ const CustomModal: React.FC<DynamicModalProps> = ({
   children, // Render the children
 }) => {
   return (
-    <Modal backdrop={backdrop} isOpen={isOpen} onClose={onCancel}>
+    <Modal
+      backdrop={backdrop}
+      isOpen={isOpen}
+      onClose={onCancel}
+      placement={placement}
+      size={size}
+    >
       <ModalContent>
         {(onClose) => (
           <>
