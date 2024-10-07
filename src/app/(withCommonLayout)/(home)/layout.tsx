@@ -11,8 +11,8 @@ const HomeLayout = ({
     <>
       <div className="container mx-auto p-3">
         <div className="flex gap-5">
-          <div className="sticky max-h-screen " id="stickySidebar">
-            <div className="basis-1/5 sticky ">{filter}</div>
+          <div className=" max-h-screen basis-1/5" id="stickySidebar">
+            <div className="  ">{filter}</div>
           </div>
           <div className="basis-4/5">{children}</div>
         </div>

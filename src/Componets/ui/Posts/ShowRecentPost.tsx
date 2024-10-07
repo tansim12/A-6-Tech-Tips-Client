@@ -19,21 +19,27 @@ const ShowRecentPost = () => {
     pageSize,
     params
   );
+
+  // Handle params change
+  useEffect(() => {
+    // Reset page and scroll to top when params change
+    setPage(1);
+    window.scrollTo(0, 0);
+    setAllPostData([]); // Clear previous data
+  }, [params]);
+
+
   useEffect(() => {
     if (data?.data?.result) {
       if (page > 1) {
-        setAllPostData((prevData) => [...prevData, ...data.data.result]);
+        setAllPostData((prevData) => [...prevData, ...data?.data?.result]);
       } else {
-        setAllPostData([...data.data.result]);
+        setAllPostData([...data?.data?.result]);
       }
     }
   }, [data, page]);
 
-//   useEffect(() => {
-//     if (params?.length >= 1) {
-//       setPage(1);
-//     }
-//   }, [params]);
+
 
     console.log({params});
 
