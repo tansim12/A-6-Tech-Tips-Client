@@ -38,7 +38,7 @@ export default function ImageGallery({ images }: IProps) {
             alt={`image-${index}`}
             className="h-[400px] w-full object-cover"
             height={500}
-            src={"https://i.ibb.co.com/Pt9bHZ9/Variety.jpg"}
+            src={image}
             width={500}
           />
         </Link>

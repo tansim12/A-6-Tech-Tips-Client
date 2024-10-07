@@ -23,10 +23,10 @@ export default function NavbarDropdown() {
   };
 
   const { user, setIsLoading: userSetLoading } = useUser();
-
+  
   return (
     <>
-      {user?.email ? (
+      {user?.id ? (
         <Dropdown>
           <DropdownTrigger>
             <Avatar
