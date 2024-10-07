@@ -1,6 +1,7 @@
 import { USER_ROLE, USER_STATUS } from "./user.const";
 
 export interface TUser {
+  id:string,
   name: string;
   email: string;
   role?: "user" | "admin";

@@ -23,6 +23,8 @@ export default function NavbarDropdown() {
   };
 
   const { user, setIsLoading: userSetLoading } = useUser();
+  console.log(user?.id);
+
   return (
     <>
       {user?.email ? (
@@ -40,7 +42,9 @@ export default function NavbarDropdown() {
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Static Actions">
-            <DropdownItem onClick={() => handleNavigation("/profile")}>
+            <DropdownItem
+              onClick={() => handleNavigation(`/profile/${user?.id}`)}
+            >
               Profile
             </DropdownItem>
             <DropdownItem
@@ -48,14 +52,23 @@ export default function NavbarDropdown() {
             >
               Dashboard
             </DropdownItem>
-            
             <DropdownItem
-              onClick={() => {
-                logoutFn();
+              onClick={async () => {
                 userSetLoading(true);
-                if (privateRotes?.some((route: any) => route === pathname)) {
-                  router.push("/");
+                await logoutFn();
+                // Regex for private routes with dynamic segments
+                const isPrivateRoute = privateRotes.some((route: string) =>
+                  new RegExp(`^${route.replace(":page*", ".*")}$`).test(
+                    pathname as string
+                  )
+                );
+                // Check if the current route is a private route
+                if (isPrivateRoute) {
+                  // Redirect after logout and loading is done
+                  await router.push("/");
                 }
+                // Reset loading state
+                userSetLoading(false);
               }}
               key="delete"
               className="text-danger"
