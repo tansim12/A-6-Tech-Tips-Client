@@ -10,7 +10,17 @@ import {
 
 interface DynamicModalProps {
   title?: string;
-  size?: "lg" | "sm" | "md" | "xl" | "2xl" | "4xl" | "xs" | "3xl" | "5xl" | "full"
+  size?:
+    | "lg"
+    | "sm"
+    | "md"
+    | "xl"
+    | "2xl"
+    | "4xl"
+    | "xs"
+    | "3xl"
+    | "5xl"
+    | "full";
   placement?:
     | "center"
     | "auto"
@@ -30,7 +40,7 @@ interface DynamicModalProps {
 const CustomModal: React.FC<DynamicModalProps> = ({
   title,
   placement = "top",
-  size="lg",
+  size = "lg",
   onConfirm,
   onCancel,
   confirmText = "Confirm",
@@ -51,7 +61,10 @@ const CustomModal: React.FC<DynamicModalProps> = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
-            <ModalBody>{children}</ModalBody>
+            <ModalBody>
+              {" "}
+              <div className="blur-0 z-50">{children}</div>
+            </ModalBody>
             <ModalFooter>
               {onCancel && (
                 <Button color="danger" variant="light" onPress={onCancel}>

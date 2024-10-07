@@ -86,7 +86,7 @@ const CustomFileUpload = ({
             )}
 
             {/* Preview selected files with remove button */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px",marginTop:"20px" }}>
               {fileList.map((file, index) => (
                 <div
                   key={index}
@@ -96,8 +96,8 @@ const CustomFileUpload = ({
                     src={URL.createObjectURL(file)}
                     alt={file.name}
                     style={{
-                      width: "150px",
-                      height: "150px",
+                      width: "100px",
+                      height: "100px",
                       objectFit: "cover",
                       borderRadius: "8px",
                     }}

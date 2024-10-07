@@ -16,6 +16,16 @@ const CustomReactQuill = ({
   isLabelColor,
   placeholder,
 }: TInputProps) => {
+  const toolbarOptions = [
+    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [{ color: [] }, { background: [] }],
+    [{ align: [] }],
+    ["link", "image", "video"],
+    ["clean"], // Remove formatting button
+  ];
+
   return (
     <div
       style={{ marginBottom: "10px" }}
@@ -43,6 +53,9 @@ const CustomReactQuill = ({
                 value={field.value || ""} // Ensure value is managed properly
                 placeholder={placeholder}
                 className="h-56 mb-10"
+                modules={{
+                  toolbar: toolbarOptions, // Custom toolbar options
+                }}
                 theme="snow" // React Quill theme (can be customized)
               />
               {error && <small style={{ color: "red" }}>{error.message}</small>}

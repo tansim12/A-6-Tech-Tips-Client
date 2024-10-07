@@ -34,7 +34,7 @@ const CustomToggle = ({
             checked={field.value}
             onChange={(e:any) => field.onChange(e.target.checked)}
           >
-            {label}
+         
           </Switch>
         )}
       />
