@@ -10,15 +10,28 @@ import CustomToggle from "../../Form/CustomToggle";
 import { Button } from "@nextui-org/react";
 import { TUser } from "@/src/Types/User/user.types";
 import CustomFileUpload from "../../Form/CustomFileUpload";
+import { uploadImagesToImgBB } from "@/src/utils/uploadImagesToImgBB";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createPostSchema } from "@/src/Schemas/createPost.schema";
 
 const PostForm = ({ user }: { user: TUser }) => {
   const [selectImages, setSelectImages] = useState([]);
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    const images = await uploadImagesToImgBB(selectImages);
+
+    const payload = {
+      title: data?.title,
+      description: data?.description,
+      premium: data?.premium,
+      images,
+      category: data?.category,
+    };
+    console.log(payload);
+    
   };
   return (
     <div>
-      <FXForm onSubmit={onSubmit}>
+      <FXForm onSubmit={onSubmit} resolver={zodResolver(createPostSchema)}>
         <CustomInput name="title" label="Title" type="text" />
 
         <div className=" flex gap-10 w-full items-center my-3">
@@ -40,12 +53,11 @@ const PostForm = ({ user }: { user: TUser }) => {
           name="images"
           label="Images"
         />
-        <div className="mb-20">
+        <div className="mb-16">
           <CustomReactQuill name="description" label="Description" />
         </div>
-        
-          <Button type="submit">Submit</Button>
-        
+
+        <Button type="submit">Submit</Button>
       </FXForm>
     </div>
   );
