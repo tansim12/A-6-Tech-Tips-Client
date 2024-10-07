@@ -1,10 +1,10 @@
-import PostFilterSidebar from "@/src/Componets/ui/Filter/PostFilterSidebar";
+import CPostFilterSidebar from "@/src/pages/CPostFilterSidebar";
 import React from "react";
 
 const FilterSideBarSlot = () => {
   return (
     <div>
-      <PostFilterSidebar />
+      <CPostFilterSidebar />
     </div>
   );
 };

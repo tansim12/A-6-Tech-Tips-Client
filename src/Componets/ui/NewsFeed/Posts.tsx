@@ -11,6 +11,7 @@ import { TPost } from "@/src/Types/Posts/post.type";
 import { TUser } from "@/src/Types/User/user.types";
 import { useUser } from "@/src/Context/user.context";
 import moment from "moment";
+import Image from "next/image";
 
 interface IProps {
   post: TPost;
@@ -28,7 +29,14 @@ export default function Post({ post }: IProps) {
       <div className="border-b border-default-200 pb-2">
         <div className="flex items-center justify-between border-b border-default-200 pb-4">
           <div className="flex items-center gap-3">
-            <Avatar isBordered name={name} radius="sm" src={profilePhoto} />
+            {/* <Avatar isBordered name={name} radius="sm" src={profilePhoto}/> */}
+            <Image
+              src={profilePhoto as string}
+              width={50}
+              height={50}
+              alt="user Image"
+              className="rounded-full border-4 border-base "
+            />
             <div>
               <p>{name}</p>
               <p className="text-xs">{email}</p>
