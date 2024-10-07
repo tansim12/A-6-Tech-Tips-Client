@@ -7,6 +7,7 @@ import { useGetRecentPostData } from "@/src/hooks/post.hook";
 import infiniteScrollFn from "@/src/utils/infiniteScrollFn";
 import { Spinner } from "@nextui-org/react";
 import { useUser } from "@/src/Context/user.context";
+import NoFoundData from "../No Found/NoFoundData";
 
 const ShowRecentPost = () => {
   const { params } = useUser();
@@ -28,7 +29,6 @@ const ShowRecentPost = () => {
     setAllPostData([]); // Clear previous data
   }, [params]);
 
-
   useEffect(() => {
     if (data?.data?.result) {
       if (page > 1) {
@@ -39,17 +39,17 @@ const ShowRecentPost = () => {
     }
   }, [data, page]);
 
-
-
-    console.log({params});
+  console.log({ params });
 
   infiniteScrollFn(page, setPage, data?.data?.meta?.total, pageSize);
 
   return (
     <div>
-      {allPostData?.map((item: TPost) => (
-        <Post key={item?._id} post={item} />
-      ))}
+      {allPostData?.length
+        ? allPostData?.map((item: TPost) => (
+            <Post key={item?._id} post={item} />
+          ))
+        : !isLoading && <NoFoundData />}
 
       {isLoading && !isSuccess && (
         <div className="w-full flex justify-center items-center my-10">
