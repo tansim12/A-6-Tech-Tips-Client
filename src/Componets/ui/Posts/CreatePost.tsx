@@ -9,11 +9,17 @@ import { useDisclosure } from "@nextui-org/react";
 import CustomModal from "../Custom Modal/CustomModal";
 import PostForm from "./PostForm";
 import { TUser } from "@/src/Types/User/user.types";
-
+import { useRouter } from "next/navigation";
 const CreatePost = () => {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [backdrop, _setBackdrop] = useState("blur");
   const { user } = useUser();
+  const handleNavigate = () => {
+    if (!user?.id) {
+       router.push("/login");
+    }
+  };
   return (
     <>
       <CustomModal
@@ -25,11 +31,11 @@ const CreatePost = () => {
         size="4xl"
       >
         {" "}
-        <PostForm user={user as TUser} />
+        <PostForm user={user as TUser}  onClose={onClose as any}/>
       </CustomModal>
 
       <div
-        onClick={onOpen}
+        onClick={user?.id ? onOpen : handleNavigate}
         className="shadow-lg border border-gray-300 p-4 md:p-6 mb-8 rounded-lg cursor-pointer mt-6"
       >
         {/* User Profile and Input */}

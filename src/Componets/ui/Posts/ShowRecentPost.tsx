@@ -39,7 +39,6 @@ const ShowRecentPost = () => {
     }
   }, [data, page]);
 
-
   infiniteScrollFn(page, setPage, data?.data?.meta?.total, pageSize);
 
   return (

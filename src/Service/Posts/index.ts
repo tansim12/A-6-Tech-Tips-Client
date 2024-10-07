@@ -3,6 +3,10 @@
 import envConfig from "@/src/config/envConfig";
 import { handleApiError } from "@/src/hooks/handleApiError";
 import { TQueryParams } from "@/src/Types/Filter/filter.type";
+import { TPost } from "@/src/Types/Posts/post.type";
+import { cookies } from "next/headers";
+import { axiosInstance } from "../axios/axiosInstance";
+import { revalidateTag } from "next/cache";
 
 // Define a function to get news feed posts
 export const getNewsFeedPosts = async (
@@ -25,14 +29,14 @@ export const getNewsFeedPosts = async (
         params.append(item.name, String(item.value)); // Convert value to string
       });
     }
-    
+
     // Fetch from the API with the constructed URL including query parameters
-    const res = await fetch(
-      `${envConfig.baseApi}/post?${params.toString()}`,
-      {
-        method: "GET",
-      }
-    );
+    const res = await fetch(`${envConfig.baseApi}/post?${params.toString()}`, {
+      method: "GET",
+      next: {
+        tags: ["recentPost"],
+      },
+    });
 
     // Return the response in JSON format
     return await res.json();
@@ -40,5 +44,26 @@ export const getNewsFeedPosts = async (
     // Handle the API error
     handleApiError(error);
     console.error("Error fetching posts:", error?.message);
+  }
+};
+
+export const createPostServerAction = async (payload: Partial<TPost>) => {
+  try {
+    const accessToken = cookies().get("accessToken")?.value;
+    const res = await fetch(`${envConfig.baseApi}/post`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json", 
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const data = await res.json(); 
+    revalidateTag("recentPost")
+    return data; 
+    // const res = await axiosInstance.post("/post", payload);
+    // return res?.data;
+  } catch (error) {
+    handleApiError(error);
   }
 };

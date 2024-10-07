@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { getNewsFeedPosts } from "../Service/Posts";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createPostServerAction, getNewsFeedPosts } from "../Service/Posts";
 import { TQueryParams } from "../Types/Filter/filter.type";
+
 
 export const useGetRecentPostData = (
   page: number,
@@ -12,6 +13,12 @@ export const useGetRecentPostData = (
     queryFn: async () => {
       return await getNewsFeedPosts(page, pageSize, params);
     },
-    // enabled: !!userId, // Query will only run if userId is provided
+
+  });
+};
+export const useCreatePost = () => {
+  return useMutation({
+    mutationKey: ["CREATE_POST"], // Use queryKey to track specific mutations
+    mutationFn: async (payload) => await createPostServerAction(payload as any),
   });
 };

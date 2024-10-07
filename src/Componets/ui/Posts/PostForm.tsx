@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FXForm from "../../Form/FXForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import CustomInput from "../../Form/CustomInput";
@@ -13,8 +13,16 @@ import CustomFileUpload from "../../Form/CustomFileUpload";
 import { uploadImagesToImgBB } from "@/src/utils/uploadImagesToImgBB";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPostSchema } from "@/src/Schemas/createPost.schema";
+import { useCreatePost } from "@/src/hooks/post.hook";
+import toast from "react-hot-toast";
 
-const PostForm = ({ user }: { user: TUser }) => {
+const PostForm = ({ user, onClose }: { user: TUser; onClose: any }) => {
+  const {
+    mutate: handleCreatePost,
+    isPending,
+    isSuccess,
+    isError,
+  } = useCreatePost();
   const [selectImages, setSelectImages] = useState([]);
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const images = await uploadImagesToImgBB(selectImages);
@@ -26,9 +34,17 @@ const PostForm = ({ user }: { user: TUser }) => {
       images,
       category: data?.category,
     };
-    console.log(payload);
-    
+    handleCreatePost(payload as any);
   };
+  useEffect(() => {
+    if (isSuccess) {
+      onClose();
+      toast.success("Post Create Successfully done");
+    }
+    if (isError) {
+      toast?.error("Post Failed 😥");
+    }
+  }, [isSuccess, isError]);
   return (
     <div>
       <FXForm onSubmit={onSubmit} resolver={zodResolver(createPostSchema)}>
