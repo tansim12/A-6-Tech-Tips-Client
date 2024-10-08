@@ -1,11 +1,26 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { useCreatePayment } from "../hooks/payment.hook";
+import Loading from "../Componets/ui/Loading/Loading";
 
 const CAllPackagePage = () => {
   const router = useRouter();
+  const { mutate: handlePayment, isPending,data } = useCreatePayment();
+
+  const handlePaymentFn = () => {
+    console.log("click"); 
+    const payload = {
+      amount: 2000,
+    };
+    handlePayment(payload as any);
+  };
+  if (data?.data?.url) {
+    window.location.href = data?.data?.url;
+  }
   return (
     <div>
+      {isPending && <Loading />}
       <section className="py-24 relative">
         <div className="absolute h-[36.5rem] w-full top-0 bg-gradient-to-r from-indigo-600 to-violet-600 -z-10"></div>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -42,7 +57,7 @@ const CAllPackagePage = () => {
                 </h3>
                 <div className="flex items-center justify-center">
                   <span className="font-manrope text-4xl font-medium text-gray-900">
-                  ৳0
+                    ৳0
                   </span>
                   <span className="text-xl text-gray-500 ml-3">
                     |&nbsp; Month
@@ -104,7 +119,7 @@ const CAllPackagePage = () => {
                 </h3>
                 <div className="flex items-center justify-center">
                   <span className="font-manrope text-4xl font-medium text-gray-900">
-                  ৳2000
+                    ৳2000
                   </span>
                   <span className="text-xl text-gray-500 ml-3">
                     |&nbsp; Month
@@ -135,9 +150,7 @@ const CAllPackagePage = () => {
                 </li>
               </ul>
               <button
-                onClick={() => {
-                  router.push("/");
-                }}
+                onClick={handlePaymentFn}
                 className="py-2.5 px-5 bg-indigo-50 shadow-sm rounded-full transition-all duration-500 text-base text-indigo-600 font-semibold text-center w-fit mx-auto group-hover:bg-indigo-600 group-hover:text-white"
               >
                 Purchase Plan
@@ -166,7 +179,7 @@ const CAllPackagePage = () => {
                 </h3>
                 <div className="flex items-center justify-center">
                   <span className="font-manrope text-4xl font-medium text-gray-900">
-                  ৳0
+                    ৳0
                   </span>
                   <span className="text-xl text-gray-500 ml-3">
                     |&nbsp; Month

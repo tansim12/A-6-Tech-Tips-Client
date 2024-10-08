@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { createPostServerAction, getNewsFeedPosts } from "../Service/Posts";
 import { TQueryParams } from "../Types/Filter/filter.type";
-import { revalidateTag } from "next/cache";
+
 
 export const useGetRecentPostData = (
   page: number,
