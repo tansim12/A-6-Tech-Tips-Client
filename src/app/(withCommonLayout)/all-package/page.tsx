@@ -1,11 +1,12 @@
-import React from 'react';
+import CAllPackagePage from "@/src/pages/CAllPackagePage";
+import React from "react";
 
-const AllPackage = () => {
-    return (
-        <div>
-            All Package
-        </div>
-    );
+const AllPackagePage = () => {
+  return (
+    <div>
+      <CAllPackagePage />
+    </div>
+  );
 };
 
-export default AllPackage;
+export default AllPackagePage;
