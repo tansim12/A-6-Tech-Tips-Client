@@ -16,8 +16,11 @@ import { createPostSchema } from "@/src/Schemas/createPost.schema";
 import { useCreatePost } from "@/src/hooks/post.hook";
 import toast from "react-hot-toast";
 import Loading from "../Loading/Loading";
-
+import CustomButton from "../Button/CustomButton";
+import { MdWorkspacePremium } from "react-icons/md";
+import { useRouter } from "next/navigation";
 const PostForm = ({ user, onClose }: { user: TUser; onClose: any }) => {
+  const router  = useRouter()
   const {
     mutate: handleCreatePost,
     isPending,
@@ -46,6 +49,8 @@ const PostForm = ({ user, onClose }: { user: TUser; onClose: any }) => {
       toast?.error("Post Failed 😥");
     }
   }, [isSuccess, isError]);
+
+
   return (
     <>
       {isPending && <Loading />}
@@ -63,7 +68,17 @@ const PostForm = ({ user, onClose }: { user: TUser; onClose: any }) => {
               />
             </div>
             <div className="basis-2/5">
-              <CustomToggle label="Premium" name="premium" />
+              {user?.isVerified ? (
+                <CustomToggle label="Premium" name="premium" />
+              ) : (
+                <div onClick={()=>{router.push("/all-package")}}>
+                  <CustomButton
+                    name="Get Premium"
+                    icon={<MdWorkspacePremium size={40} color="gold" />}
+                    customCss="text-white font-bold"
+                  />
+                </div>
+              )}
             </div>
           </div>
 

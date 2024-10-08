@@ -1,5 +1,4 @@
 "use client";
-import { Avatar } from "@nextui-org/avatar";
 import { FaShare } from "react-icons/fa6";
 import { MdWorkspacePremium } from "react-icons/md";
 import Link from "next/link";
