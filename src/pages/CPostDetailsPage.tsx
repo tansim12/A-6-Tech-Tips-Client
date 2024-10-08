@@ -7,8 +7,6 @@ import Loading from "../Componets/ui/Loading/Loading";
 
 const CPostDetailsPage = ({ params }: { params: any }) => {
   const { data, isPending } = useGetSinglePost(params?.postId);
-  console.log(data);
-
   return (
     <div>
       {isPending && <Loading />}
