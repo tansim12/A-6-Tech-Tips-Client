@@ -3,28 +3,29 @@ import { FaShare } from "react-icons/fa6";
 import { MdWorkspacePremium } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
-
 import ImageGallery from "./ImageGallery";
-
 import { TPost } from "@/src/Types/Posts/post.type";
 import { TUser } from "@/src/Types/User/user.types";
 import { useUser } from "@/src/Context/user.context";
 import moment from "moment";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface IProps {
   post: TPost;
 }
 
 export default function Post({ post }: IProps) {
-  const router = useRouter();
+  const pathName = usePathname();
   const { description, _id, images, userId, premium, title, createdAt } =
     post || {};
 
   const { name, email, profilePhoto } = (userId as TUser) || {};
   const { user: loggedInUser } = useUser();
   const dayDifference = Number(moment().diff(moment(createdAt), "days"));
+
+  console.log(pathName);
+
   return (
     <div className="mb-2 rounded-md bg-default-100 p-4">
       <div className="border-b border-default-200 pb-2">
@@ -51,32 +52,36 @@ export default function Post({ post }: IProps) {
         </div>
         <div className="border-b border-default-200 py-4">
           <div className="mb-4 flex items-start justify-between">
-            <div>
-              {!loggedInUser?._id ? (
-                <Link
-                  href={`/login`}
-                  // onClick={() => !loggedInUser?._id && router.push("/login")}
-                  className="text-3xl"
-                >
-                  <span className="cursor-pointer text-2xl text-primary">
-                    {title}
-                  </span>
-                </Link>
-              ) : loggedInUser?.isVerified === false ? (
-                <Link href={`/all-package`} className="text-3xl">
-                  <span className="cursor-pointer text-2xl text-primary">
-                    {title}
-                  </span>
-                </Link>
-              ) : (
-                <Link href={`/post/${_id}`} className="text-3xl">
-                  <span className="cursor-pointer text-2xl text-primary">
-                    {title}
-                  </span>
-                </Link>
-              )}
-              <div></div>
-            </div>
+            {pathName === "/" ? (
+              <div>
+                {!loggedInUser?._id ? (
+                  <Link href={`/login`} className="text-3xl">
+                    <span className="cursor-pointer text-2xl text-primary">
+                      {title}
+                    </span>
+                  </Link>
+                ) : loggedInUser?.isVerified === false ? (
+                  <Link href={`/all-package`} className="text-3xl">
+                    <span className="cursor-pointer text-2xl text-primary">
+                      {title}
+                    </span>
+                  </Link>
+                ) : (
+                  <Link href={`/post/${_id}`} className="text-3xl">
+                    <span className="cursor-pointer text-2xl text-primary">
+                      {title}
+                    </span>
+                  </Link>
+                )}
+              </div>
+            ) : (
+              <div>
+                <span className="cursor-pointer text-2xl text-primary">
+                  {title}
+                </span>
+              </div>
+            )}
+
             <div>
               {premium && (
                 <p className="flex items-center gap-1 flex-col ">
@@ -87,45 +92,55 @@ export default function Post({ post }: IProps) {
             </div>
           </div>
 
-          <div>
-            {description?.length > 100 && (
-              <div>
+          {pathName === "/" ? (
+            <div>
+              {description?.length > 100 && (
+                <div>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: `${description?.slice(0, 100)} .....`,
+                    }}
+                  ></div>
+
+                  {!loggedInUser?._id ? (
+                    <Link href={`/login`} className="text-3xl">
+                      <span className="cursor-pointer font-bold text-lg dark:text-white light:to-black hover:text-primary">
+                        See More
+                      </span>
+                    </Link>
+                  ) : loggedInUser?.isVerified === false ? (
+                    <Link href={`/all-package`} className="text-3xl">
+                      <span className="cursor-pointer font-bold text-lg dark:text-white light:to-black hover:text-primary flex items-center gap-2">
+                        See More <MdWorkspacePremium size={25} color="gold" />{" "}
+                      </span>
+                    </Link>
+                  ) : (
+                    <Link href={`/post/${_id}`} className="text-3xl">
+                      <span className="cursor-pointer font-bold text-lg dark:text-white light:to-black hover:text-primary">
+                        See More
+                      </span>
+                    </Link>
+                  )}
+                </div>
+              )}
+
+              {description?.length < 100 && (
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: `${description?.slice(0, 100)} .....`,
+                    __html: description,
                   }}
                 ></div>
-
-                {!loggedInUser?._id ? (
-                  <Link href={`/login`} className="text-3xl">
-                    <span className="cursor-pointer font-bold text-lg dark:text-white light:to-black hover:text-primary">
-                      See More
-                    </span>
-                  </Link>
-                ) : loggedInUser?.isVerified === false ? (
-                  <Link href={`/all-package`} className="text-3xl">
-                    <span className="cursor-pointer font-bold text-lg dark:text-white light:to-black hover:text-primary">
-                      See More
-                    </span>
-                  </Link>
-                ) : (
-                  <Link href={`/post/${_id}`} className="text-3xl">
-                    <span className="cursor-pointer font-bold text-lg dark:text-white light:to-black hover:text-primary">
-                      See More
-                    </span>
-                  </Link>
-                )}
-              </div>
-            )}
-
-            {description?.length < 100 && (
+              )}
+            </div>
+          ) : (
+            <div>
               <div
                 dangerouslySetInnerHTML={{
                   __html: description,
                 }}
               ></div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {images?.length && images.length > 0 ? (

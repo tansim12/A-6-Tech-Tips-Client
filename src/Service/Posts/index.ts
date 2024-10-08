@@ -49,7 +49,15 @@ export const createPostServerAction = async (payload: Partial<TPost>) => {
   try {
     const res = await axiosInstance.post("/post", payload);
     return res?.data;
-  } catch (error) {  
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+export const getSinglePostAction = async (postId: string) => {
+  try {
+    const res = await axiosInstance.get(`/post/${postId}`);
+    return res?.data?.data;
+  } catch (error) {
     handleApiError(error);
   }
 };
