@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createPostSchema } from "@/src/Schemas/createPost.schema";
 import { useCreatePost } from "@/src/hooks/post.hook";
 import toast from "react-hot-toast";
+import Loading from "../Loading/Loading";
 
 const PostForm = ({ user, onClose }: { user: TUser; onClose: any }) => {
   const {
@@ -46,36 +47,39 @@ const PostForm = ({ user, onClose }: { user: TUser; onClose: any }) => {
     }
   }, [isSuccess, isError]);
   return (
-    <div>
-      <FXForm onSubmit={onSubmit} resolver={zodResolver(createPostSchema)}>
-        <CustomInput name="title" label="Title" type="text" />
+    <>
+      {isPending && <Loading />}
+      <div>
+        <FXForm onSubmit={onSubmit} resolver={zodResolver(createPostSchema)}>
+          <CustomInput name="title" label="Title" type="text" />
 
-        <div className=" flex gap-10 w-full items-center my-3">
-          <div className="basis-3/5">
-            <CustomSelect
-              label="Category"
-              name="category"
-              options={categoryDataByLabel}
-              placeholder="Select Category"
-            />
+          <div className=" flex gap-10 w-full items-center my-3">
+            <div className="basis-3/5">
+              <CustomSelect
+                label="Category"
+                name="category"
+                options={categoryDataByLabel}
+                placeholder="Select Category"
+              />
+            </div>
+            <div className="basis-2/5">
+              <CustomToggle label="Premium" name="premium" />
+            </div>
           </div>
-          <div className="basis-2/5">
-            <CustomToggle label="Premium" name="premium" />
+
+          <CustomFileUpload
+            changeOnValue={setSelectImages}
+            name="images"
+            label="Images"
+          />
+          <div className="mb-16">
+            <CustomReactQuill name="description" label="Description" />
           </div>
-        </div>
 
-        <CustomFileUpload
-          changeOnValue={setSelectImages}
-          name="images"
-          label="Images"
-        />
-        <div className="mb-16">
-          <CustomReactQuill name="description" label="Description" />
-        </div>
-
-        <Button type="submit">Submit</Button>
-      </FXForm>
-    </div>
+          <Button type="submit">Submit</Button>
+        </FXForm>
+      </div>
+    </>
   );
 };
 

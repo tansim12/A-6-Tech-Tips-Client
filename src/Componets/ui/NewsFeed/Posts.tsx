@@ -29,7 +29,6 @@ export default function Post({ post }: IProps) {
       <div className="border-b border-default-200 pb-2">
         <div className="flex items-center justify-between border-b border-default-200 pb-4">
           <div className="flex items-center gap-3">
-            {/* <Avatar isBordered name={name} radius="sm" src={profilePhoto}/> */}
             <Image
               src={profilePhoto as string}
               width={50}
@@ -64,12 +63,12 @@ export default function Post({ post }: IProps) {
               )}
             </div>
           </div>
-          <p>{description}</p>
+          <div dangerouslySetInnerHTML={{ __html: description }}></div>
         </div>
 
-        {images?.length && images.length > 1 && (
+        {images?.length && images.length > 0 ? (
           <ImageGallery images={images as string[]} />
-        )}
+        ):""}
 
         <div className="mt-4 flex gap-5">
           <Button className="flex-1" variant="light">
