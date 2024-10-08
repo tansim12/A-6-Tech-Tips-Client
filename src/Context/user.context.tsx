@@ -27,12 +27,11 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<TUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [params, setParams] = useState<TQueryParams[] | []>([]);
-
   useEffect(() => {
     const handleUser = async () => {
       const getUser = await getCurrentUser();
       if (getUser) {
-        setUser(getUser?.data);
+        setUser(getUser);
         setIsLoading(false);
       } else {
         setUser(null);

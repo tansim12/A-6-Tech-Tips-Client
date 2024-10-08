@@ -23,10 +23,10 @@ export default function NavbarDropdown() {
   };
 
   const { user, setIsLoading: userSetLoading } = useUser();
-  
+
   return (
     <>
-      {user?.id ? (
+      {user?._id ? (
         <Dropdown>
           <DropdownTrigger>
             <Avatar
@@ -42,7 +42,7 @@ export default function NavbarDropdown() {
           </DropdownTrigger>
           <DropdownMenu aria-label="Static Actions">
             <DropdownItem
-              onClick={() => handleNavigation(`/profile/${user?.id}`)}
+              onClick={() => handleNavigation(`/profile/${user?._id}`)}
             >
               Profile
             </DropdownItem>

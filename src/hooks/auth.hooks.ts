@@ -1,7 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import toast from "react-hot-toast";
-import { createLogin, createRegister } from "../Service/Auth/auth.service";
+import { createLogin, createRegister, getCurrentUser } from "../Service/Auth/auth.service";
 
 export const useUserRegister = () => {
   return useMutation({
@@ -27,3 +27,4 @@ export const useUserLogin = () => {
     },
   });
 };
+

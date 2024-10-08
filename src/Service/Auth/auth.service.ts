@@ -1,9 +1,15 @@
 "use server";
+interface CustomJwtPayload extends JwtPayload {
+  data?: {
+    id: string;
+    // other properties of the data object
+  };
+}
 
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 import { axiosInstance } from "../axios/axiosInstance";
 export const createRegister = async (payload: FieldValues) => {
   try {
@@ -42,8 +48,13 @@ export const getCurrentUser = async (): Promise<any | null> => {
       return null;
     }
 
-    const decodedToken = await jwtDecode(accessToken);
-    return decodedToken;
+    const decodedToken = await jwtDecode<CustomJwtPayload>(accessToken);
+    if (decodedToken) {
+      const res = await axiosInstance.get(`/user/${decodedToken?.data?.id}`);   
+      return res?.data?.data;
+    }else{
+      null
+    }
   } catch (error) {
     console.error("Error decoding token:", error);
     return null;
