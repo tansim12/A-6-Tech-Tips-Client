@@ -29,16 +29,17 @@ export default function NavbarDropdown() {
       {user?._id ? (
         <Dropdown>
           <DropdownTrigger>
-            <Avatar
-              className="cursor-pointer border-base border-2"
-              // name={user?.name ? user?.name : "user"}
-
-              src={
-                user?.profilePhoto
-                  ? user?.profilePhoto
-                  : "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg"
-              }
-            />
+            <div>
+              <Avatar
+                className="cursor-pointer border-base border-2"
+                src={
+                  user?.profilePhoto
+                    ? user?.profilePhoto
+                    : "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg"
+                }
+              />
+             {user?.isVerified === true ? "verify":"normal user"}
+            </div>
           </DropdownTrigger>
           <DropdownMenu aria-label="Static Actions">
             <DropdownItem

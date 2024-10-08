@@ -16,7 +16,7 @@ const CreatePost = () => {
   const [backdrop, _setBackdrop] = useState("blur");
   const { user } = useUser();
   const handleNavigate = () => {
-    if (!user?.id) {
+    if (!user?._id) {
        router.push("/login");
     }
   };
@@ -35,7 +35,7 @@ const CreatePost = () => {
       </CustomModal>
 
       <div
-        onClick={user?.id ? onOpen : handleNavigate}
+        onClick={user?._id ? onOpen : handleNavigate}
         className="shadow-lg border border-gray-300 p-4 md:p-6 mb-8 rounded-lg cursor-pointer mt-6"
       >
         {/* User Profile and Input */}

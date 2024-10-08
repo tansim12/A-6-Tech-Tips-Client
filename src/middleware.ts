@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
   const user = await getCurrentUser();
 
   // Check if user is not authenticated and request is for Auth routes
-  if (!user?.data) {
+  if (!user) {
     if (AuthRoutes.includes(pathname)) {
       return NextResponse.next();
     }
@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // If the user is authenticated, check their role and allow access accordingly
-  const userRole = user?.data?.role as TRole;
+  const userRole = user?.role as TRole;
 
   if (userRole && roleBaseRoute[userRole]) {
     const routes = roleBaseRoute[userRole];
