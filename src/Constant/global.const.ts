@@ -6,4 +6,5 @@ export const privateRotes = [
   "/user",
   "/login",
   "/register",
+  "/post:page*",
 ];

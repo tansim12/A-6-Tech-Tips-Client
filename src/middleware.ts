@@ -1,4 +1,3 @@
-
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getCurrentUser } from "./Service/Auth/auth.service";
@@ -7,7 +6,7 @@ const AuthRoutes = ["/login", "/register"];
 const roleBaseRoute = {
   user: [/^\/user/],
   admin: [/^\/admin/],
-  common: [/^\/profile/], // common route for both users and admins
+  common: [/^\/profile/, /^\/post/], // common route for both users and admins
 };
 
 type TRole = keyof typeof roleBaseRoute;
@@ -58,6 +57,6 @@ export const config = {
     "/admin/:page*",
     "/login",
     "/register",
+    "/post/:page*",
   ],
 };
-

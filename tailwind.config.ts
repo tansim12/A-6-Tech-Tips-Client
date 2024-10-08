@@ -13,6 +13,7 @@ module.exports = {
     extend: {
       colors: {
         base: "#0866ff", // your base color
+        primary: "#0866ff", // your base color
         lightText: "#000000", // black text for light mode
         darkText: "#ffffff", // white text for dark mode
         default:"#000000"
