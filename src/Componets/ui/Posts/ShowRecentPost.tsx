@@ -13,7 +13,7 @@ const ShowRecentPost = () => {
   const { params } = useUser();
   const [allPostData, setAllPostData] = useState<TPost[]>([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(1);
+  const [pageSize, setPageSize] = useState(2);
 
   const { data, isLoading, isSuccess } = useGetRecentPostData(
     page,
@@ -26,7 +26,11 @@ const ShowRecentPost = () => {
     // Reset page and scroll to top when params change
     setPage(1);
     window.scrollTo(0, 0);
-    setAllPostData([]); // Clear previous data
+    if (params?.length < 1) {
+      setAllPostData(data?.data?.result); // Clear previous data
+    } else {
+      setAllPostData([]);
+    }
   }, [params]);
 
   useEffect(() => {
