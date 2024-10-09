@@ -61,3 +61,19 @@ export const getSinglePostAction = async (postId: string) => {
     handleApiError(error);
   }
 };
+export const createCommentAction = async (postId: string, payload: any) => { 
+  try {
+    const res = await axiosInstance.put(`/comments/${postId}`, payload);
+    return res?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+export const commentReplyAction = async (commentId: string, payload: any) => {
+  try {
+    const res = await axiosInstance.put(`/comments/replies/${commentId}`, payload);
+    return res?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

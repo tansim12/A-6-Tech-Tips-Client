@@ -10,6 +10,8 @@ import { useUser } from "@/src/Context/user.context";
 import moment from "moment";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import CommentSystem from "./CommentSystem";
+import { TComment } from "@/src/Types/Posts/comments.type";
 
 interface IProps {
   post: TPost;
@@ -17,14 +19,13 @@ interface IProps {
 
 export default function Post({ post }: IProps) {
   const pathName = usePathname();
-  const { description, _id, images, userId, premium, title, createdAt } =
+  const { description, _id, images, userId, premium, title, createdAt,comments } =
     post || {};
 
   const { name, email, profilePhoto } = (userId as TUser) || {};
   const { user: loggedInUser } = useUser();
   const dayDifference = Number(moment().diff(moment(createdAt), "days"));
 
-  console.log(pathName);
 
   return (
     <div className="mb-2 rounded-md bg-default-100 p-4">
@@ -158,6 +159,11 @@ export default function Post({ post }: IProps) {
             <FaShare />
           </Button>
         </div>
+      </div>
+
+      {/* comment  */}
+      <div>
+        <CommentSystem comments={comments as TComment[] | []} currentUser={loggedInUser as TUser} postId={_id as string} />
       </div>
     </div>
   );
