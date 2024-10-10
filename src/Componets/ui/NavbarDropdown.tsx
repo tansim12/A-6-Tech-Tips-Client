@@ -14,6 +14,7 @@ import {
 
 import { usePathname, useRouter } from "next/navigation";
 import { FaCheckCircle } from "react-icons/fa";
+import CustomButton from "./Button/CustomButton";
 
 export default function NavbarDropdown() {
   const router = useRouter();
@@ -89,7 +90,12 @@ export default function NavbarDropdown() {
           </DropdownMenu>
         </Dropdown>
       ) : (
-        <Button onClick={() => handleNavigation("/login")}>Login</Button>
+        <button onClick={() => handleNavigation("/login")}>
+          <CustomButton
+            name="Login"
+            customCss="text-white font-bold"
+          ></CustomButton>
+        </button>
       )}
     </>
   );
