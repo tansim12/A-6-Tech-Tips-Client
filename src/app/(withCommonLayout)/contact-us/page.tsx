@@ -1,11 +1,8 @@
+import CContactUsPage from '@/src/pages/CContactUsPage';
 import React from 'react';
 
 const ContactUs = () => {
-    return (
-        <div>
-            ContactUs
-        </div>
-    );
+    return  <CContactUsPage />;
 };
 
 export default ContactUs;

@@ -1,4 +1,4 @@
-"use client"
+
 import React from "react";
 import history from "@/src/assets/history.jpg";
 import banner from "@/src/assets/banner.jpg";
@@ -128,7 +128,7 @@ const CAboutUsPage = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h2 className="text-3xl font-semibold mb-4">
+              <h2 className="text-3xl font-semibold mb-4 text-black">
                 Contact Information
               </h2>
               <p className="text-gray-700 mb-2">Phone: (123) 456-7890</p>
