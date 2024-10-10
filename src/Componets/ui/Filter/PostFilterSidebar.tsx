@@ -89,7 +89,7 @@ const PostFilterSidebar = () => {
 
       {filterFields?.map((filed) => (
         <section key={filed?.name} className="w-full divide-y rounded mt-4">
-          <details className="group border  rounded-md " open>
+          <details className="group border  rounded-md p-1" open>
             <summary className="relative cursor-pointer list-none pr-8 py-1 ps-1 transition-colors duration-300 focus-visible:outline-none [&::-webkit-details-marker]:hidden bg-[#F1F2F3] text_blue rounded-se-lg rounded-ss-lg ">
               <span className="text-base text-[16px] font-[500]">
                 {filed?.name?.toUpperCase()}
