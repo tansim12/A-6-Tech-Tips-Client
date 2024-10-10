@@ -13,6 +13,7 @@ import {
 } from "@nextui-org/dropdown";
 
 import { usePathname, useRouter } from "next/navigation";
+import { FaCheckCircle } from "react-icons/fa";
 
 export default function NavbarDropdown() {
   const router = useRouter();
@@ -29,16 +30,25 @@ export default function NavbarDropdown() {
       {user?._id ? (
         <Dropdown>
           <DropdownTrigger>
-            <div>
+            <div className="flex items-center gap-2">
               <Avatar
                 className="cursor-pointer border-base border-2"
                 src={
-                  user?.profilePhoto
-                    ? user?.profilePhoto
-                    : "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg"
+                  user?.profilePhoto ||
+                  "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg"
                 }
               />
-             {user?.isVerified === true ? "verify":"normal user"}
+              <div className="flex flex-col">
+                <span className="font-semibold">
+                  {user?.name?.slice(0, 10)}{" "}
+                  {user?.isVerified && (
+                    <FaCheckCircle className="inline text-green-500" />
+                  )}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {user?.isVerified ? "Verified" : "User"}
+                </span>
+              </div>
             </div>
           </DropdownTrigger>
           <DropdownMenu aria-label="Static Actions">
