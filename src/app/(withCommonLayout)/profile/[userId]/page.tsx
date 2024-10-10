@@ -1,11 +1,12 @@
-import React from 'react';
+import CProfilePage from "@/src/pages/CProfilePage";
+import React from "react";
 
-const ProfilePage = () => {
-    return (
-        <div>
-            ProfilePage
-        </div>
-    );
+const ProfilePge = ({params}:{params:any}) => {
+  return (
+    <div>
+      <CProfilePage params={params } />
+    </div>
+  );
 };
 
-export default ProfilePage;
+export default ProfilePge;

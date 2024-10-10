@@ -109,3 +109,16 @@ export const followAndUnFollowAction = async (userId: string, payload: any) => {
     handleApiError(error);
   }
 };
+
+
+
+// user profile section 
+
+export const getUserProfileAction = async () => {
+  try {
+    const res = await axiosInstance.get(`/user-profile`);
+    return res?.data?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
