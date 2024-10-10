@@ -9,7 +9,7 @@ import { TUser } from "@/src/Types/User/user.types";
 import { useUser } from "@/src/Context/user.context";
 import moment from "moment";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import CommentSystem from "./CommentSystem";
 import { TComment } from "@/src/Types/Posts/comments.type";
 import { AiFillLike } from "react-icons/ai";
@@ -34,7 +34,7 @@ export default function Post({ post }: IProps) {
     comments,
     react,
   } = post || {};
-
+  const router = useRouter();
   const { name, email, profilePhoto } = (userId as TUser) || {};
   const { user: loggedInUser } = useUser();
   const dayDifference = Number(moment().diff(moment(createdAt), "days"));
@@ -43,6 +43,7 @@ export default function Post({ post }: IProps) {
     mutate: handleGiveReact,
     isError: isGiveReactError,
     data: reactData,
+    isPending: isGiveReactErrorPending,
   } = useGiveReact();
 
   useEffect(() => {
@@ -79,7 +80,10 @@ export default function Post({ post }: IProps) {
               className="rounded-full border-4 border-base "
             />
             <div>
-              <p>{name}</p>
+              <div className="flex justify-center items-center gap-3">
+                <p>{name}</p>
+                <p className="text-blue-500">Follow</p>
+              </div>
               <p className="text-xs">{email}</p>
 
               <p className="flex items-center gap-1 text-[10px]">
@@ -190,10 +194,16 @@ export default function Post({ post }: IProps) {
         )}
 
         <div className="mt-4 flex gap-5">
-          {reactData?.data?.react?.some((item:any) => item?.userId === loggedInUser?._id) ||
-          react?.some((item) => item?.userId === loggedInUser?._id) ? (
+          {reactData?.data?.react?.some(
+            (item: any) => item?.userId === loggedInUser?._id
+          ) || react?.some((item) => item?.userId === loggedInUser?._id) ? (
             <Button
-              onClick={handleGiveReactRemoveFn}
+              onClick={() => {
+                loggedInUser?._id
+                  ? handleGiveReactRemoveFn()
+                  : router.push("/login");
+              }}
+              disabled={isGiveReactErrorPending}
               className="flex-1"
               variant="light"
             >
@@ -201,7 +211,10 @@ export default function Post({ post }: IProps) {
             </Button>
           ) : (
             <Button
-              onClick={handleGiveReactFn}
+              disabled={isGiveReactErrorPending}
+              onClick={() => {
+                loggedInUser?._id ? handleGiveReactFn() : router.push("/login");
+              }}
               className="flex-1"
               variant="light"
             >
