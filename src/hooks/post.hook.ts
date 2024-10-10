@@ -4,6 +4,7 @@ import {
   commentReplyAction,
   createCommentAction,
   createPostServerAction,
+  followAndUnFollowAction,
   getNewsFeedPosts,
   getSinglePostAction,
   giveReactAction,
@@ -12,6 +13,10 @@ import { TQueryParams } from "../Types/Filter/filter.type";
 interface GiveReactPayload {
   postId: string;
   isDelete: boolean;
+}
+interface TPayload {
+  userId: string;
+  isCreateFollowing: boolean
 }
 
 export const useGetRecentPostData = (
@@ -96,6 +101,16 @@ export const useGiveReact = () => {
     mutationFn: async (payload: GiveReactPayload) => {
       const { postId, isDelete } = payload;
       return await giveReactAction(postId, { isDelete });
+    },
+  });
+};
+export const useFollowAndUnFollow = () => {
+  // const queryClient = useQueryClient(); // Uncomment if needed
+  return useMutation({
+    mutationKey: ["FOLLOW_AND_UNFOLLOW"],
+    mutationFn: async (payload: TPayload) => {
+      const { userId, isCreateFollowing } = payload;
+      return await followAndUnFollowAction(userId, { isCreateFollowing });
     },
   });
 };

@@ -96,3 +96,16 @@ export const giveReactAction = async (postId: string, payload: any) => {
     handleApiError(error);
   }
 };
+
+
+export const followAndUnFollowAction = async (userId: string, payload: any) => {
+  try {
+    const res = await axiosInstance.put(
+      `/user-profile/create-and-remove-followers/${userId}`,
+      payload
+    );
+    return res?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

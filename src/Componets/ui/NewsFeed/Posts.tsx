@@ -13,7 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import CommentSystem from "./CommentSystem";
 import { TComment } from "@/src/Types/Posts/comments.type";
 import { AiFillLike } from "react-icons/ai";
-import { useGiveReact } from "@/src/hooks/post.hook";
+import { useFollowAndUnFollow, useGiveReact } from "@/src/hooks/post.hook";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -26,6 +26,7 @@ export default function Post({ post }: IProps) {
   const {
     description,
     _id,
+    
     images,
     userId,
     premium,
@@ -45,12 +46,21 @@ export default function Post({ post }: IProps) {
     data: reactData,
     isPending: isGiveReactErrorPending,
   } = useGiveReact();
+  const {
+    mutate: handleFollowAndUnFollow,
+    isError: isFollowAndUnFollowError,
+    data: followAndUnFollowData,
+    isPending: isFollowAndUnFollowPending,
+  } = useFollowAndUnFollow();
 
   useEffect(() => {
     if (isGiveReactError) {
       toast.error("Give React problem");
     }
-  }, [isGiveReactError]);
+    if (isFollowAndUnFollowError) {
+      toast.error("Follow UnFollowError  problem");
+    }
+  }, [isGiveReactError,isFollowAndUnFollowError]);
 
   const handleGiveReactFn = () => {
     const payload = {
@@ -65,6 +75,23 @@ export default function Post({ post }: IProps) {
       isDelete: true,
     };
     handleGiveReact(payload);
+  };
+
+  const handleFollowFn = () => {
+    const payload = {
+      userId: userId?._id,
+      isCreateFollowing: true,
+    };
+    console.log(payload);
+    
+    handleFollowAndUnFollow(payload);
+  };
+  const handleUnFollowFn = () => {
+    const payload = {
+      userId: userId?._id,
+      isCreateFollowing: false,
+    };
+    handleFollowAndUnFollow(payload);
   };
 
   return (
@@ -82,7 +109,37 @@ export default function Post({ post }: IProps) {
             <div>
               <div className="flex justify-center items-center gap-3">
                 <p>{name}</p>
-                <p className="text-blue-500">Follow</p>
+
+                {followAndUnFollowData?.data?.followers?.some(
+                  (item: any) => item === loggedInUser?._id
+                ) ||
+                loggedInUser?.userProfile?.followers?.some(
+                  (item: any) => item === loggedInUser?._id
+                ) ? (
+                  <button
+                    disabled={isFollowAndUnFollowPending}
+                    onClick={() => {
+                      loggedInUser?._id
+                        ? handleUnFollowFn()
+                        : router.push("/login");
+                    }}
+                    className="text-blue-500 cursor-pointer"
+                  >
+                    UnFollow
+                  </button>
+                ) : (
+                  <button
+                    disabled={isFollowAndUnFollowPending}
+                    onClick={() => {
+                      loggedInUser?._id
+                        ? handleFollowFn()
+                        : router.push("/login");
+                    }}
+                    className="text-blue-500 cursor-pointer"
+                  >
+                    Follow
+                  </button>
+                )}
               </div>
               <p className="text-xs">{email}</p>
 
