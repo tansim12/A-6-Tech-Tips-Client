@@ -5,7 +5,11 @@ import { FaReply, FaTrash } from "react-icons/fa";
 import moment from "moment";
 import { TComment } from "@/src/Types/Posts/comments.type";
 import { TUser } from "@/src/Types/User/user.types";
-import { useCommentReplies, useCreateComment } from "@/src/hooks/post.hook";
+import {
+  useCommentDelete,
+  useCommentReplies,
+  useCreateComment,
+} from "@/src/hooks/post.hook";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -29,6 +33,8 @@ const CommentSystem = ({
 
   const { mutate: handleCommentReplies, isError: isReplayCommentError } =
     useCommentReplies();
+  const { mutate: handleDeleteCommentMutate, isError: isCommentDeleteError } =
+    useCommentDelete();
 
   const handleAddComment = () => {
     if (!newComment.trim()) return;
@@ -65,7 +71,10 @@ const CommentSystem = ({
     if (isReplayCommentError) {
       toast.error("Comment Replies problem");
     }
-  }, [isCreateCommentError, isReplayCommentError]);
+    if (isCommentDeleteError) {
+      toast.error("Comment Delete problem");
+    }
+  }, [isCreateCommentError, isReplayCommentError, isCommentDeleteError]);
 
   const handleReply = (commentId: string) => {
     const replyText = replyTexts[commentId]?.trim();
@@ -76,7 +85,7 @@ const CommentSystem = ({
         ? {
             ...comment,
             replies: [
-              ...comment?.replies,
+              ...(comment?.replies ?? []),
               {
                 _id: Date.now().toString(), // Temporary ID for reply
                 userId: {
@@ -97,7 +106,7 @@ const CommentSystem = ({
           }
         : comment
     );
-    
+
     const payload = {
       message: replyText,
     };
@@ -108,6 +117,10 @@ const CommentSystem = ({
   };
 
   const handleDeleteComment = (commentId: string) => {
+    const payload = {
+      commentId,
+    };
+    handleDeleteCommentMutate(payload as any);
     const filteredComments = comments.filter(
       (comment) => comment._id !== commentId
     );
@@ -123,7 +136,7 @@ const CommentSystem = ({
         <div className="flex items-start gap-3 mb-4">
           <img
             src={currentUser?.profilePhoto}
-            alt="User Profile"
+            alt="User"
             className="rounded-full border-2"
             width={40}
             height={40}
@@ -147,94 +160,123 @@ const CommentSystem = ({
 
         {/* Comment List */}
         <div className="space-y-4">
-          {comments?.map((comment) => (
-            <div key={comment._id} className="flex flex-col space-y-2">
-              <div className="flex items-start gap-3">
-                <img
-                  src={comment?.userId?.profilePhoto}
-                  alt={`${comment.userId.name} profile`}
-                  className="rounded-full border-2"
-                  width={40}
-                  height={40}
-                />
-                <div className="flex-1 bg-default-200 p-3 rounded-md">
-                  <p className="font-semibold text-blue-400">
-                    {comment.userId.name}
-                  </p>
-                  <p>{comment.message}</p>
-                  <div className="flex justify-between items-center mt-1 text-xs text-gray-500">
-                    <span>{moment(comment.createdAt).fromNow()}</span>
-                    <div className="flex space-x-2">
-                      <button
-                        className="text-blue-600 hover:underline flex items-center gap-1"
-                        onClick={() => setActiveReplyId(comment._id)}
-                      >
-                        <FaReply size={12} /> Reply
-                      </button>
-                      <button
-                        className="text-red-600 hover:underline flex items-center gap-1"
-                        onClick={() => handleDeleteComment(comment._id)}
-                      >
-                        <FaTrash size={12} /> Delete
-                      </button>
+          {comments &&
+            [...comments]?.reverse()?.map((comment) => (
+              <div key={comment._id} className="flex flex-col space-y-2">
+                <div className="flex items-start gap-3">
+                  <img
+                    src={
+                      typeof comment?.userId === "object" &&
+                      comment?.userId?.profilePhoto
+                        ? comment?.userId?.profilePhoto
+                        : ""
+                    }
+                    alt="photo"
+                    className="rounded-full border-2"
+                    width={40}
+                    height={40}
+                  />
+
+                  <div className="flex-1 bg-default-200 p-3 rounded-md">
+                    <p className="font-semibold text-blue-400">
+                      {typeof comment?.userId === "object"
+                        ? comment?.userId?.name
+                        : "Unknown User"}
+                    </p>
+                    <p>{comment?.message}</p>
+                    <div className="flex justify-between items-center mt-1 text-xs text-gray-500">
+                      <span>{moment(comment?.createdAt).fromNow()}</span>
+                      <div className="flex space-x-2">
+                        <button
+                          className="text-blue-600 hover:underline flex items-center gap-1"
+                          onClick={() => setActiveReplyId(comment._id)}
+                        >
+                          <FaReply size={12} /> Reply
+                        </button>
+                        {typeof comment?.userId === "object" &&
+                          comment?.userId?._id?.toString() ===
+                            currentUser?._id && (
+                            <button
+                              className="text-red-600 hover:underline flex items-center gap-1"
+                              onClick={() => handleDeleteComment(comment._id)}
+                            >
+                              <FaTrash size={12} /> Delete
+                            </button>
+                          )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Reply Section */}
-              {activeReplyId === comment._id && (
-                <div className="flex items-start gap-3 mt-2 ml-10">
-                  <img
-                    src={currentUser?.profilePhoto}
-                    alt="User Profile"
-                    className="rounded-full border-2"
-                    width={30}
-                    height={30}
-                  />
-                  <div className="flex-1">
-                    <Input
-                      fullWidth
-                      placeholder="Write a reply..."
-                      value={replyTexts[comment._id] || ""}
-                      onChange={(e) =>
-                        setReplyTexts({
-                          ...replyTexts,
-                          [comment._id]: e.target.value,
-                        })
-                      }
+                {/* Reply Section */}
+                {activeReplyId === comment._id && (
+                  <div className="flex items-start gap-3 mt-2 ml-10">
+                    <img
+                      src={currentUser?.profilePhoto}
+                      alt="User"
+                      className="rounded-full border-2"
+                      width={30}
+                      height={30}
                     />
+                    <div className="flex-1">
+                      <Input
+                        fullWidth
+                        placeholder="Write a reply..."
+                        value={replyTexts[comment._id] || ""}
+                        onChange={(e) =>
+                          setReplyTexts({
+                            ...replyTexts,
+                            [comment._id]: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    <Button
+                      onClick={() => {
+                        currentUser?._id
+                          ? handleReply(comment._id)
+                          : router.push("/login");
+                      }}
+                    >
+                      Reply
+                    </Button>
                   </div>
-                  <Button onClick={() => handleReply(comment._id)}>
-                    Reply
-                  </Button>
-                </div>
-              )}
+                )}
 
-              {/* Display Replies */}
-              {comment.replies.map((reply) => (
-                <div
-                  key={reply._id}
-                  className="flex items-start gap-3 mt-2 ml-10"
-                >
-                  <img
-                    src={reply.userId.profilePhoto}
-                    alt={`${reply.userId.name} profile`}
-                    className="rounded-full border-2"
-                    width={30}
-                    height={30}
-                  />
-                  <div className="flex-1 bg-default-100 p-2 rounded-md">
-                    <p className="font-semibold">{reply.userId.name}</p>
-                    <p>{reply.message}</p>
-                    <span className="text-xs text-gray-500">
-                      {moment(reply.createdAt).fromNow()}
-                    </span>
+                {/* Display Replies */}
+                {comment?.replies!.map((reply) => (
+                  <div
+                    key={reply._id}
+                    className="flex items-start gap-3 mt-2 ml-10"
+                  >
+                    <img
+                      src={
+                        typeof reply?.userId === "object" &&
+                        reply?.userId?.profilePhoto
+                          ? reply?.userId.profilePhoto
+                          : ""
+                      }
+                      alt="photo"
+                      className="rounded-full border-2"
+                      width={30}
+                      height={30}
+                    />
+                    <div className="flex-1 bg-default-100 p-2 rounded-md">
+                      <p className="font-semibold">
+                        {typeof reply?.userId === "object"
+                          ? reply?.userId?.name
+                          : "Unknown User"}
+                      </p>
+
+                      <p>{reply.message}</p>
+                      <span className="text-xs text-gray-500">
+                        {moment(reply.createdAt).fromNow()}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ))}
+                ))}
+              </div>
+            ))}
         </div>
       </div>
     </div>

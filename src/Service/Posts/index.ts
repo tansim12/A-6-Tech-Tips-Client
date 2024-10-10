@@ -77,3 +77,11 @@ export const commentReplyAction = async (commentId: string, payload: any) => {
     handleApiError(error);
   }
 };
+export const commentDeleteAction = async (commentId: string) => {
+  try {   
+    const res = await axiosInstance.delete(`/comments/${commentId}`);
+    return res?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

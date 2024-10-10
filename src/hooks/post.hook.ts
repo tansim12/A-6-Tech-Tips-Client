@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  commentDeleteAction,
   commentReplyAction,
   createCommentAction,
   createPostServerAction,
@@ -48,6 +49,18 @@ export const useCreateComment = () => {
 
     mutationFn: async ({ postId, payload }: { postId: string; payload: any }) =>
       await createCommentAction(postId, payload),
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any);
+    // },
+  });
+};
+export const useCommentDelete = () => {
+  // const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["COMMENT_DELETE"],
+    mutationFn: async ({ commentId }: { commentId: string }) => {   
+      return await commentDeleteAction(commentId);
+    },
     // onSuccess: () => {
     //   queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any);
     // },

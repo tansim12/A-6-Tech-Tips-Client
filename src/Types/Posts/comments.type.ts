@@ -8,4 +8,5 @@ export type TComment = {
   message: string; // Comment message
   isDelete?: boolean;
   replies?: TComment[]; // Array of nested replies
+  createdAt?:string
 };
