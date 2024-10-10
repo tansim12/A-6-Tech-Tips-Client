@@ -61,7 +61,7 @@ export const getSinglePostAction = async (postId: string) => {
     handleApiError(error);
   }
 };
-export const createCommentAction = async (postId: string, payload: any) => { 
+export const createCommentAction = async (postId: string, payload: any) => {
   try {
     const res = await axiosInstance.put(`/comments/${postId}`, payload);
     return res?.data;
@@ -71,15 +71,26 @@ export const createCommentAction = async (postId: string, payload: any) => {
 };
 export const commentReplyAction = async (commentId: string, payload: any) => {
   try {
-    const res = await axiosInstance.put(`/comments/replies/${commentId}`, payload);
+    const res = await axiosInstance.put(
+      `/comments/replies/${commentId}`,
+      payload
+    );
     return res?.data;
   } catch (error) {
     handleApiError(error);
   }
 };
 export const commentDeleteAction = async (commentId: string) => {
-  try {   
+  try {
     const res = await axiosInstance.delete(`/comments/${commentId}`);
+    return res?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+export const giveReactAction = async (postId: string, payload: any) => {
+  try {
+    const res = await axiosInstance.put(`/post/react/${postId}`, payload);
     return res?.data;
   } catch (error) {
     handleApiError(error);

@@ -12,6 +12,10 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import CommentSystem from "./CommentSystem";
 import { TComment } from "@/src/Types/Posts/comments.type";
+import { AiFillLike } from "react-icons/ai";
+import { useGiveReact } from "@/src/hooks/post.hook";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 interface IProps {
   post: TPost;
@@ -19,13 +23,48 @@ interface IProps {
 
 export default function Post({ post }: IProps) {
   const pathName = usePathname();
-  const { description, _id, images, userId, premium, title, createdAt,comments } =
-    post || {};
+  const {
+    description,
+    _id,
+    images,
+    userId,
+    premium,
+    title,
+    createdAt,
+    comments,
+    react,
+  } = post || {};
 
   const { name, email, profilePhoto } = (userId as TUser) || {};
   const { user: loggedInUser } = useUser();
   const dayDifference = Number(moment().diff(moment(createdAt), "days"));
 
+  const {
+    mutate: handleGiveReact,
+    isError: isGiveReactError,
+    data: reactData,
+  } = useGiveReact();
+
+  useEffect(() => {
+    if (isGiveReactError) {
+      toast.error("Give React problem");
+    }
+  }, [isGiveReactError]);
+
+  const handleGiveReactFn = () => {
+    const payload = {
+      postId: post?._id,
+      isDelete: false,
+    };
+    handleGiveReact(payload);
+  };
+  const handleGiveReactRemoveFn = () => {
+    const payload = {
+      postId: post?._id,
+      isDelete: true,
+    };
+    handleGiveReact(payload);
+  };
 
   return (
     <div className="mb-2 rounded-md bg-default-100 p-4">
@@ -151,9 +190,24 @@ export default function Post({ post }: IProps) {
         )}
 
         <div className="mt-4 flex gap-5">
-          <Button className="flex-1" variant="light">
-            Share
-          </Button>
+          {reactData?.data?.react?.some((item:any) => item?.userId === loggedInUser?._id) ||
+          react?.some((item) => item?.userId === loggedInUser?._id) ? (
+            <Button
+              onClick={handleGiveReactRemoveFn}
+              className="flex-1"
+              variant="light"
+            >
+              <AiFillLike className="text-primary" size={40} />
+            </Button>
+          ) : (
+            <Button
+              onClick={handleGiveReactFn}
+              className="flex-1"
+              variant="light"
+            >
+              <AiFillLike size={40} />
+            </Button>
+          )}
           <Button className="flex-1" variant="light">
             Share
             <FaShare />
@@ -163,7 +217,11 @@ export default function Post({ post }: IProps) {
 
       {/* comment  */}
       <div>
-        <CommentSystem comments={comments as TComment[] | []} currentUser={loggedInUser as TUser} postId={_id as string} />
+        <CommentSystem
+          comments={comments as TComment[] | []}
+          currentUser={loggedInUser as TUser}
+          postId={_id as string}
+        />
       </div>
     </div>
   );

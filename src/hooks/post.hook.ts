@@ -6,8 +6,13 @@ import {
   createPostServerAction,
   getNewsFeedPosts,
   getSinglePostAction,
+  giveReactAction,
 } from "../Service/Posts";
 import { TQueryParams } from "../Types/Filter/filter.type";
+interface GiveReactPayload {
+  postId: string;
+  isDelete: boolean;
+}
 
 export const useGetRecentPostData = (
   page: number,
@@ -58,7 +63,7 @@ export const useCommentDelete = () => {
   // const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["COMMENT_DELETE"],
-    mutationFn: async ({ commentId }: { commentId: string }) => {   
+    mutationFn: async ({ commentId }: { commentId: string }) => {
       return await commentDeleteAction(commentId);
     },
     // onSuccess: () => {
@@ -82,5 +87,15 @@ export const useCommentReplies = () => {
     // onSuccess: () => {
     //   queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any);
     // },
+  });
+};
+export const useGiveReact = () => {
+  // const queryClient = useQueryClient(); // Uncomment if needed
+  return useMutation({
+    mutationKey: ["GIVE_REACT"],
+    mutationFn: async (payload: GiveReactPayload) => {
+      const { postId, isDelete } = payload;
+      return await giveReactAction(postId, { isDelete });
+    },
   });
 };
