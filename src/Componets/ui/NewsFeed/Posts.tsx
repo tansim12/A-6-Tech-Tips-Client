@@ -79,7 +79,7 @@ export default function Post({ post }: IProps) {
 
   const handleFollowFn = () => {
     const payload = {
-      userId: userId?._id,
+      userId: (userId as TUser)._id,
       isCreateFollowing: true,
     };
     console.log(payload);
@@ -88,7 +88,7 @@ export default function Post({ post }: IProps) {
   };
   const handleUnFollowFn = () => {
     const payload = {
-      userId: userId?._id,
+      userId: (userId as TUser)._id,
       isCreateFollowing: false,
     };
     handleFollowAndUnFollow(payload);
