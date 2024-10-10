@@ -90,12 +90,11 @@ export default function NavbarDropdown() {
           </DropdownMenu>
         </Dropdown>
       ) : (
-        <button onClick={() => handleNavigation("/login")}>
-          <CustomButton
-            name="Login"
-            customCss="text-white font-bold"
-          ></CustomButton>
-        </button>
+        <CustomButton
+          onClick={() => handleNavigation("/login")}
+          name="Login"
+          customCss="text-white font-bold"
+        />
       )}
     </>
   );

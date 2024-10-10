@@ -16,6 +16,7 @@ import { AiFillLike } from "react-icons/ai";
 import { useFollowAndUnFollow, useGiveReact } from "@/src/hooks/post.hook";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { FaCheckCircle } from "react-icons/fa";
 
 interface IProps {
   post: TPost;
@@ -26,7 +27,7 @@ export default function Post({ post }: IProps) {
   const {
     description,
     _id,
-    
+
     images,
     userId,
     premium,
@@ -60,7 +61,7 @@ export default function Post({ post }: IProps) {
     if (isFollowAndUnFollowError) {
       toast.error("Follow UnFollowError  problem");
     }
-  }, [isGiveReactError,isFollowAndUnFollowError]);
+  }, [isGiveReactError, isFollowAndUnFollowError]);
 
   const handleGiveReactFn = () => {
     const payload = {
@@ -81,7 +82,7 @@ export default function Post({ post }: IProps) {
     const payload = {
       userId: (userId as TUser)._id,
       isCreateFollowing: true,
-    }; 
+    };
     handleFollowAndUnFollow(payload);
   };
   const handleUnFollowFn = () => {
@@ -106,7 +107,14 @@ export default function Post({ post }: IProps) {
             />
             <div>
               <div className="flex justify-center items-center gap-3">
-                <p>{name}</p>
+                <div className="flex justify-center items-center gap-1">
+                  <p>{name}</p>
+                  <p>
+                    {typeof userId !== "string" && userId?.isVerified && (
+                      <FaCheckCircle className="inline text-green-500" />
+                    )}
+                  </p>
+                </div>
 
                 {followAndUnFollowData?.data?.followers?.some(
                   (item: any) => item === loggedInUser?._id
