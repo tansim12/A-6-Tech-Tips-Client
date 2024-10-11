@@ -1,7 +1,13 @@
 import { USER_ROLE, USER_STATUS } from "./user.const";
-interface TUserProfile {
-  _id: string;
-  followers: string[];
+export interface TUserProfile {
+  _id?: string;
+  followers?: string[];
+  isCreateFollowing?: boolean;
+  userId?: string | TUser;
+  bio?: string;
+  description?: string;
+  profilePhoto?: string;
+  coverPhoto?: string;
 }
 
 export interface TUser {

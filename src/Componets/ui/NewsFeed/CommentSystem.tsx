@@ -244,7 +244,7 @@ const CommentSystem = ({
                 )}
 
                 {/* Display Replies */}
-                {comment?.replies!.map((reply) => (
+                {comment?.replies!?.map((reply) => (
                   <div
                     key={reply._id}
                     className="flex items-start gap-3 mt-2 ml-10"
