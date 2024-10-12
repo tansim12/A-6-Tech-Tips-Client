@@ -103,7 +103,7 @@ export default function Post({ post }: IProps) {
               width={50}
               height={50}
               alt="user Image"
-              className="rounded-full border-4 border-base "
+              className="rounded-full border-4 border-base object-cover "
             />
             <div>
               <div className="flex justify-center items-center gap-3">
