@@ -30,9 +30,9 @@ export const useUpdateUserProfile = () => {
     mutationFn: async (payload: Partial<TUserProfile>) => {
       return await updateUserInfoAction(payload); // Perform the API call to update user info
     },
-    onSuccess: (_data, variables) => {
+    onSuccess: (_data, variables) => {   
       // Assuming the `payload` contains `userId` as part of the object, use it to revalidate the profile query.
-      queryClient.invalidateQueries(["GET_USER_PROFILE", variables.userId] as any);
+      queryClient.invalidateQueries(["GET_USER_PROFILE", variables?._id,"GET_USER_DATA"] as any);
     },
   });
 };

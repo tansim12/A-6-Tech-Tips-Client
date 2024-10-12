@@ -28,12 +28,13 @@ import { uploadImagesToImgBB } from "../utils/uploadImagesToImgBB";
 import { TUserProfile } from "../Types/User/user.types";
 import Loading from "../Componets/ui/Loading/Loading";
 import { FaCheckCircle } from "react-icons/fa";
+import CustomReactQuill from "../Componets/Form/CustomReactQuill";
 
 const CProfilePage = ({ params }: { params: any }) => {
   const { user: loggedInUser } = useUser();
   const [allPostData, setAllPostData] = useState<TPost[]>([]);
   const [modalType, setModalType] = useState<
-    "coverPhoto" | "profilePhoto" | null
+    "coverPhoto" | "profilePhoto" | "editProfile" | null
   >(null);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(3);
@@ -67,8 +68,6 @@ const CProfilePage = ({ params }: { params: any }) => {
     isSuccess: updateUserInfoIsSuccess,
   } = useUpdateUserProfile();
 
-  const [isEditing, setIsEditing] = useState(false);
-
   // error use effect
   useEffect(() => {
     if (isMyAllPostDataError) {
@@ -89,10 +88,6 @@ const CProfilePage = ({ params }: { params: any }) => {
     selectImage?.length,
     updateUserInfoIsError,
   ]);
-  // Toggle modal visibility
-  const toggleEditModal = () => {
-    setIsEditing(!isEditing);
-  };
 
   useEffect(() => {
     if (myAllPostData?.result) {
@@ -109,6 +104,8 @@ const CProfilePage = ({ params }: { params: any }) => {
 
     if (selectImage?.length > 0) {
       uploadedImage = await uploadImagesToImgBB(selectImage); // Assuming this uploads and returns image URLs
+    } else {
+      return toast.error("Please Select Photo");
     }
 
     if (modalType === "coverPhoto") {
@@ -122,33 +119,71 @@ const CProfilePage = ({ params }: { params: any }) => {
     onClose();
     setSelectImages([]);
   };
+  const handleBioUpdate: SubmitHandler<FieldValues> = (data) => {
+    const payload = { bio: data?.bio };
+    handleUpdateUserInfoMute(payload as any);
+
+    onClose();
+  };
 
   infiniteScrollFn(page, setPage, myAllPostData?.meta?.total, pageSize);
+
+  console.log(userProfileData?.bio);
 
   return (
     <>
       {/* cover photo update  */}
-      <CustomModal
-        title={modalType as string}
-        isOpen={isOpen}
-        backdrop={backdrop as "opaque" | "blur" | "transparent"}
-        onCancel={onClose}
-        cancelText="Cancel"
-        size="4xl"
-      >
-        {" "}
-        <>
-          {updateUserInfoIsPending && <Loading />}
-          <FXForm onSubmit={handleSubmitPhoto}>
-            <CustomFileUpload
-              name="coverPhoto"
-              changeOnValue={setSelectImages}
-              label="Cover Image"
-            />
-            <CustomButton name="Submit" />
-          </FXForm>
-        </>
-      </CustomModal>
+      {(modalType === "profilePhoto" || modalType === "coverPhoto") && (
+        <CustomModal
+          title={modalType === "profilePhoto" ? "Profile Photo" : "Cover Photo"}
+          isOpen={isOpen}
+          backdrop={backdrop as "opaque" | "blur" | "transparent"}
+          onCancel={onClose}
+          cancelText="Cancel"
+          size="4xl"
+        >
+          <>
+            {updateUserInfoIsPending && <Loading />}
+            <FXForm onSubmit={handleSubmitPhoto}>
+              <CustomFileUpload
+                name={
+                  modalType === "profilePhoto" ? "profilePhoto" : "coverPhoto"
+                }
+                changeOnValue={setSelectImages}
+                label={
+                  modalType === "profilePhoto" ? "Profile Image" : "Cover Image"
+                }
+              />
+              <CustomButton name="Submit" />
+            </FXForm>
+          </>
+        </CustomModal>
+      )}
+
+      {modalType === "editProfile" && (
+        <CustomModal
+          title={modalType as string}
+          isOpen={isOpen}
+          backdrop={backdrop as "opaque" | "blur" | "transparent"}
+          onCancel={onClose}
+          cancelText="Cancel"
+          size="4xl"
+        >
+          {" "}
+          <>
+            {updateUserInfoIsPending && <Loading />}
+            <FXForm
+              onSubmit={handleBioUpdate}
+              defaultValues={{ bio: userProfileData?.bio }}
+            >
+              <div className="mb-16">
+                <CustomReactQuill name="bio" label="Bio" />
+              </div>
+              <CustomButton name="Submit" />
+            </FXForm>
+          </>
+        </CustomModal>
+      )}
 
       <div className="min-h-screen container mx-auto">
         {/* Cover Section */}
@@ -208,13 +243,27 @@ const CProfilePage = ({ params }: { params: any }) => {
               <FaCheckCircle size={20} className="inline text-green-500 " />
             )}
           </h1>
-          <p className="text-gray-500 text-sm w-[60%] mx-auto my-3 text-center">
-            {userProfileData?.bio?.length ? userProfileData?.bio : "Added Bio"}
-          </p>
+
+          {userProfileData?.bio?.length ? (
+            <div
+            className="my-3"
+              dangerouslySetInnerHTML={{
+                __html: userProfileData?.bio,
+              }}
+            ></div>
+          ) : (
+            "Added Bio"
+          )}
 
           {/* Action Buttons */}
           <div className="mt-4 flex justify-center gap-2">
-            <Button color="primary" onClick={toggleEditModal}>
+            <Button
+              onClick={() => {
+                setModalType("editProfile");
+                onOpen();
+              }}
+              color="primary"
+            >
               Edit Profile
             </Button>
           </div>
