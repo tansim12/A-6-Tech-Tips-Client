@@ -97,7 +97,6 @@ export const giveReactAction = async (postId: string, payload: any) => {
   }
 };
 
-
 export const followAndUnFollowAction = async (userId: string, payload: any) => {
   try {
     const res = await axiosInstance.put(
@@ -105,6 +104,17 @@ export const followAndUnFollowAction = async (userId: string, payload: any) => {
       payload
     );
     return res?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+export const updatePostsAction = async (
+  postId: string,
+  payload: Partial<TPost>
+) => {
+  try { 
+    const res = await axiosInstance.put(`/post/${postId}`, payload);
+    return res?.data?.data;
   } catch (error) {
     handleApiError(error);
   }

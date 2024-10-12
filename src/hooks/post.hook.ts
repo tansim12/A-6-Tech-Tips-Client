@@ -8,8 +8,10 @@ import {
   getNewsFeedPosts,
   getSinglePostAction,
   giveReactAction,
+  updatePostsAction,
 } from "../Service/Posts";
 import { TQueryParams } from "../Types/Filter/filter.type";
+import { TPost } from "../Types/Posts/post.type";
 interface GiveReactPayload {
   postId: string;
   isDelete: boolean;
@@ -114,3 +116,14 @@ export const useFollowAndUnFollow = () => {
     },
   });
 };
+
+export const useUpdatePost = () => {
+  return useMutation({
+    mutationKey: ["UPDATE_POST"], // queryKey with userId
+    mutationFn: async ({ postId,payload }: { postId: string,payload:Partial<TPost> }) =>
+      await updatePostsAction(postId,payload),
+  });
+};
+
+
+
