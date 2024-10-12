@@ -1,7 +1,14 @@
 "use client"; // Enable client-side rendering
 import { RxAvatar } from "react-icons/rx";
 import React, { useEffect, useState } from "react";
-import { Button, Tabs, Tab, Spinner, useDisclosure, Avatar } from "@nextui-org/react"; // NextUI Tabs and Tab components
+import {
+  Button,
+  Tabs,
+  Tab,
+  Spinner,
+  useDisclosure,
+  Avatar,
+} from "@nextui-org/react"; // NextUI Tabs and Tab components
 import Image from "next/image";
 import { useUser } from "../Context/user.context";
 import {
@@ -25,10 +32,11 @@ import CustomFileUpload from "../Componets/Form/CustomFileUpload";
 import CustomButton from "../Componets/ui/Button/CustomButton";
 import { useUpdatePost } from "../hooks/post.hook";
 import { uploadImagesToImgBB } from "../utils/uploadImagesToImgBB";
-import { TUserProfile } from "../Types/User/user.types";
+import { TUser, TUserProfile } from "../Types/User/user.types";
 import Loading from "../Componets/ui/Loading/Loading";
 import { FaCheckCircle } from "react-icons/fa";
 import CustomReactQuill from "../Componets/Form/CustomReactQuill";
+import UserInfo from "../Componets/ui/Posts/UserInfo";
 
 const CProfilePage = ({ params }: { params: any }) => {
   const { user: loggedInUser } = useUser();
@@ -128,7 +136,7 @@ const CProfilePage = ({ params }: { params: any }) => {
 
   infiniteScrollFn(page, setPage, myAllPostData?.meta?.total, pageSize);
 
-  console.log(userProfileData);
+  console.log(loggedInUser);
 
   return (
     <>
@@ -318,7 +326,10 @@ const CProfilePage = ({ params }: { params: any }) => {
                   {" "}
                   {userProfileData?.followers?.length ? (
                     userProfileData?.followers?.map((item: any) => (
-                      <div className="flex items-center gap-5 my-2" key={item?._id}>
+                      <div
+                        className="flex items-center gap-5 my-2"
+                        key={item?._id}
+                      >
                         <Avatar
                           className="cursor-pointer border-base border-2"
                           src={
@@ -345,16 +356,18 @@ const CProfilePage = ({ params }: { params: any }) => {
                 </div>
               </Tab>
               <Tab
-                key="videos"
+                key="Settings"
                 title={
                   <div className="flex items-center space-x-2">
                     <FiVideo /> {/* Video icon */}
-                    <span>Videos</span>
+                    <span>Settings</span>
                   </div>
                 }
               >
                 {/* Videos Content (You can replace this with actual content) */}
-                <div className="text-center py-10">No Videos Available</div>
+                <div className="text-center py-10">
+                  <UserInfo loggedInUser={loggedInUser as Partial<TUser>} />{" "}
+                </div>
               </Tab>
             </Tabs>
           </div>
