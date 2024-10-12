@@ -1,7 +1,7 @@
 "use client"; // Enable client-side rendering
 import { RxAvatar } from "react-icons/rx";
 import React, { useEffect, useState } from "react";
-import { Button, Tabs, Tab, Spinner, useDisclosure } from "@nextui-org/react"; // NextUI Tabs and Tab components
+import { Button, Tabs, Tab, Spinner, useDisclosure, Avatar } from "@nextui-org/react"; // NextUI Tabs and Tab components
 import Image from "next/image";
 import { useUser } from "../Context/user.context";
 import {
@@ -128,7 +128,7 @@ const CProfilePage = ({ params }: { params: any }) => {
 
   infiniteScrollFn(page, setPage, myAllPostData?.meta?.total, pageSize);
 
-  console.log(userProfileData?.bio);
+  console.log(userProfileData);
 
   return (
     <>
@@ -246,7 +246,7 @@ const CProfilePage = ({ params }: { params: any }) => {
 
           {userProfileData?.bio?.length ? (
             <div
-            className="my-3"
+              className="my-3"
               dangerouslySetInnerHTML={{
                 __html: userProfileData?.bio,
               }}
@@ -314,7 +314,35 @@ const CProfilePage = ({ params }: { params: any }) => {
                 }
               >
                 {/* Music Content (You can replace this with actual content) */}
-                <div className="text-center py-10">No Followers Available</div>
+                <div className="text-center py-10">
+                  {" "}
+                  {userProfileData?.followers?.length ? (
+                    userProfileData?.followers?.map((item: any) => (
+                      <div className="flex items-center gap-5 my-2" key={item?._id}>
+                        <Avatar
+                          className="cursor-pointer border-base border-2"
+                          src={
+                            item?.profilePhoto ||
+                            "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg"
+                          }
+                        />
+                        <div className="flex flex-col">
+                          <span className="font-semibold">
+                            {item?.name}{" "}
+                            {item?.isVerified && (
+                              <FaCheckCircle className="inline text-green-500" />
+                            )}
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            {item?.isVerified ? "Verified" : "User"}
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <span>No Follower</span>
+                  )}
+                </div>
               </Tab>
               <Tab
                 key="videos"
