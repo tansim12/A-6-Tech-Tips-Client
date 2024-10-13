@@ -20,9 +20,10 @@ import Post from "../Componets/ui/NewsFeed/Posts";
 import { TPost } from "../Types/Posts/post.type";
 import NoFoundData from "../Componets/ui/No Found/NoFoundData";
 import { MdEditSquare } from "react-icons/md";
+import { IoSettingsOutline } from "react-icons/io5";
 
 // Import icons from react-icons
-import { FiImage, FiMusic, FiVideo } from "react-icons/fi"; // Feather Icons
+import { FiImage } from "react-icons/fi"; // Feather Icons
 import toast from "react-hot-toast";
 import infiniteScrollFn from "../utils/infiniteScrollFn";
 import CustomModal from "../Componets/ui/Custom Modal/CustomModal";
@@ -359,7 +360,8 @@ const CProfilePage = ({ params }: { params: any }) => {
                 key="Settings"
                 title={
                   <div className="flex items-center space-x-2">
-                    <FiVideo /> {/* Video icon */}
+                  <IoSettingsOutline />
+                  {/* Video icon */}
                     <span>Settings</span>
                   </div>
                 }

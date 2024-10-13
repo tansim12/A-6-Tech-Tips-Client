@@ -23,6 +23,9 @@ export interface TUser {
   profilePhoto?: string;
   isVerified?: boolean;
   userProfile?: TUserProfile;
+  createdAt?:string,
+  updatedAt?:string,
+
 }
 export type TUserRole = keyof typeof USER_ROLE;
 export type TUserStatus = keyof typeof USER_STATUS;

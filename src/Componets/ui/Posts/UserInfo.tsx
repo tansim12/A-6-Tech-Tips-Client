@@ -1,4 +1,5 @@
 import { TUser } from "@/src/Types/User/user.types";
+import moment from "moment";
 
 const UserInfo = ({ loggedInUser }: { loggedInUser: Partial<TUser> }) => {
   return (
@@ -34,11 +35,20 @@ const UserInfo = ({ loggedInUser }: { loggedInUser: Partial<TUser> }) => {
           </div>
           <div className="flex justify-between">
             <span className="font-semibold">Account Created:</span>
-            <span>October 2, 2024</span>
+            <span> {moment(loggedInUser?.createdAt).format("ll")}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-semibold">Last Updated:</span>
-            <span>October 12, 2024</span>
+            <span> {moment(loggedInUser?.updatedAt).format("ll")}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-semibold">Last Password Change:</span>
+            <span>
+              {" "}
+              {loggedInUser?.passwordChangeAt
+                ? moment(loggedInUser?.passwordChangeAt).format("ll")
+                : "N/A"}
+            </span>
           </div>
         </div>
 
