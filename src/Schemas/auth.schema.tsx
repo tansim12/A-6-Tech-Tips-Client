@@ -1,4 +1,3 @@
-
 import { z } from "zod";
 
 export const loginValidationSchema = z.object({
@@ -8,7 +7,6 @@ export const loginValidationSchema = z.object({
     .trim()
     .min(6, "Password needs to be at lest 6 character"),
 });
-
 
 export const registerSchema = z.object({
   name: z.string({ required_error: "Name is required" }),
@@ -24,4 +22,18 @@ export const registerSchema = z.object({
     .string({ required_error: "Password is required" })
     .min(8, "Password must be at least 8 characters long")
     .max(20, "Password must be at most 20 characters long"),
+});
+
+const changePasswordValidationSchemaZod = z.object({
+  email: z
+    .string()
+    .email({ message: "Email must be a valid email" })
+    .nonempty({ message: "Email is required" }),
+  newPassword: z
+    .string({ required_error: "Password is required" })
+    .min(8, "Password must be at least 8 characters long")
+    .max(20, "Password must be at most 20 characters long"),
+});
+const forgetPasswordSchemaZod = z.object({
+  id: z.string({ required_error: "Id should be string" }),
 });
