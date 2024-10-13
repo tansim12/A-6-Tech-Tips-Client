@@ -31,7 +31,6 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import FXForm from "../Componets/Form/FXForm";
 import CustomFileUpload from "../Componets/Form/CustomFileUpload";
 import CustomButton from "../Componets/ui/Button/CustomButton";
-import { useUpdatePost } from "../hooks/post.hook";
 import { uploadImagesToImgBB } from "../utils/uploadImagesToImgBB";
 import { TUser, TUserProfile } from "../Types/User/user.types";
 import Loading from "../Componets/ui/Loading/Loading";
@@ -62,19 +61,11 @@ const CProfilePage = ({ params }: { params: any }) => {
     isSuccess,
   } = useGetMyAllPostsData(page, pageSize);
 
+
   const {
-    data: updatePostData,
-    mutate: handleUpdatePost,
-    isPending: isUpdatePostLoading,
-    isError: isUpdatePostError,
-    isSuccess: updatePostIsSuccess,
-  } = useUpdatePost();
-  const {
-    data: updateUserData,
     mutate: handleUpdateUserInfoMute,
     isPending: updateUserInfoIsPending,
     isError: updateUserInfoIsError,
-    isSuccess: updateUserInfoIsSuccess,
   } = useUpdateUserProfile();
 
   // error use effect

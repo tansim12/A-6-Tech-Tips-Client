@@ -24,7 +24,7 @@ export const registerSchema = z.object({
     .max(20, "Password must be at most 20 characters long"),
 });
 
-const changePasswordValidationSchemaZod = z.object({
+export const changePasswordValidationSchemaZod = z.object({
   email: z
     .string()
     .email({ message: "Email must be a valid email" })
@@ -33,7 +33,11 @@ const changePasswordValidationSchemaZod = z.object({
     .string({ required_error: "Password is required" })
     .min(8, "Password must be at least 8 characters long")
     .max(20, "Password must be at most 20 characters long"),
+  confirmNewPassword: z
+    .string({ required_error: "Password is required" })
+    .min(8, "Password must be at least 8 characters long")
+    .max(20, "Password must be at most 20 characters long"),
 });
-const forgetPasswordSchemaZod = z.object({
+export const forgetPasswordSchemaZod = z.object({
   id: z.string({ required_error: "Id should be string" }),
 });

@@ -11,6 +11,9 @@ import { FieldValues } from "react-hook-form";
 
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { axiosInstance } from "../axios/axiosInstance";
+import { handleApiError } from "@/src/hooks/handleApiError";
+import axios from "axios";
+import envConfig from "@/src/config/envConfig";
 export const createRegister = async (payload: FieldValues) => {
   try {
     const { data } = await axiosInstance.post("/auth/signup", payload);
@@ -50,10 +53,10 @@ export const getCurrentUser = async (): Promise<any | null> => {
 
     const decodedToken = await jwtDecode<CustomJwtPayload>(accessToken);
     if (decodedToken) {
-      const res = await axiosInstance.get(`/user/${decodedToken?.data?.id}`);   
+      const res = await axiosInstance.get(`/user/${decodedToken?.data?.id}`);
       return res?.data?.data;
-    }else{
-      null
+    } else {
+      null;
     }
   } catch (error) {
     console.error("Error decoding token:", error);
@@ -82,5 +85,37 @@ export const getNewAccessToken = async () => {
     return res.data;
   } catch (error) {
     throw new Error("Failed to get new access token");
+  }
+};
+
+export const forgetPasswordAction = async (payload: any) => {
+  try {
+    const res = await axiosInstance.post(`/auth/forget-password`, payload);
+    return res.data; // Return response data if needed
+  } catch (error) {
+    handleApiError(error); // Handle the error appropriately
+    throw error; // Optionally re-throw the error if you want to propagate it
+  }
+};
+
+export const changePasswordAction = async (token: string, payload: any) => {
+  try {
+    const res = await axios.post(
+      `${envConfig.baseApi}/auth/password-change`,
+      payload,
+      {
+        headers: {
+          Authorization: `${token}`, // Set the Authorization header with the token
+        },
+      }
+    );
+    if (res?.data) {
+      cookies().delete("accessToken");
+      cookies().delete("refreshToken");
+    }
+    return res?.data; // Return response data if needed
+  } catch (error) {
+    handleApiError(error); // Handle the error appropriately
+    throw error; // Optionally re-throw the error if you want to propagate it
   }
 };

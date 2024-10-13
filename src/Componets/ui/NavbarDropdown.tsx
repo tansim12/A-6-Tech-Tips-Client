@@ -26,6 +26,8 @@ export default function NavbarDropdown() {
 
   const { user, setIsLoading: userSetLoading } = useUser();
 
+  console.log(user?._id);
+
   return (
     <>
       {user?._id ? (
@@ -90,11 +92,13 @@ export default function NavbarDropdown() {
           </DropdownMenu>
         </Dropdown>
       ) : (
-        <CustomButton
-          onClick={() => handleNavigation("/login")}
-          name="Login"
-          customCss="text-white font-bold"
-        />
+        <div>
+          <CustomButton
+            onClick={() => handleNavigation("/login")}
+            name="Login"
+            customCss="text-white font-bold"
+          />
+        </div>
       )}
     </>
   );
