@@ -25,9 +25,6 @@ export default function NavbarDropdown() {
   };
 
   const { user, setIsLoading: userSetLoading } = useUser();
-
-  console.log(user?._id);
-
   return (
     <>
       {user?._id ? (
