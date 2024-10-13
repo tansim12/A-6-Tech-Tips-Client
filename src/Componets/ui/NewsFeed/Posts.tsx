@@ -1,6 +1,6 @@
 "use client";
 import { FaShare } from "react-icons/fa6";
-import { MdWorkspacePremium } from "react-icons/md";
+import { MdOutlineDeleteForever, MdWorkspacePremium } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import ImageGallery from "./ImageGallery";
@@ -13,16 +13,22 @@ import { usePathname, useRouter } from "next/navigation";
 import CommentSystem from "./CommentSystem";
 import { TComment } from "@/src/Types/Posts/comments.type";
 import { AiFillLike } from "react-icons/ai";
-import { useFollowAndUnFollow, useGiveReact } from "@/src/hooks/post.hook";
+import {
+  useFollowAndUnFollow,
+  useGiveReact,
+  useUpdatePost,
+} from "@/src/hooks/post.hook";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 interface IProps {
   post: TPost;
+  isShowDeleteOption?: boolean;
 }
 
-export default function Post({ post }: IProps) {
+export default function Post({ post, isShowDeleteOption = false }: IProps) {
   const pathName = usePathname();
   const {
     description,
@@ -53,6 +59,13 @@ export default function Post({ post }: IProps) {
     data: followAndUnFollowData,
     isPending: isFollowAndUnFollowPending,
   } = useFollowAndUnFollow();
+  const {
+    mutate: handleUpdatePostMute,
+    isError: isUpdatePostError,
+    data: updatePostData,
+    isPending: isUpdatePostPending,
+    isSuccess:isUpdatePost
+  } = useUpdatePost();
 
   useEffect(() => {
     if (isGiveReactError) {
@@ -61,7 +74,15 @@ export default function Post({ post }: IProps) {
     if (isFollowAndUnFollowError) {
       toast.error("Follow UnFollowError  problem");
     }
-  }, [isGiveReactError, isFollowAndUnFollowError]);
+
+    if (updatePostData || isUpdatePost) {
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your file has been deleted.",
+        icon: "success",
+      });
+    }
+  }, [isGiveReactError, isFollowAndUnFollowError, updatePostData,isUpdatePost]);
 
   const handleGiveReactFn = () => {
     const payload = {
@@ -91,6 +112,29 @@ export default function Post({ post }: IProps) {
       isCreateFollowing: false,
     };
     handleFollowAndUnFollow(payload);
+  };
+
+  const handleDeletePost = () => {
+    const newPayload = {
+      postId: post?._id,
+      payload: {
+        isDelete: true,
+      },
+    };
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleUpdatePostMute(newPayload);
+      }
+    });
   };
 
   return (
@@ -156,6 +200,15 @@ export default function Post({ post }: IProps) {
               </p>
             </div>
           </div>
+
+          {/* delete options  */}
+          {isShowDeleteOption ? (
+            <button onClick={handleDeletePost}>
+              <MdOutlineDeleteForever size={30} color="red" />
+            </button>
+          ) : (
+            ""
+          )}
         </div>
         <div className="border-b border-default-200 py-4">
           <div className="mb-4 flex items-start justify-between">

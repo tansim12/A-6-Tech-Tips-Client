@@ -18,7 +18,7 @@ interface GiveReactPayload {
 }
 interface TPayload {
   userId: string;
-  isCreateFollowing: boolean
+  isCreateFollowing: boolean;
 }
 
 export const useGetRecentPostData = (
@@ -118,12 +118,18 @@ export const useFollowAndUnFollow = () => {
 };
 
 export const useUpdatePost = () => {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: ["UPDATE_POST"], // queryKey with userId
-    mutationFn: async ({ postId,payload }: { postId: string,payload:Partial<TPost> }) =>
-      await updatePostsAction(postId,payload),
+    mutationKey: ["UPDATE_POST"], 
+    mutationFn: async ({
+      postId,
+      payload,
+    }: {
+      postId: string;
+      payload: Partial<TPost>;
+    }) => await updatePostsAction(postId, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["GET_RECENT_POST_DATA","GET_MY_ALL_POST"] as any);
+    },
   });
 };
-
-
-

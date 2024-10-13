@@ -296,7 +296,7 @@ const CProfilePage = ({ params }: { params: any }) => {
                   <div className="space-y-4 mt-4">
                     {allPostData?.length
                       ? allPostData?.map((item: TPost) => (
-                          <Post key={item._id} post={item} />
+                          <Post key={item._id} post={item} isShowDeleteOption={true} />
                         ))
                       : !isMyAllPostDataLoading && <NoFoundData />}
                   </div>
