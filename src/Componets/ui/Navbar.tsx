@@ -17,6 +17,8 @@ import { ThemeSwitch } from "./theme-switch";
 import { siteConfig } from "@/src/config/site";
 import { Logo } from "./icon";
 import NavbarDropdown from "./NavbarDropdown";
+import logo from '@/src/assets/logo.png';
+import Image from "next/image";
 
 export const Navbar = () => {
   return (
@@ -28,8 +30,10 @@ export const Navbar = () => {
               className="flex justify-start items-center gap-1"
               href="/"
             >
-              <Logo />
-              <p className="font-bold text-inherit">ACME</p>
+             <div className=" w-[60%]">
+              <Image src={logo} alt="logo" />
+             </div>
+              <p className="font-bold text-inherit"></p>
             </NextLink>
           </NavbarBrand>
           <ul className="hidden lg:flex gap-4 justify-start ml-2">

@@ -1,6 +1,10 @@
 import * as React from "react";
 
-import { IconSvgProps } from "@/types";
+export interface IconSvgProps extends React.SVGProps<SVGSVGElement> {
+  size?: number; // Optional size prop with default value
+  width?: number | string; // Optional width can be number or string
+  height?: number | string; // Optional height can be number or string
+};
 
 export const Logo: React.FC<IconSvgProps> = ({
   size = 36,
