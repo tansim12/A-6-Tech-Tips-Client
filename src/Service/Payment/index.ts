@@ -15,9 +15,6 @@ export const myAllPaymentInfoAction = async (query: Partial<TPaymentInfo>) => {
   
   try {
     const res = await axiosInstance.get("/payment/my-payment-info");
-    // console.log(res?.data);
-    
-    console.log("hello .................................");
     return res?.data?.data;
   } catch (error) {
     handleApiError(error);

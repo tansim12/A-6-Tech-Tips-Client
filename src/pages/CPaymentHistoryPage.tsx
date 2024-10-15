@@ -1,82 +1,120 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  Pagination,
-} from "@nextui-org/react";
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  ColumnDef,
+} from "@tanstack/react-table";
+import moment from "moment";
 import { useFindMyAllPaymentInfo } from "../hooks/payment.hook";
 import Loading from "../Componets/ui/Loading/Loading";
-import moment from "moment";
+
+// Define your data type
+interface PaymentData {
+  _id: string;
+  userId: { name: string; email: string };
+  mer_txnid: string;
+  amount: number;
+  payment_type: string;
+  approval_code: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 const PaymentHistoryTable = () => {
   const { data, isPending } = useFindMyAllPaymentInfo([] as any);
 
-  const paymentData = data?.result || [];
-  const meta = data?.meta || { page: 1, limit: 10, total: 0, totalPage: 1 };
+  const paymentData: PaymentData[] = data?.result || [];
 
-  const [page, setPage] = useState(meta.page);
-  const rowsPerPage = meta.limit;
+  // Define your columns using useMemo for better performance
+  const columns = useMemo<ColumnDef<PaymentData>[]>(
+    () => [
+      {
+        header: "User Name",
+        accessorKey: "userId.name",
+        cell: (info) => info.getValue(),
+      },
+      {
+        header: "Email",
+        accessorKey: "userId.email",
+      },
+      {
+        header: "Transaction ID",
+        accessorKey: "mer_txnid",
+      },
+      {
+        header: "Amount",
+        accessorKey: "amount",
+      },
+      {
+        header: "Payment Type",
+        accessorKey: "payment_type",
+      },
+      {
+        header: "Approval Code",
+        accessorKey: "approval_code",
+      },
+      {
+        header: "Created At",
+        accessorKey: "createdAt",
+        cell: (info) => moment(info.getValue()).format("ll"),
+      },
+      {
+        header: "Updated At",
+        accessorKey: "updatedAt",
+        cell: (info) => moment(info.getValue()).format("ll"),
+      },
+    ],
+    []
+  );
 
-  const items = useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    return paymentData.slice(start, end);
-  }, [page, paymentData]);
+  // Setup table instance using useReactTable
+  const table = useReactTable({
+    data: paymentData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   if (isPending) return <Loading />;
 
   return (
     <div className="container mx-auto p-4">
-      {/* Horizontal scroll wrapper */}
+      {/* Responsive container for horizontal scrolling */}
       <div className="overflow-x-auto">
-        <Table
-          aria-label="Payment History Table with Pagination"
-          bottomContent={
-            <div className="flex w-full justify-center">
-              <Pagination
-                isCompact
-                showControls
-                showShadow
-                color="secondary"
-                page={page}
-                total={meta.totalPage}
-                onChange={(page) => setPage(page)}
-              />
-            </div>
-          }
-          className="w-full"
-        >
-          <TableHeader>
-            <TableColumn>User Name</TableColumn>
-            <TableColumn>Email</TableColumn>
-            <TableColumn>Transaction ID</TableColumn>
-            <TableColumn>Amount</TableColumn>
-            <TableColumn>Payment Type</TableColumn>
-            <TableColumn>Approval Code</TableColumn>
-            <TableColumn>Created At</TableColumn>
-            <TableColumn>Updated At</TableColumn>
-          </TableHeader>
-          <TableBody>
-            {items.map((item: any) => (
-              <TableRow key={item._id}>
-                <TableCell>{item.userId.name}</TableCell>
-                <TableCell>{item.userId.email}</TableCell>
-                <TableCell>{item.mer_txnid}</TableCell>
-                <TableCell>{item.amount}</TableCell>
-                <TableCell>{item.payment_type}</TableCell>
-                <TableCell>{item.approval_code}</TableCell>
-                <TableCell>{moment(item.createdAt).format("ll")}</TableCell>
-                <TableCell>{moment(item.updatedAt).format("ll")}</TableCell>
-              </TableRow>
+        <table className="min-w-full table-auto text-left">
+          <thead className="bg-gray-100">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id} className="px-4 py-2">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </th>
+                ))}
+              </tr>
             ))}
-          </TableBody>
-        </Table>
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id} className="border-t">
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="px-4 py-2">
+                    {flexRender(
+                      cell.column.columnDef.cell,
+                      cell.getContext()
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

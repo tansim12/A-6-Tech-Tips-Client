@@ -38,6 +38,7 @@ const PostForm = ({ user, onClose }: { user: TUser; onClose: any }) => {
       images,
       category: data?.category,
     };
+    
     handleCreatePost(payload as any);
   };
   useEffect(() => {

@@ -10,11 +10,11 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
       </div>
       <hr />
       <div className="flex gap-5 justify-center  mt-8">
-        <div className="basis-2/12">
+        <div className="basis-2/12 hidden md:block">
           <DashboardSidebar />
         </div>
         <div className="basis-10/12 ">
-         {/* {children} */}
+         {children}
         </div>
       </div>
     </div>
