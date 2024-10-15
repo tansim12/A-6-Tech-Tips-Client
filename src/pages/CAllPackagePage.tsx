@@ -9,7 +9,6 @@ const CAllPackagePage = () => {
   const { mutate: handlePayment, isPending,data } = useCreatePayment();
 
   const handlePaymentFn = () => {
-    console.log("click"); 
     const payload = {
       amount: 2000,
     };

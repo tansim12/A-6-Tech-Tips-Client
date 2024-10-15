@@ -127,9 +127,6 @@ const CProfilePage = ({ params }: { params: any }) => {
   };
 
   infiniteScrollFn(page, setPage, myAllPostData?.meta?.total, pageSize);
-
-  console.log(loggedInUser);
-
   return (
     <>
       {/* cover photo update  */}

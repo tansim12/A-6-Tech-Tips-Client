@@ -21,7 +21,7 @@ const DashboardSidebar = () => {
   return (
     <div>
       <CustomDrawer isOpen={isOpen} onClose={toggleDrawer}>
-        <div className="p-4 font-bold text-xl">Dashboard</div>
+        <DashboardMenuItems role={user?.role} />
       </CustomDrawer>
       <button
         onClick={toggleDrawer}
@@ -33,7 +33,7 @@ const DashboardSidebar = () => {
         </span>
       </button>
 
-      <div>
+      <div className="hidden md:block">
         <DashboardMenuItems role={user?.role} />
       </div>
     </div>

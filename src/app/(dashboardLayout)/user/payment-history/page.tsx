@@ -1,11 +1,12 @@
-import React from 'react';
+import CPaymentHistoryPage from "@/src/pages/CPaymentHistoryPage";
+import React from "react";
 
 const PaymentHistory = () => {
-    return (
-        <div>
-            PaymentHistory
-        </div>
-    );
+  return (
+    <div>
+      <CPaymentHistoryPage />
+    </div>
+  );
 };
 
 export default PaymentHistory;

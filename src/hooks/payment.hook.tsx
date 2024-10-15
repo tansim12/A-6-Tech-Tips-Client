@@ -1,6 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { axiosInstance } from "../Service/axios/axiosInstance";
-import { createPaymentAction } from "../Service/Payment";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  createPaymentAction,
+  myAllPaymentInfoAction,
+} from "../Service/Payment";
+import { TPaymentInfo } from "../Types/Payment Info/paymentInfo.type";
 
 export const useCreatePayment = () => {
   const queryClient = useQueryClient();
@@ -13,5 +16,12 @@ export const useCreatePayment = () => {
         "GET_RECENT_POST_DATA",
       ] as any);
     },
+  });
+};
+
+export const useFindMyAllPaymentInfo = (query: Partial<TPaymentInfo>) => {
+  return useQuery({
+    queryKey: ["MY_ALL_PAYMENT_INFO", query],
+    queryFn: async () => await myAllPaymentInfoAction(query),
   });
 };

@@ -13,7 +13,9 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
         <div className="basis-2/12">
           <DashboardSidebar />
         </div>
-        <div className="basis-10/12 "> {children}</div>
+        <div className="basis-10/12 ">
+         {/* {children} */}
+        </div>
       </div>
     </div>
   );

@@ -22,7 +22,6 @@ const PostFilterSidebar = () => {
   const [searchValue, setSearchValue] = useState("");
   const handleFilterChange = (e: any) => {
     const { name, value, checked, type } = e.target;
-    console.log(typeof value);
 
     setFilters((prevFilters: TQueryParams[]) => {
       if (type === "checkbox") {
