@@ -30,8 +30,6 @@ export const myAllPaymentInfoAction = async (
       params.append(item.name, String(item.value)); // Convert value to string
     });
   }
-
-  console.log(params.toString());
   
   try {
     const res = await axiosInstance.get(

@@ -8,6 +8,7 @@ import {
 } from "../Service/User Service/userService";
 import { TPost } from "../Types/Posts/post.type";
 import { TUserProfile } from "../Types/User/user.types";
+import { TQueryParams } from "../Types/Filter/filter.type";
 
 // Custom hook to fetch user data
 export const useGetUserProfileData = () => {
@@ -17,10 +18,10 @@ export const useGetUserProfileData = () => {
   });
 };
 
-export const useGetMyAllPostsData = (page: number, pageSize: number) => {
+export const useGetMyAllPostsData = (page: number, pageSize: number,params:TQueryParams[]) => {
   return useQuery({
-    queryKey: ["GET_MY_ALL_POST", page, pageSize], // queryKey with userId
-    queryFn: async () => await getMyAllPostActions(page, pageSize),
+    queryKey: ["GET_MY_ALL_POST", page, pageSize,params], // queryKey with userId
+    queryFn: async () => await getMyAllPostActions(page, pageSize,params),
   });
 };
 

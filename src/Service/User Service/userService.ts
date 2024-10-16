@@ -3,6 +3,7 @@ import { handleApiError } from "@/src/hooks/handleApiError";
 import { axiosInstance } from "../axios/axiosInstance";
 import { useMutation } from "@tanstack/react-query";
 import { TUserProfile } from "@/src/Types/User/user.types";
+import { TQueryParams } from "@/src/Types/Filter/filter.type";
 
 export const getUserProfileAction = async () => {
   try {
@@ -13,10 +14,26 @@ export const getUserProfileAction = async () => {
   }
 };
 
-export const getMyAllPostActions = async (page: number, pageSize: number) => {
+export const getMyAllPostActions = async (
+  page: number,
+  pageSize: number,
+  args: TQueryParams[]
+) => {
   try {
+    const params = new URLSearchParams();
+
+    params.append("page", page.toString());
+    params.append("limit", pageSize.toString());
+
+    // Loop through the args to dynamically append query parameters
+    if (args) {
+      args.forEach((item: TQueryParams) => {
+        params.append(item.name, String(item.value)); // Convert value to string
+      });
+    }
+
     const res = await axiosInstance.get(
-      `/post/my-all-posts?page=${page}&limit=${pageSize}`
+      `/post/my-all-posts?${params.toString()}`
     );
     return res?.data?.data;
   } catch (error) {

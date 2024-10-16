@@ -59,7 +59,7 @@ const CProfilePage = ({ params }: { params: any }) => {
     isPending: isMyAllPostDataLoading,
     isError: isMyAllPostDataError,
     isSuccess,
-  } = useGetMyAllPostsData(page, pageSize);
+  } = useGetMyAllPostsData(page, pageSize,[]);
 
 
   const {
