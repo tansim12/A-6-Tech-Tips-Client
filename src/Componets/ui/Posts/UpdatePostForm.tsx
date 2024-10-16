@@ -20,6 +20,7 @@ import { MdWorkspacePremium } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { useUpdatePost } from "@/src/hooks/post.hook";
 import Swal from "sweetalert2";
+import ComponentsLoading from "../Loading/ComponentsLoading";
 
 const UpdatePostForm = ({
   user,
@@ -42,13 +43,14 @@ const UpdatePostForm = ({
     isSuccess: isUpdatePostSuccess,
   } = useUpdatePost();
   const router = useRouter();
-
+  const [imageLoading, setImageLoading] = useState(false);
   // State to manage the old images
   const [currentOldImages, setCurrentOldImages] = useState(oldImages || []);
 
   const [selectImages, setSelectImages] = useState([]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setImageLoading(true);
     const images = await uploadImagesToImgBB(selectImages);
 
     const payload = {
@@ -63,6 +65,7 @@ const UpdatePostForm = ({
       payload: { ...payload },
     };
     handleUpdatePostMute(newPayload as any);
+    setImageLoading(false);
   };
 
   useEffect(() => {
@@ -86,98 +89,102 @@ const UpdatePostForm = ({
   };
 
   return (
-    <div>
-      <FXForm
-        onSubmit={onSubmit}
-        resolver={zodResolver(createPostSchema)}
-        defaultValues={defaultData}
-      >
-        <CustomInput name="title" label="Title" type="text" />
+    <>
 
-        <div className="flex gap-10 w-full items-center my-3">
-          <div className="basis-3/5">
-            <CustomSelect
-              label="Category"
-              name="category"
-              options={categoryDataByLabel}
-              placeholder="Select Category"
-              defaultValue={[defaultData?.category]}
-            />
+    {isUpdatePostPending || imageLoading && <ComponentsLoading /> }
+      <div>
+        <FXForm
+          onSubmit={onSubmit}
+          resolver={zodResolver(createPostSchema)}
+          defaultValues={defaultData}
+        >
+          <CustomInput name="title" label="Title" type="text" />
+
+          <div className="flex gap-10 w-full items-center my-3">
+            <div className="basis-3/5">
+              <CustomSelect
+                label="Category"
+                name="category"
+                options={categoryDataByLabel}
+                placeholder="Select Category"
+                defaultValue={[defaultData?.category]}
+              />
+            </div>
+            <div className="basis-2/5">
+              {user?.isVerified ? (
+                <CustomToggle label="Premium" name="premium" />
+              ) : (
+                <div
+                  onClick={() => {
+                    router.push("/all-package");
+                  }}
+                >
+                  <CustomButton
+                    name="Get Premium"
+                    icon={<MdWorkspacePremium size={40} color="gold" />}
+                    customCss="text-white font-bold"
+                  />
+                </div>
+              )}
+            </div>
           </div>
-          <div className="basis-2/5">
-            {user?.isVerified ? (
-              <CustomToggle label="Premium" name="premium" />
-            ) : (
+
+          <CustomFileUpload
+            changeOnValue={setSelectImages}
+            name="images"
+            label="Images"
+          />
+
+          <div className="mb-16">
+            <CustomReactQuill name="description" label="Description" />
+          </div>
+
+          <div className="my-4">
+            {currentOldImages.length > 0 && (
               <div
-                onClick={() => {
-                  router.push("/all-package");
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                  marginTop: "20px",
                 }}
               >
-                <CustomButton
-                  name="Get Premium"
-                  icon={<MdWorkspacePremium size={40} color="gold" />}
-                  customCss="text-white font-bold"
-                />
+                {currentOldImages.map((item, index) => (
+                  <div
+                    key={index}
+                    style={{ textAlign: "center", position: "relative" }}
+                  >
+                    <img
+                      src={item}
+                      alt={"old Image"}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                      }}
+                    />
+                    <Button
+                      onClick={() => handleRemove(index)}
+                      style={{
+                        position: "absolute",
+                        top: "-10px",
+                        right: "-10px",
+                        borderRadius: "50%",
+                      }}
+                    >
+                      ✖
+                    </Button>
+                  </div>
+                ))}
               </div>
             )}
           </div>
-        </div>
 
-        <CustomFileUpload
-          changeOnValue={setSelectImages}
-          name="images"
-          label="Images"
-        />
-
-        <div className="mb-16">
-          <CustomReactQuill name="description" label="Description" />
-        </div>
-
-        <div className="my-4">
-          {currentOldImages.length > 0 && (
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "10px",
-                marginTop: "20px",
-              }}
-            >
-              {currentOldImages.map((item, index) => (
-                <div
-                  key={index}
-                  style={{ textAlign: "center", position: "relative" }}
-                >
-                  <img
-                    src={item}
-                    alt={"old Image"}
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                    }}
-                  />
-                  <Button
-                    onClick={() => handleRemove(index)}
-                    style={{
-                      position: "absolute",
-                      top: "-10px",
-                      right: "-10px",
-                      borderRadius: "50%",
-                    }}
-                  >
-                    ✖
-                  </Button>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <Button type="submit">Submit</Button>
-      </FXForm>
-    </div>
+          <Button type="submit">Submit</Button>
+        </FXForm>
+      </div>
+    </>
   );
 };
 
