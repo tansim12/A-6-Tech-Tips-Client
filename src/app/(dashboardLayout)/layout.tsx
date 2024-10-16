@@ -9,7 +9,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
         <DashboardNav />
       </div>
       <hr />
-      <div className=" flex flex-col md:flex md:flex-row gap-5 justify-center mt-8">
+      <div className=" flex flex-col lg:flex lg:flex-row gap-5 justify-center mt-8">
         <div className="basis-2/12">
           <DashboardSidebar />
         </div>

@@ -23,7 +23,7 @@ const DashboardSidebar = () => {
       </div>
       <button
         onClick={toggleDrawer}
-        className="p-2 bg-base text-white rounded-md block md:hidden "
+        className="p-2 bg-base text-white rounded-md block lg:hidden "
       >
         <span className="flex justify-center items-center gap-4">
           {" "}
@@ -32,7 +32,7 @@ const DashboardSidebar = () => {
       </button>
 
       {/* large device  */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <DashboardMenuItems role={user?.role} />
       </div>
     </div>
