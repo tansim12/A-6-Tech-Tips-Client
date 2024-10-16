@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   adminAnalyticsAction,
+  adminFindAllUserAction,
   getMyAllPostActions,
   getUserProfileAction,
   myAnalyticsAction,
@@ -18,10 +19,14 @@ export const useGetUserProfileData = () => {
   });
 };
 
-export const useGetMyAllPostsData = (page: number, pageSize: number,params:TQueryParams[]) => {
+export const useGetMyAllPostsData = (
+  page: number,
+  pageSize: number,
+  params: TQueryParams[]
+) => {
   return useQuery({
-    queryKey: ["GET_MY_ALL_POST", page, pageSize,params], // queryKey with userId
-    queryFn: async () => await getMyAllPostActions(page, pageSize,params),
+    queryKey: ["GET_MY_ALL_POST", page, pageSize, params], // queryKey with userId
+    queryFn: async () => await getMyAllPostActions(page, pageSize, params),
   });
 };
 
@@ -54,5 +59,16 @@ export const useMyAnalyticsData = () => {
   return useQuery({
     queryKey: ["MY_ANALYTICS"], // queryKey with userId
     queryFn: async () => await myAnalyticsAction(),
+  });
+};
+
+export const useAdminFindAllUser = (
+  page: number,
+  pageSize: number,
+  params: TQueryParams[]
+) => {
+  return useQuery({
+    queryKey: ["GET_MY_ALL_POST", page, pageSize, params], // queryKey with userId
+    queryFn: async () => await adminFindAllUserAction(page, pageSize, params),
   });
 };

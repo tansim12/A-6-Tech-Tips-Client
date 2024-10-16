@@ -1,11 +1,12 @@
-import React from 'react';
+import CManageUserPage from "@/src/pages/CManageUserPage";
+import React from "react";
 
-const ManageUser = () => {
-    return (
-        <div>
-            ManageUser
-        </div>
-    );
+const ManageUserPage = () => {
+  return (
+    <div>
+      <CManageUserPage />
+    </div>
+  );
 };
 
-export default ManageUser;
+export default ManageUserPage;
