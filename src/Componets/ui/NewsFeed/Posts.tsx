@@ -254,7 +254,7 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
 
           {pathName === "/" ? (
             <div>
-              {description?.length > 100 && (
+              {description?.length > 100 && premium !== false &&  (
                 <div>
                   <div
                     dangerouslySetInnerHTML={{
@@ -285,6 +285,13 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
               )}
 
               {description?.length < 100 && (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: description,
+                  }}
+                ></div>
+              )}
+              {description?.length > 100 &&  premium === false &&  (
                 <div
                   dangerouslySetInnerHTML={{
                     __html: description,
