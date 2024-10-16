@@ -64,9 +64,10 @@ const PostMenu = ({ post, user }: { post: TPost; user: TUser }) => {
   const defaultData = {
     title: post?.title,
     images: post?.images,
-    isDelete: post?.isDelete,
     description: post?.description,
     premium: post?.premium,
+    category: post?.category,
+    
   };
 
   return (
@@ -92,8 +93,8 @@ const PostMenu = ({ post, user }: { post: TPost; user: TUser }) => {
           {/* Set placement to 'bottomLeft' to open the dropdown to the left */}
           <DropdownMenu aria-label="Static Actions">
             <DropdownItem key="new">
-              <button
-                className="flex justify-center items-center gap-4"
+              <button 
+                className="flex justify-center items-center gap-4 w-full"
                 onClick={onOpen}
               >
                 <MdEdit /> Edit
@@ -102,7 +103,7 @@ const PostMenu = ({ post, user }: { post: TPost; user: TUser }) => {
 
             <DropdownItem key="delete" className="text-danger" color="danger">
               <button
-                className="flex justify-center items-center gap-4"
+                className="flex justify-center items-center gap-4 w-full"
                 onClick={handleDeletePost}
               >
                 <MdOutlineDeleteForever /> Delete

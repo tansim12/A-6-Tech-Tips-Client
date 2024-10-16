@@ -13,7 +13,6 @@ import CustomFileUpload from "../../Form/CustomFileUpload";
 import { uploadImagesToImgBB } from "@/src/utils/uploadImagesToImgBB";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPostSchema } from "@/src/Schemas/createPost.schema";
-import { useCreatePost } from "@/src/hooks/post.hook";
 import toast from "react-hot-toast";
 import Loading from "../Loading/Loading";
 import CustomButton from "../Button/CustomButton";
@@ -29,12 +28,7 @@ const UpdatePostForm = ({
   defaultData?: any;
 }) => {
   const router = useRouter();
-  const {
-    mutate: handleCreatePost,
-    isPending,
-    isSuccess,
-    isError,
-  } = useCreatePost();
+
   const [selectImages, setSelectImages] = useState([]);
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const images = await uploadImagesToImgBB(selectImages);
@@ -47,21 +41,21 @@ const UpdatePostForm = ({
       category: data?.category,
     };
 
-    handleCreatePost(payload as any);
+    console.log(payload);
   };
-  useEffect(() => {
-    if (isSuccess) {
-      onClose();
-      toast.success("Post Create Successfully done");
-    }
-    if (isError) {
-      toast?.error("Post Failed 😥");
-    }
-  }, [isSuccess, isError]);
+  //   useEffect(() => {
+  //     if (isSuccess) {
+  //       onClose();
+  //       toast.success("Post Create Successfully done");
+  //     }
+  //     if (isError) {
+  //       toast?.error("Post Failed 😥");
+  //     }
+  //   }, [isSuccess, isError]);
 
   return (
     <>
-      {isPending && <Loading />}
+      {/* {isPending && <Loading />} */}
       <div>
         <FXForm
           onSubmit={onSubmit}
@@ -77,6 +71,7 @@ const UpdatePostForm = ({
                 name="category"
                 options={categoryDataByLabel}
                 placeholder="Select Category"
+                defaultValue={[defaultData?.category]}
               />
             </div>
             <div className="basis-2/5">

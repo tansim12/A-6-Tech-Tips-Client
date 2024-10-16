@@ -32,6 +32,7 @@ const CustomToggle = ({
         render={({ field }) => (
           <Switch
             checked={field.value}
+            isSelected={field.value}
             onChange={(e:any) => field.onChange(e.target.checked)}
           >
          

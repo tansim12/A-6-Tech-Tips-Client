@@ -11,6 +11,7 @@ type TPHSelectProps = {
   mode?: "multiple" | undefined; // multiple selection mode
   isLabelColor?: boolean;
   placeholder?: string;
+  defaultValue?: string | string[]; // Allow default value to be a string or array
 };
 
 const CustomSelect = ({
@@ -21,6 +22,7 @@ const CustomSelect = ({
   mode,
   isLabelColor,
   placeholder,
+  defaultValue,
 }: TPHSelectProps) => {
   return (
     <div className={`${isLabelColor ? "custom-label" : ""}`}>
@@ -46,6 +48,7 @@ const CustomSelect = ({
               aria-label={label}
               size="lg"
               disabled={disabled}
+              defaultSelectedKeys={defaultValue} // Set default selected keys here
               placeholder={placeholder}
               {...field}
               className={isLabelColor ? "custom-dropdown" : ""}
