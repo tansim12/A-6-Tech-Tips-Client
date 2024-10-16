@@ -22,6 +22,14 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { HiDotsVertical } from "react-icons/hi";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/react";
+import PostMenu from "./PostMenu";
 
 interface IProps {
   post: TPost;
@@ -59,14 +67,6 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
     data: followAndUnFollowData,
     isPending: isFollowAndUnFollowPending,
   } = useFollowAndUnFollow();
-  const {
-    mutate: handleUpdatePostMute,
-    isError: isUpdatePostError,
-    data: updatePostData,
-    isPending: isUpdatePostPending,
-    isSuccess:isUpdatePost
-  } = useUpdatePost();
-
   useEffect(() => {
     if (isGiveReactError) {
       toast.error("Give React problem");
@@ -75,14 +75,11 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
       toast.error("Follow UnFollowError  problem");
     }
 
-    if (updatePostData || isUpdatePost) {
-      Swal.fire({
-        title: "Deleted!",
-        text: "Your file has been deleted.",
-        icon: "success",
-      });
-    }
-  }, [isGiveReactError, isFollowAndUnFollowError, updatePostData,isUpdatePost]);
+   
+  }, [
+    isGiveReactError,
+    isFollowAndUnFollowError,
+  ]);
 
   const handleGiveReactFn = () => {
     const payload = {
@@ -114,28 +111,7 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
     handleFollowAndUnFollow(payload);
   };
 
-  const handleDeletePost = () => {
-    const newPayload = {
-      postId: post?._id,
-      payload: {
-        isDelete: true,
-      },
-    };
 
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleUpdatePostMute(newPayload);
-      }
-    });
-  };
 
   return (
     <div className="mb-2 rounded-md bg-default-100 p-4">
@@ -201,14 +177,8 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
             </div>
           </div>
 
-          {/* delete options  */}
-          {isShowDeleteOption ? (
-            <button onClick={handleDeletePost}>
-              <MdOutlineDeleteForever size={30} color="red" />
-            </button>
-          ) : (
-            ""
-          )}
+          {/* dropdown edit and delete options  */}
+          {isShowDeleteOption ? <PostMenu post={post} user={loggedInUser as TUser} /> : ""}
         </div>
         <div className="border-b border-default-200 py-4">
           <div className="mb-4 flex items-start justify-between">
@@ -254,7 +224,7 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
 
           {pathName === "/" ? (
             <div>
-              {description?.length > 100 && premium !== false &&  (
+              {description?.length > 100 && premium !== false && (
                 <div>
                   <div
                     dangerouslySetInnerHTML={{
@@ -291,7 +261,7 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
                   }}
                 ></div>
               )}
-              {description?.length > 100 &&  premium === false &&  (
+              {description?.length > 100 && premium === false && (
                 <div
                   dangerouslySetInnerHTML={{
                     __html: description,

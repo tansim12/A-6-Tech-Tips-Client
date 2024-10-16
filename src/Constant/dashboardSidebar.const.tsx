@@ -1,7 +1,8 @@
 import { FaHome } from "react-icons/fa";
-
+import { TbTransactionDollar } from "react-icons/tb";
 import { ReactNode } from "react"; // Import ReactNode for JSX types
 import { FiHome, FiSettings, FiUsers } from "react-icons/fi";
+import { BsFillFileEarmarkPostFill } from "react-icons/bs";
 
 // Define the type for the sidebar items
 interface SidebarItem {
@@ -17,6 +18,10 @@ export const sidebarItems: { admin: SidebarItem[]; user: SidebarItem[] } = {
       name: "Dashboard",
       path: "/admin/dashboard",
       icon: <FaHome />,
+    }, {
+      name: "My Posts",
+      path: "/admin/my-posts",
+      icon: <BsFillFileEarmarkPostFill />,
     },
   ],
   user: [
@@ -26,9 +31,14 @@ export const sidebarItems: { admin: SidebarItem[]; user: SidebarItem[] } = {
       icon: <FiHome />,
     },
     {
+      name: "My Posts",
+      path: "/user/my-posts",
+      icon: <BsFillFileEarmarkPostFill />,
+    },
+    {
       name: "Payments",
       path: "/user/payment-history",
-      icon: <FiUsers />,
+      icon: <TbTransactionDollar />,
     },
   ],
 };
