@@ -63,7 +63,6 @@ const PostMenu = ({ post, user }: { post: TPost; user: TUser }) => {
 
   const defaultData = {
     title: post?.title,
-    images: post?.images,
     description: post?.description,
     premium: post?.premium,
     category: post?.category,
@@ -81,7 +80,7 @@ const PostMenu = ({ post, user }: { post: TPost; user: TUser }) => {
         size="4xl"
       >
         {" "}
-        <UpdatePostForm user={user as TUser} onClose={onClose as any} defaultData={defaultData} />
+        <UpdatePostForm user={user as TUser} onClose={onClose as any} defaultData={defaultData} oldImages={post?.images} postId={post?._id} />
       </CustomModal>{" "}
       <div>
         <Dropdown>

@@ -114,8 +114,6 @@ export const updatePostsAction = async (
   postId: string,
   payload: Partial<TPost>
 ) => {
-  console.log(postId,payload);
-  
   try { 
     const res = await axiosInstance.put(`/post/${postId}`, payload);
     return res?.data?.data;
