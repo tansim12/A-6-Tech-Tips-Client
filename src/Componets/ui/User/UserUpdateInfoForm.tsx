@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import FXForm from "../../Form/FXForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
@@ -13,6 +14,7 @@ const UserUpdateInfoForm = ({
   defaultValue: any;
   userId: string;
 }) => {
+    
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
   };
