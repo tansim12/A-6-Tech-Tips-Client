@@ -59,19 +59,7 @@ const CAdminDashboard = () => {
     value: item.revenue,
   }));
 
-  // Colors for the charts (if needed)
-  const colorMap = {
-    "Total Posts": "#ff7f0e",
-    "Premium Posts": "#1f77b4",
-    "Deleted Posts": "#d62728",
-    Readers: "#2ca02c",
-    Reactions: "#9467bd",
-    Comments: "#8c564b",
-    Shares: "#e377c2",
-    "Premium Users": "#bcbd22",
-    Payments: "#17becf",
-    Revenue: "#8884d8",
-  };
+
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">

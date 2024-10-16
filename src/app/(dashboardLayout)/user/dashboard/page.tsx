@@ -1,11 +1,11 @@
-import React from 'react';
+import MyAnalytics from "@/src/Componets/Shared/MyAnalytics";
 
-const UserDashboard = () => {
-    return (
-        <div>
-            UserDashboard
-        </div>
-    );
+const UserDashboardPage = () => {
+  return (
+    <div>
+      <MyAnalytics />
+    </div>
+  );
 };
 
-export default UserDashboard;
+export default UserDashboardPage;

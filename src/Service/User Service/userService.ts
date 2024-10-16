@@ -40,3 +40,11 @@ export const adminAnalyticsAction = async () => {
     handleApiError(error);
   }
 };
+export const myAnalyticsAction = async () => {
+  try {
+    const res = await axiosInstance.get(`/user-profile/my-analytics`);
+    return res?.data?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

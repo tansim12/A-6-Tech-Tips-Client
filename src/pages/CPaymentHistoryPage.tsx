@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-table";
 import moment from "moment";
 import { useFindMyAllPaymentInfo } from "../hooks/payment.hook";
-import Loading from "../Componets/ui/Loading/Loading";
+import ComponentsLoading from "../Componets/ui/Loading/ComponentsLoading";
 
 // Define your data type
 interface PaymentData {
@@ -77,7 +77,7 @@ const PaymentHistoryTable = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  if (isPending) return <Loading />;
+  if (isPending) return <ComponentsLoading />;
 
   return (
     <div className="container mx-auto p-4">
