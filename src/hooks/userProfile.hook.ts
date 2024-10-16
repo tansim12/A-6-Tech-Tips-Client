@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  adminAnalyticsAction,
   getMyAllPostActions,
   getUserProfileAction,
   updateUserInfoAction,
@@ -34,5 +35,12 @@ export const useUpdateUserProfile = () => {
       // Assuming the `payload` contains `userId` as part of the object, use it to revalidate the profile query.
       queryClient.invalidateQueries(["GET_USER_PROFILE", variables?._id,"GET_USER_DATA"] as any);
     },
+  });
+};
+
+export const useAdminAnalyticsData = () => {
+  return useQuery({
+    queryKey: ["ADMIN_ANALYTICS"], // queryKey with userId
+    queryFn: async () => await adminAnalyticsAction(),
   });
 };

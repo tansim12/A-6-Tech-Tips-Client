@@ -9,13 +9,11 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
         <DashboardNav />
       </div>
       <hr />
-      <div className="flex gap-5 justify-center  mt-8">
-        <div className="basis-2/12 hidden md:block">
+      <div className=" flex flex-col md:flex md:flex-row gap-5 justify-center mt-8">
+        <div className="basis-2/12">
           <DashboardSidebar />
         </div>
-        <div className="basis-10/12 ">
-         {children}
-        </div>
+        <div className="basis-10/12 ">{children}</div>
       </div>
     </div>
   );

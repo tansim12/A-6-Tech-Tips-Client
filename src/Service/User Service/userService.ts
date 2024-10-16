@@ -27,6 +27,15 @@ export const getMyAllPostActions = async (page: number, pageSize: number) => {
 export const updateUserInfoAction = async (payload: Partial<TUserProfile>) => {
   try {
     const res = await axiosInstance.put(`/user-profile`, payload);
+    return res?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+export const adminAnalyticsAction = async () => {
+  try {
+    const res = await axiosInstance.get(`/user-profile/admin-analytics`);
+    return res?.data?.data;
   } catch (error) {
     handleApiError(error);
   }
