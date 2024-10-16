@@ -14,15 +14,21 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
+  useDisclosure,
 } from "@nextui-org/react";
 import moment from "moment";
 import CustomPagination from "../Componets/Shared/CustomPagination";
 import { FiSearch } from "react-icons/fi";
 import CreateAtSort from "../Componets/Shared/CreateAtSort";
-import { FaSort } from "react-icons/fa";
+import { FaEdit, FaSort } from "react-icons/fa";
 import NoFoundData from "../Componets/ui/No Found/NoFoundData";
+import CustomModal from "../Componets/ui/Custom Modal/CustomModal";
+import UserUpdateInfoForm from "../Componets/ui/User/UserUpdateInfoForm";
+import { TUser } from "../Types/User/user.types";
 
 const CManageUserPage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [backdrop, _setBackdrop] = useState("blur");
   const [sortValue, setSortValue] = useState("-createdAt");
   const handleSort = () => {
     setSortValue((prev) =>
@@ -60,17 +66,42 @@ const CManageUserPage = () => {
   ]);
 
   const [meta, setMeta] = useState(allUserData?.meta);
-
+  const [defaultValue, setDefaultValue] = useState({});
+  const [userId, setUserId] = useState("");
   useEffect(() => {
     if (isAllUserError) {
       toast.error("All user data get problem");
     }
   }, []);
+
+  const handleEditProfile = (userProfile: Partial<TUser>) => {
+    const payload = {
+      isDelete: userProfile?.isDelete,
+      isVerified: userProfile?.isVerified,
+      name: userProfile?.name,
+      role: userProfile?.role,
+      status: userProfile?.status,
+    };
+    setDefaultValue(payload);
+    setUserId(userProfile?._id as string);
+  };
+
   return (
     <div>
+      {/* modal section  */}
 
-{/* modal section  */}
-
+      <div>
+        <CustomModal
+          title="Edit User"
+          isOpen={isOpen}
+          backdrop={backdrop as "opaque" | "blur" | "transparent"}
+          onCancel={onClose}
+          cancelText="Cancel"
+          size="4xl"
+        >
+          <UserUpdateInfoForm defaultValue={defaultValue} userId={userId} />
+        </CustomModal>{" "}
+      </div>
 
       {/* sort and filter section  */}
       <div className=" flex justify-end items-center gap-5 my-4  ">
@@ -156,8 +187,16 @@ const CManageUserPage = () => {
                         {moment(user.createdAt).format("ll")}
                       </TableCell>
                       <TableCell>
-                        <Button color="primary" size="sm">
-                          View Profile
+                        <Button
+                          onClick={() => {
+                            onOpen();
+                            handleEditProfile(user);
+                          }}
+                          className=" flex justify-center items-center gap-3"
+                          color="primary"
+                          size="sm"
+                        >
+                          <FaEdit /> Edit
                         </Button>
                       </TableCell>
                     </TableRow>
