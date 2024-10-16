@@ -121,3 +121,34 @@ export const updatePostsAction = async (
     handleApiError(error);
   }
 };
+
+
+
+// admin get all post 
+export const adminGetAllPostAction = async (
+  page: number,
+  pageSize: number,
+  args: TQueryParams[]
+) => {
+  try {
+    // Create a new URLSearchParams object to build query params
+    const params = new URLSearchParams();
+
+    params.append("page", page.toString());
+    params.append("limit", pageSize.toString());
+
+    // Loop through the args to dynamically append query parameters
+    if (args) {
+      args.forEach((item: TQueryParams) => {
+        params.append(item.name, String(item.value)); // Convert value to string
+      });
+    }
+
+ const res  = await axiosInstance.get(`/post/all-posts?${params.toString()}`)
+
+ return res?.data?.data
+  } catch (error: any) {
+    handleApiError(error);
+   
+  }
+};

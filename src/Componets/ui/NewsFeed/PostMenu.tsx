@@ -108,6 +108,7 @@ const PostMenu = ({ post, user }: { post: TPost; user: TUser }) => {
                 <MdOutlineDeleteForever /> Delete
               </button>
             </DropdownItem>
+           
           </DropdownMenu>
         </Dropdown>
       </div>

@@ -3,6 +3,7 @@ import { TbTransactionDollar } from "react-icons/tb";
 import { ReactNode } from "react"; // Import ReactNode for JSX types
 import { FiHome, FiSettings, FiUsers } from "react-icons/fi";
 import { BsFillFileEarmarkPostFill } from "react-icons/bs";
+import { MdOutlineManageSearch } from "react-icons/md";
 
 // Define the type for the sidebar items
 interface SidebarItem {
@@ -18,10 +19,16 @@ export const sidebarItems: { admin: SidebarItem[]; user: SidebarItem[] } = {
       name: "Dashboard",
       path: "/admin/dashboard",
       icon: <FaHome />,
-    }, {
+    },
+    {
       name: "My Posts",
       path: "/admin/my-posts",
       icon: <BsFillFileEarmarkPostFill />,
+    },
+    {
+      name: "Manage Posts",
+      path: "/admin/manage-posts",
+      icon: <MdOutlineManageSearch />,
     },
   ],
   user: [

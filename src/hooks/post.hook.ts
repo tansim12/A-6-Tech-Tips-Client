@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  adminGetAllPostAction,
   commentDeleteAction,
   commentReplyAction,
   createCommentAction,
@@ -120,7 +121,7 @@ export const useFollowAndUnFollow = () => {
 export const useUpdatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: ["UPDATE_POST"], 
+    mutationKey: ["UPDATE_POST"],
     mutationFn: async ({
       postId,
       payload,
@@ -129,7 +130,21 @@ export const useUpdatePost = () => {
       payload: Partial<TPost>;
     }) => await updatePostsAction(postId, payload),
     onSuccess: () => {
-      queryClient.invalidateQueries(["GET_RECENT_POST_DATA","GET_MY_ALL_POST"] as any);
+      queryClient.invalidateQueries([
+        "GET_RECENT_POST_DATA",
+        "GET_MY_ALL_POST",
+      ] as any);
     },
+  });
+};
+
+export const useAdminGetAllPosts = (
+  page: number,
+  pageSize: number,
+  params: TQueryParams[]
+) => {
+  return useQuery({
+    queryKey: ["GET_ADMIN_ALL_POST", page, pageSize, params], // queryKey with userId
+    queryFn: async () => await adminGetAllPostAction(page, pageSize, params),
   });
 };

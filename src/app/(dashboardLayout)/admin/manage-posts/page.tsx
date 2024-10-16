@@ -1,11 +1,12 @@
-import React from 'react';
+import CAdminManagePosts from "@/src/pages/CAdminManagePosts";
+import React from "react";
 
-const ManagePost = () => {
-    return (
-        <div>
-            ManagePost
-        </div>
-    );
+const AdminManagePosts = () => {
+  return (
+    <div>
+      <CAdminManagePosts />
+    </div>
+  );
 };
 
-export default ManagePost;
+export default AdminManagePosts;
