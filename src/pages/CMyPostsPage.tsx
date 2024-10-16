@@ -6,14 +6,9 @@ import Post from "../Componets/ui/NewsFeed/Posts";
 import NoFoundData from "../Componets/ui/No Found/NoFoundData";
 import ComponentsLoading from "../Componets/ui/Loading/ComponentsLoading";
 import { TQueryParams } from "../Types/Filter/filter.type";
-import { FaSortAmountDownAlt, FaSortAmountUp } from "react-icons/fa";
+
 
 import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
   Input,
 } from "@nextui-org/react";
 import { FiSearch } from "react-icons/fi";
@@ -91,9 +86,6 @@ const CMyPostsPage = () => {
           </div>
         </div>
       </div>
-
-      {/* {isMyAllPostDataLoading && <ComponentsLoading />} */}
-
       <div className="">
         {myAllPostData?.result?.length
           ? myAllPostData?.result?.map((item: any) => (
