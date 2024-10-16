@@ -2,13 +2,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   adminAnalyticsAction,
   adminFindAllUserAction,
+  adminUserUpdateAction,
   getMyAllPostActions,
   getUserProfileAction,
   myAnalyticsAction,
   updateUserInfoAction,
 } from "../Service/User Service/userService";
 import { TPost } from "../Types/Posts/post.type";
-import { TUserProfile } from "../Types/User/user.types";
+import { TUser, TUserProfile } from "../Types/User/user.types";
 import { TQueryParams } from "../Types/Filter/filter.type";
 
 // Custom hook to fetch user data
@@ -68,7 +69,33 @@ export const useAdminFindAllUser = (
   params: TQueryParams[]
 ) => {
   return useQuery({
-    queryKey: ["GET_MY_ALL_POST", page, pageSize, params], // queryKey with userId
+    queryKey: ["ADMIN_FIND_ALL_USER", page, pageSize, params], // queryKey with userId
     queryFn: async () => await adminFindAllUserAction(page, pageSize, params),
+  });
+};
+
+export const useAdminUserProfileUpdate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["ADMIN_UPDATE_USER_INFO"], // A unique mutation key
+    mutationFn: async ({
+      userId,
+      payload,
+    }: {
+      userId: string;
+      payload: Partial<TUser>;
+    }) => {
+      return await adminUserUpdateAction(userId, payload); // Perform the API call to update user info
+    },
+    onSuccess: (_data, variables) => {
+      // Revalidate queries based on userId or other parameters
+      queryClient.invalidateQueries(["ADMIN_FIND_ALL_USER"] as any); // Invalidate the admin users list
+      queryClient.invalidateQueries(["GET_USER_PROFILE", variables?.userId] as any); // Invalidate the user profile query
+      queryClient.invalidateQueries(["GET_USER_DATA"] as any); // Invalidate any other user data related queries
+    },
+    onError: (error) => {
+      console.error("Error updating user profile:", error);
+    },
   });
 };

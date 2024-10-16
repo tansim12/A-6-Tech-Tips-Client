@@ -16,19 +16,12 @@ import { AiFillLike } from "react-icons/ai";
 import {
   useFollowAndUnFollow,
   useGiveReact,
-  useUpdatePost,
+
 } from "@/src/hooks/post.hook";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
-import Swal from "sweetalert2";
-import { HiDotsVertical } from "react-icons/hi";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@nextui-org/react";
+
 import PostMenu from "./PostMenu";
 
 interface IProps {

@@ -1,11 +1,14 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import FXForm from "../../Form/FXForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import CustomInput from "../../Form/CustomInput";
 import CustomToggle from "../../Form/CustomToggle";
 import CustomSelect from "../../Form/CustomSelect";
 import CustomButton from "../Button/CustomButton";
+import { useAdminUserProfileUpdate } from "@/src/hooks/userProfile.hook";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const UserUpdateInfoForm = ({
   defaultValue,
@@ -14,9 +17,49 @@ const UserUpdateInfoForm = ({
   defaultValue: any;
   userId: string;
 }) => {
+  const {
+    mutate: handleUserInfoUpdate,
+    isPending,
+    data: updatedUserData,
+    isError,
+    isSuccess,
+  } = useAdminUserProfileUpdate();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("User Info update error");
+    }
+
+    console.log(updatedUserData);
     
+    if (isSuccess || updatedUserData) {
+      toast.success("User Update Successfully done");
+      Swal.fire({
+        title: "Updated!",
+        text: "Your file has been updated.",
+        icon: "success",
+      });
+    }
+  }, [isError, isSuccess, updatedUserData]);
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    const newPayload = {
+      userId,
+      payload: { ...data },
+    };
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Update it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleUserInfoUpdate(newPayload as any);
+      }
+    });
   };
   return (
     <div>

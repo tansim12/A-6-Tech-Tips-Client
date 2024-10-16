@@ -1,7 +1,7 @@
 "use server";
 import { handleApiError } from "@/src/hooks/handleApiError";
 import { axiosInstance } from "../axios/axiosInstance";
-import { TUserProfile } from "@/src/Types/User/user.types";
+import { TUser, TUserProfile } from "@/src/Types/User/user.types";
 import { TQueryParams } from "@/src/Types/Filter/filter.type";
 
 export const getUserProfileAction = async () => {
@@ -89,4 +89,17 @@ export const adminFindAllUserAction = async (
   }
 };
 
-
+export const adminUserUpdateAction = async (
+  userId: string,
+  payload: Partial<TUser>
+) => {
+  try {
+    const res = await axiosInstance.put(
+      `/user/profile-update/${userId}`,
+      payload
+    );
+    return res?.data?.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
