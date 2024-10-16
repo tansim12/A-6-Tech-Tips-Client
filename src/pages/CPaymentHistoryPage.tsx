@@ -11,8 +11,8 @@ import {
   Pagination,
 } from "@nextui-org/react";
 import { useFindMyAllPaymentInfo } from "../hooks/payment.hook";
-import Loading from "../Componets/ui/Loading/Loading";
 import moment from "moment";
+import ComponentsLoading from "../Componets/ui/Loading/ComponentsLoading";
 
 const PaymentHistoryTable = () => {
   const { data, isPending } = useFindMyAllPaymentInfo([] as any);
@@ -29,7 +29,7 @@ const PaymentHistoryTable = () => {
     return paymentData.slice(start, end);
   }, [page, paymentData]);
 
-  if (isPending) return <Loading />;
+  if (isPending) return <ComponentsLoading />;
 
   return (
     <div className="container mx-auto p-4">
