@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableHeader,
@@ -13,23 +13,25 @@ import {
 import { useFindMyAllPaymentInfo } from "../hooks/payment.hook";
 import moment from "moment";
 import ComponentsLoading from "../Componets/ui/Loading/ComponentsLoading";
+import CustomPagination from "../Componets/Shared/CustomPagination";
 
 const PaymentHistoryTable = () => {
-  const { data, isPending } = useFindMyAllPaymentInfo([] as any);
+  // Move useState to the top of the component to avoid breaking React's rules of hooks
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
-  const paymentData = data?.result || [];
-  const meta = data?.meta || { page: 1, limit: 10, total: 0, totalPage: 1 };
+  // Fetch payment history data
+  const { data: paymentHistoryData, isPending } = useFindMyAllPaymentInfo(
+    page,
+    pageSize,
+    []
+  );
 
-  const [page, setPage] = useState(meta.page);
-  const rowsPerPage = meta.limit;
-
-  const items = useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    return paymentData.slice(start, end);
-  }, [page, paymentData]);
-
+  // Handle loading state
   if (isPending) return <ComponentsLoading />;
+
+  // Extract metadata from API response (if available)
+  const meta = paymentHistoryData?.meta || { total: 0 };
 
   return (
     <div className="container mx-auto p-4">
@@ -37,19 +39,6 @@ const PaymentHistoryTable = () => {
       <div className="overflow-x-auto">
         <Table
           aria-label="Payment History Table with Pagination"
-          bottomContent={
-            <div className="flex w-full justify-center">
-              <Pagination
-                isCompact
-                showControls
-                showShadow
-                color="secondary"
-                page={page}
-                total={meta.totalPage}
-                onChange={(page) => setPage(page)}
-              />
-            </div>
-          }
           className="min-w-full table-auto"
         >
           <TableHeader>
@@ -63,7 +52,7 @@ const PaymentHistoryTable = () => {
             <TableColumn>Updated At</TableColumn>
           </TableHeader>
           <TableBody>
-            {items.map((item: any) => (
+            {paymentHistoryData?.result?.map((item: any) => (
               <TableRow key={item._id}>
                 <TableCell>{item.userId.name}</TableCell>
                 <TableCell>{item.userId.email}</TableCell>
@@ -77,6 +66,17 @@ const PaymentHistoryTable = () => {
             ))}
           </TableBody>
         </Table>
+      </div>
+
+      {/* Pagination Component */}
+      <div className="flex justify-center items-center w-full">
+        <CustomPagination
+          page={page}
+          pageSize={pageSize}
+          setPage={setPage}
+          setPageSize={setPageSize}
+          total={meta?.total}
+        />
       </div>
     </div>
   );

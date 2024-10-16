@@ -4,6 +4,7 @@ import {
   myAllPaymentInfoAction,
 } from "../Service/Payment";
 import { TPaymentInfo } from "../Types/Payment Info/paymentInfo.type";
+import { TQueryParams } from "../Types/Filter/filter.type";
 
 export const useCreatePayment = () => {
   const queryClient = useQueryClient();
@@ -19,9 +20,13 @@ export const useCreatePayment = () => {
   });
 };
 
-export const useFindMyAllPaymentInfo = (query: Partial<TPaymentInfo>) => {
+export const useFindMyAllPaymentInfo = (
+  page: number,
+  pageSize: number,
+  params: TQueryParams[]
+) => {
   return useQuery({
-    queryKey: ["MY_ALL_PAYMENT_INFO", query],
-    queryFn: async () => await myAllPaymentInfoAction(query),
+    queryKey: ["MY_ALL_PAYMENT_INFO", , page, pageSize, params],
+    queryFn: async () => await myAllPaymentInfoAction(page, pageSize, params),
   });
 };
