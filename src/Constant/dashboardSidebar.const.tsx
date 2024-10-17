@@ -3,7 +3,11 @@ import { TbTransactionDollar } from "react-icons/tb";
 import { ReactNode } from "react"; // Import ReactNode for JSX types
 import { FiHome, FiSettings, FiUsers } from "react-icons/fi";
 import { BsFillFileEarmarkPostFill } from "react-icons/bs";
-import { MdOutlineManageAccounts, MdOutlineManageSearch } from "react-icons/md";
+import {
+  MdOutlineManageAccounts,
+  MdOutlineManageSearch,
+  MdPayment,
+} from "react-icons/md";
 
 // Define the type for the sidebar items
 interface SidebarItem {
@@ -34,6 +38,11 @@ export const sidebarItems: { admin: SidebarItem[]; user: SidebarItem[] } = {
       name: "Manage User",
       path: "/admin/manage-user",
       icon: <MdOutlineManageAccounts />,
+    },
+    {
+      name: "Manage Payment",
+      path: "/admin/manage-payment",
+      icon: <MdPayment />,
     },
   ],
   user: [

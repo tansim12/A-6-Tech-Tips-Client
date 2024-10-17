@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  adminGetsAllPaymentInfoAction,
+  adminUpdatePaymentInfoAction,
   createPaymentAction,
   myAllPaymentInfoAction,
 } from "../Service/Payment";
-import { TPaymentInfo } from "../Types/Payment Info/paymentInfo.type";
 import { TQueryParams } from "../Types/Filter/filter.type";
 
 export const useCreatePayment = () => {
@@ -28,5 +29,33 @@ export const useFindMyAllPaymentInfo = (
   return useQuery({
     queryKey: ["MY_ALL_PAYMENT_INFO", , page, pageSize, params],
     queryFn: async () => await myAllPaymentInfoAction(page, pageSize, params),
+  });
+};
+export const useAdminGetsAllPaymentsInfo = (
+  page: number,
+  pageSize: number,
+  params: TQueryParams[]
+) => {
+  return useQuery({
+    queryKey: ["ADMIN_GETS_ALL_PAYMENT_INFO", page, pageSize, params],
+    queryFn: async () =>
+      await adminGetsAllPaymentInfoAction(page, pageSize, params),
+  });
+};
+
+export const useAdminPaymentInfoUpdate = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["PAYMENT_INFO_UPDATE"],
+    mutationFn: async ({
+      paymentId,
+      payload,
+    }: {
+      paymentId: string;
+      payload: any;
+    }) => await adminUpdatePaymentInfoAction(paymentId, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["ADMIN_GETS_ALL_PAYMENT_INFO"] as any);
+    },
   });
 };
