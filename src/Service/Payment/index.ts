@@ -1,7 +1,6 @@
 "use server";
 import { handleApiError } from "@/src/hooks/handleApiError";
 import { axiosInstance } from "../axios/axiosInstance";
-import { TPaymentInfo } from "@/src/Types/Payment Info/paymentInfo.type";
 import { TQueryParams } from "@/src/Types/Filter/filter.type";
 
 export const createPaymentAction = async (payload: any) => {
