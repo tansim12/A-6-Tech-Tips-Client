@@ -13,11 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import CommentSystem from "./CommentSystem";
 import { TComment } from "@/src/Types/Posts/comments.type";
 import { AiFillLike } from "react-icons/ai";
-import {
-  useFollowAndUnFollow,
-  useGiveReact,
-
-} from "@/src/hooks/post.hook";
+import { useFollowAndUnFollow, useGiveReact } from "@/src/hooks/post.hook";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
@@ -34,7 +30,6 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
   const {
     description,
     _id,
-
     images,
     userId,
     premium,
@@ -42,6 +37,7 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
     createdAt,
     comments,
     react,
+    shareCount,
   } = post || {};
   const router = useRouter();
   const { name, email, profilePhoto } = (userId as TUser) || {};
@@ -67,12 +63,7 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
     if (isFollowAndUnFollowError) {
       toast.error("Follow UnFollowError  problem");
     }
-
-   
-  }, [
-    isGiveReactError,
-    isFollowAndUnFollowError,
-  ]);
+  }, [isGiveReactError, isFollowAndUnFollowError]);
 
   const handleGiveReactFn = () => {
     const payload = {
@@ -103,8 +94,6 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
     };
     handleFollowAndUnFollow(payload);
   };
-
-
 
   return (
     <div className="mb-2 rounded-md bg-default-100 p-4">
@@ -171,7 +160,11 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
           </div>
 
           {/* dropdown edit and delete options  */}
-          {isShowDeleteOption ? <PostMenu post={post} user={loggedInUser as TUser} /> : ""}
+          {isShowDeleteOption ? (
+            <PostMenu post={post} user={loggedInUser as TUser} />
+          ) : (
+            ""
+          )}
         </div>
         <div className="border-b border-default-200 py-4">
           <div className="mb-4 flex items-start justify-between">
@@ -293,6 +286,10 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
               className="flex-1"
               variant="light"
             >
+              <span className="text-xl font-semibold">
+                {" "}
+                {`(${react?.length ? react?.length : 0})`}
+              </span>
               <AiFillLike className="text-primary" size={40} />
             </Button>
           ) : (
@@ -304,10 +301,18 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
               className="flex-1"
               variant="light"
             >
+              <span className="text-xl font-semibold">
+                {" "}
+                {`(${react?.length ? react?.length : 0})`}
+              </span>
               <AiFillLike size={40} />
             </Button>
           )}
           <Button className="flex-1" variant="light">
+            <span className="text-xl font-semibold">
+              {" "}
+              {`(${shareCount > 0 ? shareCount : 0})`}
+            </span>
             Share
             <FaShare />
           </Button>

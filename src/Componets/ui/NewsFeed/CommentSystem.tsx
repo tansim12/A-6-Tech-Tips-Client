@@ -130,7 +130,13 @@ const CommentSystem = ({
   return (
     <div>
       <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-2">Comments</h3>
+        <h3 className="text-lg font-semibold mb-2">
+          Comments{" "}
+          <span className="text-xl font-semibold">
+            {" "}
+            {`(${comments?.length ? comments?.length : ""})`}
+          </span>
+        </h3>
 
         {/* Add Comment Form */}
         <div className="flex items-start gap-3 mb-4">

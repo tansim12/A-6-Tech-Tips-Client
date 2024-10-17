@@ -56,15 +56,16 @@ export const useGetSinglePost = (postId: string) => {
 };
 
 export const useCreateComment = () => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["CREATE_COMMENT"],
 
     mutationFn: async ({ postId, payload }: { postId: string; payload: any }) =>
       await createCommentAction(postId, payload),
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any);
-    // },
+    onSuccess: () => {
+      // Invalidate the recent post data query
+      queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any); // Use the relevant query key for recent posts
+    },
   });
 };
 export const useCommentDelete = () => {
@@ -81,7 +82,7 @@ export const useCommentDelete = () => {
 };
 
 export const useCommentReplies = () => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["COMMENT_REPLIES"],
 
@@ -92,28 +93,37 @@ export const useCommentReplies = () => {
       commentId: string;
       payload: any;
     }) => await commentReplyAction(commentId, payload),
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any);
-    // },
+    onSuccess: () => {
+      // Invalidate the recent post data query
+      queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any); // Use the relevant query key for recent posts
+    },
   });
 };
 export const useGiveReact = () => {
-  // const queryClient = useQueryClient(); // Uncomment if needed
+  const queryClient = useQueryClient(); // Uncomment if needed
   return useMutation({
     mutationKey: ["GIVE_REACT"],
     mutationFn: async (payload: GiveReactPayload) => {
       const { postId, isDelete } = payload;
       return await giveReactAction(postId, { isDelete });
     },
+    onSuccess: () => {
+      // Invalidate the recent post data query
+      queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any); // Use the relevant query key for recent posts
+    },
   });
 };
 export const useFollowAndUnFollow = () => {
-  // const queryClient = useQueryClient(); // Uncomment if needed
+  const queryClient = useQueryClient(); // Uncomment if needed
   return useMutation({
     mutationKey: ["FOLLOW_AND_UNFOLLOW"],
     mutationFn: async (payload: TPayload) => {
       const { userId, isCreateFollowing } = payload;
       return await followAndUnFollowAction(userId, { isCreateFollowing });
+    },
+    onSuccess: () => {
+      // Invalidate the recent post data query
+      queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any); // Use the relevant query key for recent posts
     },
   });
 };

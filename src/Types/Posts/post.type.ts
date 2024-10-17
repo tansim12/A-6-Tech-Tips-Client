@@ -19,6 +19,7 @@ export enum TPostCategory {
 }
 
 export type TPost = {
+  shareCount: number;
   title: string;
   _id: string;
   userId?: string | TUser;
