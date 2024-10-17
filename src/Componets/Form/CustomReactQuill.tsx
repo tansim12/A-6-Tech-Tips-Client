@@ -1,8 +1,11 @@
+"use client"
+
+import dynamic from "next/dynamic";
 import { Controller } from "react-hook-form";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import React Quill styles
 import "./labelColor.css"; // Ensure this CSS file is imported
-
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 type TInputProps = {
   name: string;
   label?: string;

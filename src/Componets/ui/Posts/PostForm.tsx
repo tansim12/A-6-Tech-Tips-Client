@@ -89,6 +89,7 @@ const PostForm = ({ user, onClose }: { user: TUser; onClose: any }) => {
             label="Images"
           />
           <div className="mb-16">
+            {/* @ts-ignore */}
             <CustomReactQuill name="description" label="Description" />
           </div>
 

@@ -136,6 +136,7 @@ const UpdatePostForm = ({
           />
 
           <div className="mb-16">
+            {/* @ts-ignore */}
             <CustomReactQuill name="description" label="Description" />
           </div>
 

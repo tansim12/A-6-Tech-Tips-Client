@@ -174,6 +174,7 @@ const CProfilePage = ({ params }: { params: any }) => {
               defaultValues={{ bio: userProfileData?.bio }}
             >
               <div className="mb-16">
+                {/* @ts-ignore */}
                 <CustomReactQuill name="bio" label="Bio" />
               </div>
               <CustomButton name="Submit" />
