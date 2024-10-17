@@ -11,7 +11,11 @@ const CPostDetailsPage = ({ params }: { params: any }) => {
     <div>
       {isPending && <Loading />}
       <div className="container mx-auto p-3">
-        {data ? <Post post={data} /> : !isPending && <NoFoundData />}
+        {data ? (
+          <Post post={data} isCheck={true} />
+        ) : (
+          !isPending && <NoFoundData />
+        )}
       </div>
     </div>
   );

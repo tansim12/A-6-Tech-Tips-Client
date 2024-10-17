@@ -19,13 +19,19 @@ import toast from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
 
 import PostMenu from "./PostMenu";
+import SharePost from "./SharePost";
 
 interface IProps {
   post: TPost;
   isShowDeleteOption?: boolean;
+  isCheck?: boolean;
 }
 
-export default function Post({ post, isShowDeleteOption = false }: IProps) {
+export default function Post({
+  post,
+  isShowDeleteOption = false,
+  isCheck = false,
+}: IProps) {
   const pathName = usePathname();
   const {
     description,
@@ -44,6 +50,11 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
   const { user: loggedInUser } = useUser();
   const dayDifference = Number(moment().diff(moment(createdAt), "days"));
 
+  if (isCheck) {
+    if (loggedInUser?.isVerified===false && post?.premium) {
+     router.push("/all-package")
+    }
+  }
   const {
     mutate: handleGiveReact,
     isError: isGiveReactError,
@@ -308,14 +319,17 @@ export default function Post({ post, isShowDeleteOption = false }: IProps) {
               <AiFillLike size={40} />
             </Button>
           )}
-          <Button className="flex-1" variant="light">
+          {/* <Button className="flex-1" variant="light">
             <span className="text-xl font-semibold">
               {" "}
               {`(${shareCount > 0 ? shareCount : 0})`}
             </span>
             Share
             <FaShare />
-          </Button>
+          </Button> */}
+          <div className="flex-1">
+            <SharePost postId={post?._id} shareCount={shareCount} />
+          </div>
         </div>
       </div>
 
