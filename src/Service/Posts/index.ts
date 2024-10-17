@@ -109,12 +109,11 @@ export const followAndUnFollowAction = async (userId: string, payload: any) => {
   }
 };
 
-
 export const updatePostsAction = async (
   postId: string,
   payload: Partial<TPost>
 ) => {
-  try { 
+  try {
     const res = await axiosInstance.put(`/post/${postId}`, payload);
     return res?.data?.data;
   } catch (error) {
@@ -122,9 +121,7 @@ export const updatePostsAction = async (
   }
 };
 
-
-
-// admin get all post 
+// admin get all post
 export const adminGetAllPostAction = async (
   page: number,
   pageSize: number,
@@ -144,11 +141,21 @@ export const adminGetAllPostAction = async (
       });
     }
 
- const res  = await axiosInstance.get(`/post/all-posts?${params.toString()}`)
+    const res = await axiosInstance.get(`/post/all-posts?${params.toString()}`);
 
- return res?.data?.data
+    return res?.data?.data;
   } catch (error: any) {
     handleApiError(error);
-   
+  }
+};
+
+// update share count
+
+export const updateShareCountAction = async (postId: string, payload: any) => {
+  try {
+    const res = await axiosInstance.put(`/post/post-share/${postId}`, payload);
+    return res?.data?.data;
+  } catch (error) {
+    handleApiError(error);
   }
 };

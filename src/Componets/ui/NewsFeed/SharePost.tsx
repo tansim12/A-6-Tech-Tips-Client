@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import {
   FacebookShareButton,
@@ -13,6 +13,7 @@ import {
 import { Button } from "@nextui-org/react"; // Import Button from Next UI
 import { FaShare } from "react-icons/fa"; // Ensure you have react-icons installed
 import envConfig from "@/src/config/envConfig";
+import { useUpdateShareCount } from "@/src/hooks/post.hook";
 
 const SharePost = ({
   postId,
@@ -21,6 +22,8 @@ const SharePost = ({
   postId: string;
   shareCount: number;
 }) => {
+  const { mutate: handleUpdateShareCount } = useUpdateShareCount();
+
   const [shareUrl, setSharePost] = useState(
     `${envConfig.frontendUrl}/post/${postId}`
   );
@@ -28,6 +31,11 @@ const SharePost = ({
 
   const handleShare = () => {
     console.log(`Shared post ID: ${postId}`);
+    const newPayload = {
+      postId,
+      payload: { isShare: true },
+    };
+    handleUpdateShareCount(newPayload);
     // You can also perform any additional actions when the share button is clicked
   };
 

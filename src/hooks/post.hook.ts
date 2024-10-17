@@ -10,6 +10,7 @@ import {
   getSinglePostAction,
   giveReactAction,
   updatePostsAction,
+  updateShareCountAction,
 } from "../Service/Posts";
 import { TQueryParams } from "../Types/Filter/filter.type";
 import { TPost } from "../Types/Posts/post.type";
@@ -156,5 +157,17 @@ export const useAdminGetAllPosts = (
   return useQuery({
     queryKey: ["GET_ADMIN_ALL_POST", page, pageSize, params], // queryKey with userId
     queryFn: async () => await adminGetAllPostAction(page, pageSize, params),
+  });
+};
+
+export const useUpdateShareCount = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["UPDATE_SHARE_COUNT"],
+    mutationFn: async ({ postId, payload }: { postId: string; payload: any }) =>
+      await updateShareCountAction(postId, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["GET_RECENT_POST_DATA"] as any);
+    },
   });
 };
