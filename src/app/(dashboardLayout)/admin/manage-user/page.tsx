@@ -1,4 +1,4 @@
-import CManageUserPage from "@/src/pages/CManageUserPage";
+import CManageUserPage from "@/src/AllComponetsPages/CManageUserPage";
 import React from "react";
 
 const ManageUserPage = () => {

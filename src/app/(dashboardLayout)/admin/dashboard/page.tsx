@@ -1,12 +1,12 @@
-import CAdminDashboard from '@/src/pages/CAdminDashboard';
-import React from 'react';
+import CAdminDashboard from "@/src/AllComponetsPages/CAdminDashboard";
+import React from "react";
 
 const AdminDashboard = () => {
-    return (
-        <div>
-           <CAdminDashboard />
-        </div>
-    );
+  return (
+    <div>
+      <CAdminDashboard />
+    </div>
+  );
 };
 
 export default AdminDashboard;

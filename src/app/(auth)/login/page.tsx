@@ -1,4 +1,4 @@
-import CLoginPage from "@/src/pages/CLoginPage";
+import CLoginPage from "@/src/AllComponetsPages/CLoginPage";
 import React from "react";
 
 const LoginPage = () => {

@@ -1,4 +1,4 @@
-import CRegisterPage from "@/src/pages/CRegisterPage";
+import CRegisterPage from "@/src/AllComponetsPages/CRegisterPage";
 import React from "react";
 
 const RegisterPage = () => {

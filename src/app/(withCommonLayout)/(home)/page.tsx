@@ -1,4 +1,4 @@
-import CHomePage from "@/src/pages/CHomePage";
+import CHomePage from "@/src/AllComponetsPages/CHomePage";
 import React from "react";
 
 const HomePage = () => {

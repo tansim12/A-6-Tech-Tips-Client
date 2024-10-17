@@ -1,9 +1,9 @@
-import CPostDetailsPage from "@/src/pages/CPostDetailsPage";
+import CPostDetailsPage from "@/src/AllComponetsPages/CPostDetailsPage";
 
-const PostDetailsPage = ({params}:{params:any}) => {
+const PostDetailsPage = ({ params }: { params: any }) => {
   return (
     <div>
-      <CPostDetailsPage params={params}/>
+      <CPostDetailsPage params={params} />
     </div>
   );
 };

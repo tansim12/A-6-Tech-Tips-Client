@@ -1,12 +1,12 @@
-import CPaymentFailedPage from '@/src/pages/CPaymentFailedPage';
-import React from 'react';
+import CPaymentFailedPage from "@/src/AllComponetsPages/CPaymentFailedPage";
+import React from "react";
 
 const PaymentFailedPage = () => {
-    return (
-        <div>
-            <CPaymentFailedPage />
-        </div>
-    );
+  return (
+    <div>
+      <CPaymentFailedPage />
+    </div>
+  );
 };
 
 export default PaymentFailedPage;

@@ -1,4 +1,4 @@
-import CAdminManagePosts from "@/src/pages/CAdminManagePosts";
+import CAdminManagePosts from "@/src/AllComponetsPages/CAdminManagePosts";
 import React from "react";
 
 const AdminManagePosts = () => {

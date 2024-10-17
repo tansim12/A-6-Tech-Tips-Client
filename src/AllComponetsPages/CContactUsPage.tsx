@@ -1,5 +1,17 @@
-import React from "react";
-import Map from "../Componets/ui/About And Contact/Map";
+"use client"
+import React, { useMemo } from "react";
+// // import Map from "../Componets/ui/About And Contact/Map";
+
+// import dynamic from "next/dynamic"; // Ensure dynamic import from next/dynamic
+
+// // Lazy load the Map component using dynamic import
+// const Map = useMemo(
+//   () =>
+//     dynamic(() => import("@/src/Componets/ui/AboutAndContact/Map"), {
+//       ssr: false, // Disable server-side rendering for this component
+//     }),
+//   []
+// );
 
 const CContactUsPage = () => {
   return (
@@ -79,7 +91,7 @@ const CContactUsPage = () => {
 
                 {/* Map Section */}
                 <div className=" z-50">
-                  <Map />
+                  {/* <Map /> */}
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import CAllPackagePage from "@/src/pages/CAllPackagePage";
+import CAllPackagePage from "@/src/AllComponetsPages/CAllPackagePage";
 import React from "react";
 
 const AllPackagePage = () => {

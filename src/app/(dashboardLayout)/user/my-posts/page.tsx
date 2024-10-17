@@ -1,4 +1,4 @@
-import CMyPostsPage from "@/src/pages/CMyPostsPage";
+import CMyPostsPage from "@/src/AllComponetsPages/CMyPostsPage";
 import React from "react";
 
 const MyPostsPage = () => {

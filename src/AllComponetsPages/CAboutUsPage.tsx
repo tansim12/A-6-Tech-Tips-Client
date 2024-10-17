@@ -1,5 +1,5 @@
-
-import React from "react";
+"use client";
+import React, { useMemo } from "react";
 import history from "@/src/assets/history.jpg";
 import banner from "@/src/assets/banner.jpg";
 import e1 from "@/src/assets/e1.jpg";
@@ -8,7 +8,18 @@ import e3 from "@/src/assets/e3.jpg";
 
 import Image from "next/image";
 import ReUseableBanner from "../Componets/ui/Banner/ReUseableBanner";
-import Map from "../Componets/ui/About And Contact/Map";
+// // import Map from "../Componets/ui/About And Contact/Map";
+
+// import dynamic from "next/dynamic"; // Ensure dynamic import from next/dynamic
+
+// // Lazy load the Map component using dynamic import
+// const Map = useMemo(
+//   () =>
+//     dynamic(() => import("@/src/Componets/ui/AboutAndContact/Map"), {
+//       ssr: false, // Disable server-side rendering for this component
+//     }),
+//   []
+// );
 
 // Sample team members data
 const teamMembers = [
@@ -34,7 +45,9 @@ const CAboutUsPage = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h2 className="text-3xl font-semibold mb-4 text-black">Company History</h2>
+              <h2 className="text-3xl font-semibold mb-4 text-black">
+                Company History
+              </h2>
               <p className="text-black mb-4">
                 Founded in 2010, our company has been committed to providing
                 excellent service with a focus on customer satisfaction and
@@ -49,7 +62,6 @@ const CAboutUsPage = () => {
             <div className="flex justify-center items-center">
               <Image
                 src={history}
-               
                 alt="Company History"
                 className="w-full h-auto rounded-lg shadow-lg"
               />
@@ -69,7 +81,6 @@ const CAboutUsPage = () => {
                 className="bg-white shadow-lg rounded-lg overflow-hidden"
               >
                 <Image
-                 
                   src={member.photo}
                   alt={member.name}
                   className="object-cover w-full h-48"
@@ -140,7 +151,7 @@ const CAboutUsPage = () => {
               </p>
             </div>
             <div>
-              <Map />
+              {/* <Map /> */}
             </div>
           </div>
         </div>

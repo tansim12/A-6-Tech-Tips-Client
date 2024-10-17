@@ -1,4 +1,4 @@
-import CManagePaymentPage from "@/src/pages/CManagePaymentPage";
+import CManagePaymentPage from "@/src/AllComponetsPages/CManagePaymentPage";
 import React from "react";
 
 const ManagePaymentPage = () => {

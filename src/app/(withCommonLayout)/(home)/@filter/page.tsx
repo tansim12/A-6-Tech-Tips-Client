@@ -1,4 +1,4 @@
-import CPostFilterSidebar from "@/src/pages/CPostFilterSidebar";
+import CPostFilterSidebar from "@/src/AllComponetsPages/CPostFilterSidebar";
 import React from "react";
 
 const FilterSideBarSlot = () => {

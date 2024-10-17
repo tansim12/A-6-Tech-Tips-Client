@@ -1,4 +1,4 @@
-import CPaymentHistoryPage from "@/src/pages/CPaymentHistoryPage";
+import CPaymentHistoryPage from "@/src/AllComponetsPages/CPaymentHistoryPage";
 import React from "react";
 
 const PaymentHistory = () => {
