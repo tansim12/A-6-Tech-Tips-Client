@@ -1,3 +1,4 @@
+"use client";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -17,10 +18,13 @@ import { ThemeSwitch } from "./theme-switch";
 import { siteConfig } from "@/src/config/site";
 import { Logo } from "./icon";
 import NavbarDropdown from "./NavbarDropdown";
-import logo from '@/src/assets/logo.png';
+import logo from "@/src/assets/logo.png";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export const Navbar = () => {
+  const pathName = usePathname();
+
   return (
     <>
       <NextUINavbar maxWidth="xl" position="sticky">
@@ -30,19 +34,19 @@ export const Navbar = () => {
               className="flex justify-start items-center gap-1"
               href="/"
             >
-             <div className=" w-[60%]">
-              <Image src={logo} alt="logo" />
-             </div>
+              <div className=" w-[60%]">
+                <Image src={logo} alt="logo" />
+              </div>
               <p className="font-bold text-inherit"></p>
             </NextLink>
           </NavbarBrand>
           <ul className="hidden lg:flex gap-4 justify-start ml-2">
-            {siteConfig.navItems.map((item) => (
+            {siteConfig?.navItems?.map((item) => (
               <NavbarItem key={item.href}>
                 <NextLink
                   className={clsx(
                     linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary data-[active=true]:font-medium"
+                    pathName === item.href && "text-primary font-medium" // Apply active styles when the route matches
                   )}
                   color="foreground"
                   href={item.href}
@@ -83,13 +87,20 @@ export const Navbar = () => {
                       ? "danger"
                       : "foreground"
                   }
-                  href="#"
+                  href={item.href}
                   size="lg"
+                  className={clsx(
+                    linkStyles({ color: "foreground" }),
+                    pathName === item.href && "text-primary font-medium" // Apply active styles when the route matches
+                  )}
                 >
                   {item.label}
                 </Link>
               </NavbarMenuItem>
             ))}
+            <div className="my-3">
+            <NavbarDropdown />
+            </div>
           </div>
         </NavbarMenu>
       </NextUINavbar>
