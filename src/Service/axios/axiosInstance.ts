@@ -2,12 +2,12 @@
 import axios from "axios";
 import { cookies } from "next/headers";
 import { getNewAccessToken } from "../Auth/auth.service";
+import envConfig from "@/src/config/envConfig";
 
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: envConfig.baseApi,
   withCredentials: true,
-  // baseURL: envConfig.backendUrl,
 });
 
 // Add a request interceptor
