@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-#stickySidebar {
-    position: sticky;
+#stickySidebarImp {
+  position: sticky;
+  top: 100px !important;
+}
+
+@media (max-width: 768px) {
+  #stickySidebarImp {
+    position: static;
     top: 100px !important;
   }
+}

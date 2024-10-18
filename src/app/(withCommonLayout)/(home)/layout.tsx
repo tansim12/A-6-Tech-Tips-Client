@@ -11,7 +11,7 @@ const HomeLayout = ({
     <>
       <div className="container mx-auto p-3">
         <div className=" flex flex-col md:flex md:flex-row gap-5">
-          <div className=" max-h-screen basis-1/5" id="stickySidebar">
+          <div className=" max-h-screen basis-1/5" id="stickySidebarImp">
             <div className="">{filter}</div>
           </div>
           <div className="basis-4/5">{children}</div>
