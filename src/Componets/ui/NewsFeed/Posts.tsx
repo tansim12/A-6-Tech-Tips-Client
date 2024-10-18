@@ -116,7 +116,7 @@ export default function Post({
               src={profilePhoto as string}
               width={50}
               height={50}
-              alt="user Image"
+              alt="user"
               className="rounded-full border-4 border-base object-cover "
             />
             <div>
