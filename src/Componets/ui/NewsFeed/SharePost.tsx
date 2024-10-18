@@ -12,7 +12,6 @@ import {
 } from "react-share";
 import { Button } from "@nextui-org/react"; // Import Button from Next UI
 import { FaShare } from "react-icons/fa"; // Ensure you have react-icons installed
-import envConfig from "@/src/config/envConfig";
 import { useUpdateShareCount } from "@/src/hooks/post.hook";
 
 const SharePost = ({
@@ -25,7 +24,7 @@ const SharePost = ({
   const { mutate: handleUpdateShareCount } = useUpdateShareCount();
 
   const [shareUrl, setSharePost] = useState(
-    `${envConfig.frontendUrl}/post/${postId}`
+    `$https://a-6-tech-tips-client-ggc5.vercel.app/post/${postId}`
   );
   const [showOptions, setShowOptions] = useState(false); // State to manage visibility of share options
 
