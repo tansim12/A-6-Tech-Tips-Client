@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useMemo } from "react";
 // // import Map from "../Componets/ui/About And Contact/Map";
 
@@ -91,7 +91,17 @@ const CContactUsPage = () => {
 
                 {/* Map Section */}
                 <div className=" z-50">
-                  {/* <Map /> */}
+                  <div>
+                    <div className=" border m-1">
+                      <iframe
+                        allowFullScreen
+                        height="350"
+                        loading="lazy"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29210.841191686242!2d90.32901490397191!3d23.77036439141986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c0af678d9809%3A0x7aaa2fe4ee51b350!2sDhaka%201207!5e0!3m2!1sen!2sbd!4v1724320018344!5m2!1sen!2sbd"
+                        width="100%"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -112,10 +122,7 @@ const CContactUsPage = () => {
               </p>
             </div>
           </section>
-
-         
         </div>
-        
       </div>
     </>
   );

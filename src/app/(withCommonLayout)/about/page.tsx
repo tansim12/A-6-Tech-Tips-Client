@@ -5,7 +5,7 @@ const AboutPage = () => {
   return (
     <div>
       <CAboutUsPage />
-      {/* <div>hello</div> */}
+      
     </div>
   );
 };

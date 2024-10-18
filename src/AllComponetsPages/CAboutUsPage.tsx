@@ -8,6 +8,7 @@ import e3 from "@/src/assets/e3.jpg";
 
 import Image from "next/image";
 import ReUseableBanner from "../Componets/ui/Banner/ReUseableBanner";
+import Map from "../Componets/ui/AboutAndContact/Map";
 // // import Map from "../Componets/ui/About And Contact/Map";
 
 // import dynamic from "next/dynamic"; // Ensure dynamic import from next/dynamic
@@ -73,7 +74,9 @@ const CAboutUsPage = () => {
       {/* Our Team */}
       <section className="bg-white py-12">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-semibold mb-8 text-center">Our Team</h2>
+          <h2 className="text-3xl font-semibold mb-8 text-center text-black">
+            Our Team
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
               <div
@@ -151,7 +154,15 @@ const CAboutUsPage = () => {
               </p>
             </div>
             <div>
-              {/* <Map /> */}
+              <div className=" border m-1">
+                <iframe
+                  allowFullScreen
+                  height="350"
+                  loading="lazy"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29210.841191686242!2d90.32901490397191!3d23.77036439141986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c0af678d9809%3A0x7aaa2fe4ee51b350!2sDhaka%201207!5e0!3m2!1sen!2sbd!4v1724320018344!5m2!1sen!2sbd"
+                  width="100%"
+                />
+              </div>
             </div>
           </div>
         </div>
