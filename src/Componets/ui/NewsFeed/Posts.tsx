@@ -44,6 +44,7 @@ export default function Post({
     comments,
     react,
     shareCount,
+    category,
   } = post || {};
   const router = useRouter();
   const { name, email, profilePhoto } = (userId as TUser) || {};
@@ -51,8 +52,8 @@ export default function Post({
   const dayDifference = Number(moment().diff(moment(createdAt), "days"));
 
   if (isCheck) {
-    if (loggedInUser?.isVerified===false && post?.premium) {
-     router.push("/all-package")
+    if (loggedInUser?.isVerified === false && post?.premium) {
+      router.push("/all-package");
     }
   }
   const {
@@ -177,6 +178,10 @@ export default function Post({
             ""
           )}
         </div>
+        <p>
+          <span className="font-bold ">Category :</span>
+          <span className="text-sm"> {category}</span>
+        </p>
         <div className="border-b border-default-200 py-4">
           <div className="mb-4 flex items-start justify-between">
             {pathName === "/" ? (
