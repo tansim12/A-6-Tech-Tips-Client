@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Tech Tips & Tricks Hub
 
-First, run the development server:
+##  Introduction
+The "Tech Tips & Tricks" project is a dynamic full-stack web application designed to help tech enthusiasts navigate and master the ever-evolving world of technology. Users will have access to expert advice, personal experiences, and user-generated content covering everything from troubleshooting common tech issues to learning about new software, apps, gadgets, and digital tools. The platform will cater to individuals seeking practical tech solutions, tutorials, reviews, and recommendations on products and services that enhance their digital lives. The application will feature user registration and authentication, allowing users to personalize their experience, share their own tips, upvote valuable insights, and interact with other tech enthusiasts. It will also offer premium content options via payment integration.
+
+## 🔗 Live URL
+
+[Tech Tips & Tricks Hub](https://a-6-tech-tips-client-ggc5.vercel.app/)
+
+
+## Technologies Used
+- Next.js
+- TypeScript
+- React hook form
+- tanstack/react-query
+
+
+ **Clone the repository**
+
+   ```sh
+   git clone https://github.com/tansim12/A-6-Tech-Tips-Client.git
+
+   cd A-6-Tech-Tips-Client
+  
+```
+📦 Install Dependencies
+
+---
+```bash
+
+$ npm install --legacy-peer-deps
+
+```
+# ⚙️ Configure Environment Variables
+## Create a `.env.local` file in the root of the project and add the following environment variables:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+NEXT_PUBLIC_BASE_API=
+NEXT_PUBLIC_FRONTEND_URL=
+IMAGE_BB_API_KEY=
+
+
 ```
+# Running the app
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```TYPESCRIPT
+$ npm run dev
+```
+# Build the app
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```TYPESCRIPT
+$ npm run build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+```
+The server should be running on http://localhost:5173.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
