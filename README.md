@@ -55,5 +55,5 @@ $ npm run build
 
 
 ```
-The server should be running on http://localhost:5173.
+The server should be running on http://localhost:3000.
 
